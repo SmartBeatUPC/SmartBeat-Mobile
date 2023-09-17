@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData.from(
     headlineMedium: TextStyle(
       fontFamily: 'Open Sans',
       fontWeight: FontWeight.normal,
-      fontSize: 27.5,
+      fontSize: 30,
     ),
       titleLarge: TextStyle(
         fontFamily: 'Open Sans',
@@ -30,11 +30,13 @@ ThemeData lightTheme = ThemeData.from(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
         fontSize: 13.5,
+        color: AppColors.textInputColor
       ),
       displayMedium: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w800,
         fontSize: 17.5,
+          color: AppColors.textInputColor
       ),
       displayLarge: TextStyle(
         fontFamily: 'Open Sans',
@@ -76,14 +78,14 @@ ThemeData lightTheme = ThemeData.from(
       textStyle: const TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w800,
-        fontSize: 20.0,
+        fontSize: 17.5,
       ),
       side: const BorderSide(
         width: 2.0,
         color: AppColors.secondary,
       ),
       elevation: 2.5,
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 17.5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -96,9 +98,9 @@ ThemeData lightTheme = ThemeData.from(
       textStyle: const TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.w800,
-        fontSize: 20.0,
+        fontSize: 17.5,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 17.5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -111,5 +113,22 @@ ThemeData lightTheme = ThemeData.from(
     ),
   ),
   //inputDecorationTheme
-  //textButtonTheme
+  textButtonTheme: const TextButtonThemeData(
+    style: ButtonStyle(
+      padding: MaterialStatePropertyAll<EdgeInsets>(
+        EdgeInsets.all(0.0),
+      ),
+      textStyle: MaterialStatePropertyAll<TextStyle>(
+        TextStyle(
+          fontFamily: 'Open Sans',
+          fontSize: 17.0,
+          color: AppColors.primary,
+          fontWeight: FontWeight.bold,
+          decoration: TextDecoration.underline
+        ),
+      ),
+      foregroundColor: MaterialStatePropertyAll(AppColors.primary),
+      overlayColor: MaterialStatePropertyAll(Colors.transparent),
+    ),
+  ),
 );

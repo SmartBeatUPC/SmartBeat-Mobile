@@ -15,10 +15,8 @@ class CustomReactiveTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final void Function(FormControl<dynamic>)? onChanged;
   final EdgeInsets padding;
+  final bool isPassword;
   final Color color;
-  final int? maxLength;
-  final bool? filled;
-  final Color? fillColor;
 
   const CustomReactiveTextField({
     super.key,
@@ -34,10 +32,23 @@ class CustomReactiveTextField extends StatefulWidget {
     this.onChanged,
     this.padding = const EdgeInsets.only(top: 15.0),
     this.color = AppColors.primary,
-    this.maxLength,
-    this.filled,
-    this.fillColor,
-  });
+  }) : isPassword = false;
+
+  const CustomReactiveTextField.password({
+    super.key,
+    required this.hintText,
+    required this.formControl,
+    required this.label,
+    this.validationMessages,
+    this.inputFormatters,
+    this.keyboardType,
+    this.onChanged,
+    this.padding = const EdgeInsets.only(top: 15.0),
+    this.color = AppColors.primary,
+  })  : obscure = true,
+        suffixIcon = null,
+        onPressedIcon = null,
+        isPassword = true;
 
   @override
   State<CustomReactiveTextField> createState() =>
@@ -60,36 +71,61 @@ class _CustomReactiveTextFieldState extends State<CustomReactiveTextField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ReactiveTextField(
-            maxLength: widget.maxLength,
             cursorColor: widget.color,
             validationMessages: widget.validationMessages,
-            obscureText: widget.obscure,
+            obscureText: widget.isPassword ? _obscurePassword : widget.obscure,
             formControl: widget.formControl,
             onChanged: widget.onChanged,
             keyboardType: widget.keyboardType,
             inputFormatters: widget.inputFormatters,
-            style: textTheme.displayLarge!.copyWith(color: widget.color),
+            style: textTheme.displayMedium!
+                .copyWith(color: AppColors.textInputColor),
             decoration: InputDecoration(
-              filled: widget.filled,
-              fillColor: widget.fillColor,
               labelText: widget.label,
-              labelStyle: textTheme.displayLarge!
-                  .copyWith(color: widget.color, fontWeight: FontWeight.w500),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: widget.color.withOpacity(0.9)),
+              border: const OutlineInputBorder(
+                gapPadding: 8.0,
+                borderSide: BorderSide(
+                  color: Colors.black,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.0),
+                ),
               ),
-              enabledBorder: UnderlineInputBorder(
+              labelStyle: textTheme.displayMedium!.copyWith(
+                  color: AppColors.textInputColor, fontWeight: FontWeight.bold),
+              enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: widget.color),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8.0),
+                ),
               ),
-              errorBorder: const UnderlineInputBorder(
+              errorBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.redAccent, width: 1.5),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.0),
+                ),
               ),
               errorStyle: textTheme.displaySmall?.copyWith(
                   color: Colors.redAccent, fontWeight: FontWeight.bold),
-              suffixIcon: IconButton(
-                onPressed: widget.onPressedIcon,
-                icon: Icon(widget.suffixIcon),
-              ),
+              suffixIcon: widget.isPassword
+                  ? IconButton(
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: AppColors.textInputColor,
+                      ),
+                    )
+                  : IconButton(
+                      onPressed: widget.onPressedIcon,
+                      icon: Icon(
+                        widget.suffixIcon,
+                        color: AppColors.textInputColor,
+                      ),
+                    ),
               hintText: widget.hintText,
               hintStyle: textTheme.displayMedium!.copyWith(
                   fontWeight: FontWeight.w500,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smartbeat_frontend/seguridad/screens/login/components/form_section.dart';
-import 'package:smartbeat_frontend/seguridad/screens/login/components/footer_section.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/components/form_section.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/components/footer_section.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 
-class LoginScreen extends StatelessWidget {
-  static String route = 'login_screen';
+class RegistroScreen extends StatelessWidget {
+  static String route = 'registro_screen';
 
-  const LoginScreen({super.key});
+  const RegistroScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                '!Bienvenido¡ Un placer\ntenerte de vuelta',
+                '!Hola¡ Comienza tu\nregistro',
                 style: Theme.of(context)
                     .textTheme
                     .headlineMedium
@@ -31,8 +31,9 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: FormSection(),
             ),
-            const SizedBox(height: 35.0),
+            const SizedBox(height: 25.0),
             const FooterSection(),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),

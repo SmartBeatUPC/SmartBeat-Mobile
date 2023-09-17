@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
+import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class CustomScaffold extends StatelessWidget {
   final Widget? bottomNavigationBar;
@@ -9,7 +9,7 @@ class CustomScaffold extends StatelessWidget {
   final Color? backgroundColorAppBar;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final Widget? body;
-  final Widget? title;
+  final bool useAppBar;
 
   const CustomScaffold({
     Key? key,
@@ -17,9 +17,9 @@ class CustomScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.floatingActionButtonLocation,
-    this.title,
     this.backgroundColor,
     this.backgroundColorAppBar,
+    this.useAppBar = false,
   }) : super(key: key);
 
   @override
@@ -27,17 +27,37 @@ class CustomScaffold extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: title,
-          toolbarHeight: title == null ? 0 : null,
-          automaticallyImplyLeading: title != null,
-          backgroundColor:
-              backgroundColorAppBar ?? Theme.of(context).colorScheme.primary,
-          centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: AppColors.complementary1.withOpacity(0.85),
+        appBar: useAppBar ? AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AppImages.splashIcon,
+                height: 40.0,
+              ),
+              const SizedBox(width: 5.0),
+              Image.asset(
+                AppImages.splashText,
+                height: 20.0,
+              ),
+            ],
           ),
-        ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back_ios_sharp),
+              onPressed: () {},
+            ),
+          ],
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {},
+          ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.white,
+          ),
+        ) : null,
         bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: floatingActionButton,
         floatingActionButtonLocation: floatingActionButtonLocation,

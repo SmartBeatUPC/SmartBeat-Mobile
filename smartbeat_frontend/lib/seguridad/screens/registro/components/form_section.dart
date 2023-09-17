@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:smartbeat_frontend/seguridad/forms/login_form.dart';
+import 'package:smartbeat_frontend/seguridad/forms/registro_form.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 
@@ -13,7 +13,7 @@ class FormSection extends StatefulWidget {
 }
 
 class _FormSectionState extends State<FormSection> {
-  late LoginForm _form = LoginForm();
+  late RegistroForm _form = RegistroForm();
 
   @override
   void initState() {
@@ -44,15 +44,21 @@ class _FormSectionState extends State<FormSection> {
                 ),
                 CustomReactiveTextField.password(
                   color: AppColors.outlineVariant,
+                  hintText: 'Email',
+                  formControl: _form.email,
+                  label: 'Email',
+                ),
+                CustomReactiveTextField.password(
+                  color: AppColors.outlineVariant,
                   hintText: 'Contraseña',
                   formControl: _form.password,
                   label: 'Contraseña',
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    '¿Olvidaste la contraseña?',
-                  ),
+                CustomReactiveTextField.password(
+                  color: AppColors.outlineVariant,
+                  hintText: 'Confirma Contraseña',
+                  formControl: _form.password,
+                  label: 'Confirma Contraseña',
                 ),
               ],
             ),
@@ -63,9 +69,9 @@ class _FormSectionState extends State<FormSection> {
             child: ReactiveFormConsumer(builder: (context, form, child) {
               return ElevatedButton(
                 onPressed: () {
-                  //TODO Login
+                  //TODO Registro
                 },
-                child: const Text('Ingresar'),
+                child: const Text('Registrarse'),
               );
             }),
           ),

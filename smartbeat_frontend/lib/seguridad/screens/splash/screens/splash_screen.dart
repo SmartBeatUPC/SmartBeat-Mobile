@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartbeat_frontend/seguridad/screens/inicio/screens/inicio_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/screens/login_screen.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -62,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _animationController.forward();
-    animationCompletedNavigateToRoute(LoginScreen.route);
+    animationCompletedNavigateToRoute(InicioScreen.route);
   }
 
   @override
@@ -117,7 +118,6 @@ class _SplashScreenState extends State<SplashScreen>
                     },
                     child: Image.asset(
                       AppImages.splashIcon,
-                      // Replace with your image asset path
                       height: 100.0,
                     ),
                   ),

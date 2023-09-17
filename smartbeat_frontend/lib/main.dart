@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return ReactiveFormConfig(
       validationMessages: FormConfig.validationMessages,
       child: MaterialApp(
-        title: 'Ayni App',
+        title: 'SmartBeat App',
         theme: lightTheme,
         debugShowCheckedModeBanner: false,
         initialRoute: SplashScreen.route,
