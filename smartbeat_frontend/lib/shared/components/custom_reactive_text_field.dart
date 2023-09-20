@@ -31,7 +31,7 @@ class CustomReactiveTextField extends StatefulWidget {
     this.suffixIcon,
     this.onChanged,
     this.padding = const EdgeInsets.only(top: 15.0),
-    this.color = AppColors.primary,
+    this.color = AppColors.outlineVariant,
   }) : isPassword = false;
 
   const CustomReactiveTextField.password({

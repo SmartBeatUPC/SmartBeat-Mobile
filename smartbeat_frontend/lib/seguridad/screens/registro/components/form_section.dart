@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/screens/seleccion_paciente_medico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/forms/registro_form.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
@@ -36,26 +37,16 @@ class _FormSectionState extends State<FormSection> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 CustomReactiveTextField(
-                  hintText: 'Usuario',
-                  formControl: _form.usuario,
-                  label: 'Usuario',
-                  color: AppColors.outlineVariant,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                ),
-                CustomReactiveTextField.password(
-                  color: AppColors.outlineVariant,
                   hintText: 'Email',
                   formControl: _form.email,
                   label: 'Email',
                 ),
                 CustomReactiveTextField.password(
-                  color: AppColors.outlineVariant,
                   hintText: 'Contraseña',
                   formControl: _form.password,
                   label: 'Contraseña',
                 ),
                 CustomReactiveTextField.password(
-                  color: AppColors.outlineVariant,
                   hintText: 'Confirma Contraseña',
                   formControl: _form.password,
                   label: 'Confirma Contraseña',
@@ -69,7 +60,7 @@ class _FormSectionState extends State<FormSection> {
             child: ReactiveFormConsumer(builder: (context, form, child) {
               return ElevatedButton(
                 onPressed: () {
-                  //TODO Registro
+                  Navigator.pushNamed(context, SeleccionPacienteMedicoScreen.route);
                 },
                 child: const Text('Registrarse'),
               );

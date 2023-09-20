@@ -11,11 +11,11 @@ ThemeData lightTheme = ThemeData.from(
     outlineVariant: AppColors.outlineVariant,
   ),
   textTheme: const TextTheme(
-    headlineMedium: TextStyle(
-      fontFamily: 'Open Sans',
-      fontWeight: FontWeight.normal,
-      fontSize: 30,
-    ),
+      headlineMedium: TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.normal,
+        fontSize: 30,
+      ),
       titleLarge: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
@@ -27,17 +27,15 @@ ThemeData lightTheme = ThemeData.from(
         fontSize: 17.5,
       ),
       displaySmall: TextStyle(
-        fontFamily: 'Open Sans',
-        fontWeight: FontWeight.normal,
-        fontSize: 13.5,
-        color: AppColors.textInputColor
-      ),
+          fontFamily: 'Open Sans',
+          fontWeight: FontWeight.normal,
+          fontSize: 13.5,
+          color: AppColors.textInputColor),
       displayMedium: TextStyle(
-        fontFamily: 'Open Sans',
-        fontWeight: FontWeight.w800,
-        fontSize: 17.5,
-          color: AppColors.textInputColor
-      ),
+          fontFamily: 'Open Sans',
+          fontWeight: FontWeight.w800,
+          fontSize: 17.5,
+          color: AppColors.textInputColor),
       displayLarge: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.bold,
@@ -57,9 +55,9 @@ ThemeData lightTheme = ThemeData.from(
   //datePickerTheme
   //bottomNavigationBarTheme:
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: AppColors.secondary,
-    unselectedItemColor: AppColors.primary,
-    selectedItemColor: Colors.white,
+    backgroundColor: Colors.white,
+    unselectedItemColor: AppColors.secondary,
+    selectedItemColor: AppColors.primary,
     type: BottomNavigationBarType.fixed,
     unselectedLabelStyle: TextStyle(
       fontFamily: 'Open Sans',
@@ -120,12 +118,11 @@ ThemeData lightTheme = ThemeData.from(
       ),
       textStyle: MaterialStatePropertyAll<TextStyle>(
         TextStyle(
-          fontFamily: 'Open Sans',
-          fontSize: 17.0,
-          color: AppColors.primary,
-          fontWeight: FontWeight.bold,
-          decoration: TextDecoration.underline
-        ),
+            fontFamily: 'Open Sans',
+            fontSize: 17.0,
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.underline),
       ),
       foregroundColor: MaterialStatePropertyAll(AppColors.primary),
       overlayColor: MaterialStatePropertyAll(Colors.transparent),

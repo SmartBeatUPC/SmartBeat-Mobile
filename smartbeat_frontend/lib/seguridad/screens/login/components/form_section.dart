@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/seguridad/forms/login_form.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
-import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 
 class FormSection extends StatefulWidget {
   const FormSection({Key? key}) : super(key: key);
@@ -36,21 +36,18 @@ class _FormSectionState extends State<FormSection> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 CustomReactiveTextField(
-                  hintText: 'Usuario',
-                  formControl: _form.usuario,
-                  label: 'Usuario',
-                  color: AppColors.outlineVariant,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  hintText: 'Email',
+                  formControl: _form.email,
+                  label: 'Email',
                 ),
                 CustomReactiveTextField.password(
-                  color: AppColors.outlineVariant,
                   hintText: 'Contraseña',
                   formControl: _form.password,
                   label: 'Contraseña',
                 ),
                 TextButton(
                   onPressed: () {},
-                  child: Text(
+                  child: const Text(
                     '¿Olvidaste la contraseña?',
                   ),
                 ),
@@ -63,7 +60,7 @@ class _FormSectionState extends State<FormSection> {
             child: ReactiveFormConsumer(builder: (context, form, child) {
               return ElevatedButton(
                 onPressed: () {
-                  //TODO Login
+                  Navigator.pushNamed(context, HomeNavBarScreen.route);
                 },
                 child: const Text('Ingresar'),
               );
