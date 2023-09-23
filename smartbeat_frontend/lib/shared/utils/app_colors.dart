@@ -8,4 +8,6 @@ class AppColors {
   static const Color outlineVariant = Color(0xFFE8ECF4);
   static const Color unSelectedIcon = Color(0xFFD5D4CA);
   static const Color textInputColor = Color(0xFF8391A1);
+  static const Color fondoWeight = Color(0xFFFFBF1A);
+  static const Color acentText = Color(0xFF587EFF);
 }

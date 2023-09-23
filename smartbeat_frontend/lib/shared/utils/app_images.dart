@@ -10,4 +10,7 @@ class AppImages {
   static String personSvg = 'assets/icons/person.svg';
   static String medico = 'assets/medico.png';
   static String paciente = 'assets/paciente.png';
+  static String paciente2 = 'assets/paciente2.png';
+  static String flat1 = 'assets/icons/Flat_1_.svg';
+  static String weight = 'assets/icons/Weight.svg';
 }

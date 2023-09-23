@@ -16,6 +16,11 @@ ThemeData lightTheme = ThemeData.from(
         fontWeight: FontWeight.normal,
         fontSize: 30,
       ),
+      headlineSmall: TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.normal,
+        fontSize: 25,
+      ),
       titleLarge: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
@@ -25,6 +30,11 @@ ThemeData lightTheme = ThemeData.from(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
         fontSize: 17.5,
+      ),
+      titleSmall: TextStyle(
+        fontFamily: 'Open Sans',
+        fontWeight: FontWeight.normal,
+        fontSize: 15.0,
       ),
       displaySmall: TextStyle(
           fontFamily: 'Open Sans',

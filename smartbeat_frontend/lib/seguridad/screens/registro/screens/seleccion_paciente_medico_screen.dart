@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/components/type_user_card.dart';
-import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_paciente_screen.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -46,7 +46,7 @@ class SeleccionPacienteMedicoScreen extends StatelessWidget {
                 textBoxColor: AppColors.primary,
                 onTap: () => Navigator.pushNamed(
                   context,
-                  DatosPersonalesPacienteScreen.route,
+                  DatosPersonalesScreen.route,
                   arguments: const DatosPersonalesPacienteScreenArgs(
                       typeUser: TypeUser.Medico),
                 ),
@@ -58,7 +58,7 @@ class SeleccionPacienteMedicoScreen extends StatelessWidget {
                 textBoxColor: AppColors.secondary,
                 onTap: () => Navigator.pushNamed(
                   context,
-                  DatosPersonalesPacienteScreen.route,
+                  DatosPersonalesScreen.route,
                   arguments: const DatosPersonalesPacienteScreenArgs(
                       typeUser: TypeUser.Paciente),
                 ),

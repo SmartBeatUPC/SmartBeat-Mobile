@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico_page.dart';
 import 'package:smartbeat_frontend/home/pages/historial_page.dart';
-import 'package:smartbeat_frontend/home/pages/profile_page.dart';
+import 'package:smartbeat_frontend/home/pages/profile/profile_page.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 
 class HomeNavBarScreen extends StatefulWidget {
+  final HomeNavBarScreenArgs args;
   static String route = 'home_nav_bar_screen';
+
+  const HomeNavBarScreen({super.key, required this.args});
 
   @override
   State<HomeNavBarScreen> createState() => _HomeNavBarScreenState();
@@ -20,7 +23,7 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
   void initState() {
     super.initState();
     _pages = <Widget>[
-      const ProfilePage(),
+      ProfilePage(typeUser: widget.args.typeUser),
       const AnalisisMedicoPage(),
       const HistorialPage(),
     ];
@@ -73,4 +76,10 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
       ),
     );
   }
+}
+
+class HomeNavBarScreenArgs {
+  final TypeUser typeUser;
+
+  const HomeNavBarScreenArgs(this.typeUser);
 }

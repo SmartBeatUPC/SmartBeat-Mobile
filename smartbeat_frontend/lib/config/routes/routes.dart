@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
-import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_paciente_screen.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/seleccion_paciente_medico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/inicio/screens/inicio_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/screens/login_screen.dart';
@@ -15,13 +15,16 @@ class CustomRoute {
     InicioScreen.route: (settings) => const InicioScreen(),
     LoginScreen.route: (settings) => const LoginScreen(),
     RegistroScreen.route: (settings) => const RegistroScreen(),
-    HomeNavBarScreen.route: (settings) => HomeNavBarScreen(),
+    HomeNavBarScreen.route: (settings) {
+      final args = settings.arguments.castOr<HomeNavBarScreenArgs>()!;
+      return HomeNavBarScreen(args: args);
+    },
     SeleccionPacienteMedicoScreen.route: (settings) =>
         const SeleccionPacienteMedicoScreen(),
-    DatosPersonalesPacienteScreen.route: (settings) {
+    DatosPersonalesScreen.route: (settings) {
       final args =
           settings.arguments.castOr<DatosPersonalesPacienteScreenArgs>()!;
-      return DatosPersonalesPacienteScreen(args: args);
+      return DatosPersonalesScreen(args: args);
     },
   };
 
