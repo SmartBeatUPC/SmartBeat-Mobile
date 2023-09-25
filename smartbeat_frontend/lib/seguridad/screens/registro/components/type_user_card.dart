@@ -6,6 +6,8 @@ class TypeUserCard extends StatelessWidget {
   final String label;
   final Color textBoxColor;
   final VoidCallback onTap;
+  final double scaleImage;
+  final BoxFit fitImage;
 
   const TypeUserCard({
     super.key,
@@ -13,6 +15,8 @@ class TypeUserCard extends StatelessWidget {
     required this.label,
     required this.textBoxColor,
     required this.onTap,
+    this.scaleImage = 1.0,
+    this.fitImage = BoxFit.fill,
   });
 
   @override
@@ -31,8 +35,9 @@ class TypeUserCard extends StatelessWidget {
           height: 180.0,
           decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(pathImage), // Background image
+              fit: fitImage,
+              image: AssetImage(pathImage),
+              scale: scaleImage,
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(25.0),

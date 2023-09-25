@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class CustomScaffold extends StatelessWidget {
@@ -37,7 +38,7 @@ class CustomScaffold extends StatelessWidget {
               ),
               const SizedBox(width: 5.0),
               Image.asset(
-                AppImages.splashText,
+                backgroundColor != null ? AppImages.splashText: AppImages.splashTextWhite,
                 height: 20.0,
               ),
             ],
@@ -52,7 +53,7 @@ class CustomScaffold extends StatelessWidget {
             icon: const Icon(Icons.menu),
             onPressed: () {},
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
           centerTitle: true,
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,

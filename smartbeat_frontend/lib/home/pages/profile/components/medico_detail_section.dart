@@ -66,8 +66,8 @@ class MedicoDetailSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Icon(
                   Icons.phone,
                   size: 20.0,
@@ -78,8 +78,8 @@ class MedicoDetailSection extends StatelessWidget {
                 width: 0.5,
                 color: Colors.grey,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Icon(
                   Icons.email,
                   size: 20.0,
@@ -90,8 +90,8 @@ class MedicoDetailSection extends StatelessWidget {
                 width: 0.5,
                 color: Colors.grey,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Icon(
                   Icons.share,
                   size: 20.0,

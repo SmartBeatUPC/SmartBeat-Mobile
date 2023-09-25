@@ -40,12 +40,12 @@ class _SplashScreenState extends State<SplashScreen>
     _textOpacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: const Interval(0.5, 1.0, curve: Curves.easeInOut),
+        curve: const Interval(0.65, 1.0, curve: Curves.easeInOut),
       ),
     );
 
     _textSlideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.15, 0))
+        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0.1, 0))
             .animate(
       CurvedAnimation(
         parent: _animationController,
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _logoSlideAnimation =
-        Tween<Offset>(begin: const Offset(1, 0), end: const Offset(-0.4, 0))
+        Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-1.7, 0))
             .animate(
       CurvedAnimation(
         parent: _animationController,
@@ -88,6 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: SingleChildScrollView(
           child: Center(
             child: Stack(
+              alignment: AlignmentDirectional.center,
               children: [
                 SlideTransition(
                   position: _textSlideAnimation,
@@ -100,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen>
                             padding: const EdgeInsets.only(top: 30.0),
                             child: Image.asset(
                               AppImages.splashText,
-                              height: 50.0,
+                              height: 150.0,
                             ),
                           ),
                         );
@@ -118,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen>
                     },
                     child: Image.asset(
                       AppImages.splashIcon,
-                      height: 100.0,
+                      height: 80.0,
                     ),
                   ),
                 ),

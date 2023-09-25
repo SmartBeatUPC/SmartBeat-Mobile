@@ -14,7 +14,7 @@ ThemeData lightTheme = ThemeData.from(
       headlineMedium: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.normal,
-        fontSize: 30,
+        fontSize: 35,
       ),
       headlineSmall: TextStyle(
         fontFamily: 'Open Sans',
@@ -54,7 +54,7 @@ ThemeData lightTheme = ThemeData.from(
       headlineLarge: TextStyle(
         fontFamily: 'Open Sans',
         fontWeight: FontWeight.bold,
-        fontSize: 30,
+        fontSize: 45,
       )),
 ).copyWith(
   dialogBackgroundColor: Colors.white,
@@ -118,6 +118,18 @@ ThemeData lightTheme = ThemeData.from(
       disabledBackgroundColor: AppColors.outlineVariant,
       elevation: 2.5,
       shadowColor: AppColors.outlineVariant,
+    ),
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      backgroundColor: const MaterialStatePropertyAll<Color>(
+          Colors.white
+      ),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.5),
+        ),
+      ),
     ),
   ),
   //inputDecorationTheme

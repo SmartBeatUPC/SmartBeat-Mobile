@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smartbeat_frontend/home/pages/analisis_medico_page.dart';
+import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_page.dart';
 import 'package:smartbeat_frontend/home/pages/historial_page.dart';
 import 'package:smartbeat_frontend/home/pages/profile/profile_page.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';

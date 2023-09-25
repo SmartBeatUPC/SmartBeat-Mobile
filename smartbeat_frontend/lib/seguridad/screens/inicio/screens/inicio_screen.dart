@@ -60,7 +60,6 @@ class InicioScreen extends StatelessWidget {
                     const SizedBox(width: 20.0),
                     Image.asset(
                       AppImages.splashText,
-                      height: 40.0,
                     ),
                   ],
                 ),
