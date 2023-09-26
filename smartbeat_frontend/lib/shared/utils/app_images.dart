@@ -17,4 +17,5 @@ class AppImages {
   static String flat1 = 'assets/icons/Flat_1_.svg';
   static String weight = 'assets/icons/Weight.svg';
   static String heartbeatBoldSvg = 'assets/icons/ph_heartbeat-bold.svg';
+  static String pulse = 'assets/icons/pulse.svg';
 }

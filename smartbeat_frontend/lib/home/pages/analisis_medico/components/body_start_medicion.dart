@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_page.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/medida_presion_info.dart';
+import 'package:smartbeat_frontend/home/pages/analisis_medico/components/presion_arterial_dialog.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/seleccion_medicion_dialog.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
@@ -44,8 +45,15 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
         const Spacer(),
-        Image.asset(
-          AppImages.splashIcon,
+        InkWell(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) => PresionArterialDialog());
+          },
+          child: Image.asset(
+            AppImages.splashIcon,
+          ),
         ),
         if (widget.medidaPresionPaciente == null) ...[
           const Spacer(),
