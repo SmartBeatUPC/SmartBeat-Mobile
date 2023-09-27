@@ -19,11 +19,12 @@ class CustomRoute {
       final args = settings.arguments.castOr<HomeNavBarScreenArgs>()!;
       return HomeNavBarScreen(args: args);
     },
-    SeleccionPacienteMedicoScreen.route: (settings) =>
-        const SeleccionPacienteMedicoScreen(),
+    SeleccionPacienteMedicoScreen.route: (settings) {
+      final args = settings.arguments.castOr<SeleccionPacienteMedicoArgs>()!;
+      return SeleccionPacienteMedicoScreen(args: args);
+    },
     DatosPersonalesScreen.route: (settings) {
-      final args =
-          settings.arguments.castOr<DatosPersonalesPacienteScreenArgs>()!;
+      final args = settings.arguments.castOr<DatosPersonalesScreenArgs>()!;
       return DatosPersonalesScreen(args: args);
     },
   };

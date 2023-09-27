@@ -1,24 +1,24 @@
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:smartbeat_frontend/shared/extensions/form_group_extension.dart';
 
-class DatosPersonalesPacienteForm extends FormGroup {
-  FormControl<String> get nombre => get<String>('nombre');
+class DatosPersonalesUsuarioForm extends FormGroup {
+  FormControl<String> get name => get<String>('name');
 
-  FormControl<String> get apellidos => get<String>('apellidos');
+  FormControl<String> get lastName => get<String>('lastName');
 
-  FormControl<String> get edad => get<String>('edad');
+  FormControl<String> get age => get<String>('age');
 
   FormControl<String> get dni => get<String>('dni');
 
-  FormControl<String> get telefono => get<String>('telefono');
+  FormControl<String> get telefono => get<String>('phone');
 
-  FormControl<String> get nacionalidad => get<String>('nacionalidad');
+  FormControl<String> get phone => get<String>('nationality');
 
-  FormControl<String> get genero => get<String>('genero');
+  FormControl<String> get gender => get<String>('gender');
 
-  DatosPersonalesPacienteForm()
+  DatosPersonalesUsuarioForm()
       : super(fb.group({
-          'nombre': FormControl<String>(
+          'name': FormControl<String>(
             validators: [
               Validators.required,
             ],
@@ -28,27 +28,23 @@ class DatosPersonalesPacienteForm extends FormGroup {
               Validators.required,
             ],
           ),
-          'telefono': FormControl<String>(
+          'phone': FormControl<String>(
             validators: [
               Validators.required,
             ],
           ),
-          'apellidos': FormControl<String>(
+          'lastName': FormControl<String>(
             validators: [
               Validators.required,
             ],
           ),
-          'edad': FormControl<String>(
+          'age': FormControl<String>(
             validators: [
               Validators.required,
             ],
           ),
-          'nacionalidad': FormControl<String>(
-            validators: [
-              Validators.required,
-            ],
-          ),
-          'genero': FormControl<String>(
+          'nationality': FormControl<String>(),
+          'gender': FormControl<String>(
             validators: [
               Validators.required,
             ],

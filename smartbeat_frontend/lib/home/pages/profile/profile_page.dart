@@ -24,14 +24,14 @@ class ProfilePage extends StatelessWidget {
           children: [
             const SizedBox(height: 30.0),
             HeaderSection(
-                pathImg: typeUser == TypeUser.Paciente
+                pathImg: typeUser == TypeUser.patient
                     ? AppImages.paciente2
                     : AppImages.medico,
-                title: typeUser == TypeUser.Paciente
+                title: typeUser == TypeUser.patient
                     ? 'Juan López' : 'Dra. Jésica Girón'),
-            if(typeUser == TypeUser.Paciente)
+            if(typeUser == TypeUser.patient)
               PacienteDetailSection(),
-            if(typeUser == TypeUser.Medico)
+            if(typeUser == TypeUser.doctor)
               MedicoDetailSection(),
           ],
         ),

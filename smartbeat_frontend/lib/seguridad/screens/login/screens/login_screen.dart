@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
         if (state is LoginSuccess) {
           Navigator.pushNamed(context, HomeNavBarScreen.route,
-              arguments: const HomeNavBarScreenArgs(TypeUser.Paciente));
+              arguments: const HomeNavBarScreenArgs(TypeUser.patient));
         }
       }, builder: (context, state) {
         return Loading(

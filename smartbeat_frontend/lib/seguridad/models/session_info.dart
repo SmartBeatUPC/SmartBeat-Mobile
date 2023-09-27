@@ -11,7 +11,10 @@ class SessionInfo {
 
   SessionInfo.empty();
 
-  SessionInfo.from(Map<String, dynamic> data)
+  SessionInfo.fromLogin(Map<String, dynamic> data)
       : dataUser = User.from(data['dataUser']),
         email = data['email'];
+
+  SessionInfo.fromRegister(Map<String, dynamic> data)
+      : dataUser = User.from(data['resource']);
 }
