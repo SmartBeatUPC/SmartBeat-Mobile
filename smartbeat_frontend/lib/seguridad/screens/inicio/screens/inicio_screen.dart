@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/screens/login_screen.dart';
+import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/registro_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -69,7 +71,9 @@ class InicioScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, LoginScreen.route);
+                      //Navigator.pushNamed(context, LoginScreen.route);
+                      Navigator.pushNamed(context, HomeNavBarScreen.route,
+                          arguments: const HomeNavBarScreenArgs(TypeUser.doctor));
                     },
                     child: const Text('Iniciar Sesion'),
                   ),

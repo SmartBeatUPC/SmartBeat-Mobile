@@ -5,6 +5,9 @@ class AppImages {
   static String fondoInicio = 'assets/fondo_inicio.png';
   static String manualOption = 'assets/manual_option.png';
   static String smartwatchOption = 'assets/smartwatch_option.png';
+  static String chatbot = 'assets/chatbot.png';
+  static String qrConexion = 'assets/qr_conexion.png';
+
   static String facebookSvg = 'assets/icons/facebook_ic.svg';
   static String googleSvg = 'assets/icons/google_ic.svg';
   static String appleSvg = 'assets/icons/cib_apple.svg';

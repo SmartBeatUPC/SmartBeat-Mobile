@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartbeat_frontend/seguridad/forms/registro_inicial_form.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/components/type_user_card.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
+import 'package:smartbeat_frontend/shared/components/custom_gradient_background.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -17,25 +18,13 @@ class SeleccionPacienteMedicoScreen extends StatelessWidget {
     return CustomScaffold(
       backgroundColor: Colors.white,
       body: Stack(children: [
-        Positioned(
-          top: 500.0,
-          left: 0,
-          right: 0,
-          bottom: 0.0,
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.primary.withOpacity(0.01),
-                  AppColors.primary.withOpacity(0.30),
-                ],
-              ),
-            ),
-          ),
+        CustomGradientBackground(
+          colors: [
+            AppColors.primary.withOpacity(0.01),
+            AppColors.primary.withOpacity(0.30),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
         Center(
           child: Column(
