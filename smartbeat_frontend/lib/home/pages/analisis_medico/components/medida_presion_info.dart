@@ -6,8 +6,12 @@ import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class MedidaPresionInfo extends StatelessWidget {
   final MedidaPresionPaciente medidaPresionPaciente;
+  final Color bpmColor;
 
-  MedidaPresionInfo({required this.medidaPresionPaciente});
+  MedidaPresionInfo({
+    required this.medidaPresionPaciente,
+    this.bpmColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -80,20 +84,22 @@ class MedidaPresionInfo extends StatelessWidget {
               AppImages.heartbeatBoldSvg,
               width: 50.0,
               height: 50.0,
+              color: bpmColor,
             ),
+            const SizedBox(width: 5.0,),
             RichText(
               text: TextSpan(
                 text: medidaPresionPaciente.bpn,
                 style: textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: bpmColor,
                 ),
                 children: [
                   TextSpan(
                     text: ' BPN',
                     style: textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: bpmColor,
                     ),
                   ),
                 ],
