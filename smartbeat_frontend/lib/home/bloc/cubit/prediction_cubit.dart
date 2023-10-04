@@ -17,16 +17,17 @@ class PredictionCubit extends Cubit<PredictionState> {
       emit(PredictionLoading());
       //TODO Obtener informacion medica
       MedicalInformation medicalInformation = const MedicalInformation(
-          height: 170.0,
-          weight: 75.8,
-          bmi: 178.0,
-          sedentary: true,
-          smoke: true,
-          alcohol: false);
+        height: '1.70',
+        weight: '75.8',
+        bmi: '26.2',
+        sedentary: true,
+        smoke: true,
+        alcohol: false,
+      );
       //TODO Obtener age, gender, pathologies
       PredictionReq predictionReq = PredictionReq(
         methodology: false,
-        age: 25,
+        age: 22,
         gender: 'Masculino',
         medicalInformation: medicalInformation,
         pathologies: [],

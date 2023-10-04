@@ -64,7 +64,7 @@ class _FormSectionState extends State<FormSection> {
                   onPressed: _form.valid
                       ? () => BlocProvider.of<LoginCubit>(context)
                   //TODO Cambiar si es online
-                          .login(isOnline: false)
+                          .login()
                       : null,
                   child: const Text('Ingresar'),
                 );

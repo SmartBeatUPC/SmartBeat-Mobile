@@ -20,20 +20,22 @@ class ProfilePage extends StatelessWidget {
       useAppBar: true,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 30.0),
-            HeaderSection(
-                pathImg: typeUser == TypeUser.patient
-                    ? AppImages.paciente2
-                    : AppImages.medico,
-                title: typeUser == TypeUser.patient
-                    ? 'Juan López' : 'Dra. Jésica Girón'),
-            if(typeUser == TypeUser.patient)
-              PacienteDetailSection(),
-            if(typeUser == TypeUser.doctor)
-              MedicoDetailSection(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 30.0),
+              HeaderSection(
+                  pathImg: typeUser == TypeUser.patient
+                      ? AppImages.paciente2
+                      : AppImages.medico,
+                  title: typeUser == TypeUser.patient
+                      ? 'Juan López' : 'Dra. Jésica Girón'),
+              if(typeUser == TypeUser.patient)
+                PacienteDetailSection(),
+              if(typeUser == TypeUser.doctor)
+                MedicoDetailSection(),
+            ],
+          ),
         ),
       ),
     );

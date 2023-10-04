@@ -5,7 +5,7 @@ class PredictionReq {
   final int age;
   final String gender;
   final MedicalInformation medicalInformation;
-  final List<String> pathologies;
+  final List<String>? pathologies;
 
   const PredictionReq({
     required this.methodology,
@@ -20,9 +20,6 @@ class PredictionReq {
         'age': age,
         'gender': gender,
         'medicalInformation': medicalInformation.toMap(),
-        'pathologies': {
-          for (var item in pathologies)
-            pathologies.indexOf(item).toString(): item
-        },
+        'pathologies': pathologies,
       };
 }

@@ -1,7 +1,7 @@
 class MedicalInformation {
-  final double height;
-  final double weight;
-  final double bmi;
+  final String height;
+  final String weight;
+  final String bmi;
   final bool sedentary;
   final bool smoke;
   final bool alcohol;
