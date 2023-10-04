@@ -14,7 +14,7 @@ class CustomRoute {
     SplashScreen.route: (settings) => const SplashScreen(),
     InicioScreen.route: (settings) => const InicioScreen(),
     LoginScreen.route: (settings) => const LoginScreen(),
-    RegistroScreen.route: (settings) => const RegistroScreen(),
+        RegistroScreen.route: (settings) => const RegistroScreen(),
     HomeNavBarScreen.route: (settings) {
       final args = settings.arguments.castOr<HomeNavBarScreenArgs>()!;
       return HomeNavBarScreen(args: args);
