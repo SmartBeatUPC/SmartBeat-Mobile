@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:smartbeat_frontend/shared/models/info_app.dart';
-import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 
 class SecureStorageService {
   static final SecureStorageService _instance =
@@ -12,6 +9,8 @@ class SecureStorageService {
   SecureStorageService._privateConstructor();
 
   static SecureStorageService get instance => _instance;
+
+  /*
 
   Future<void> saveInfoEmpresa(InfoApp infoApp) async {
     await Future.delayed(const Duration(milliseconds: 1500));
@@ -28,4 +27,5 @@ class SecureStorageService {
     }
     return null;
   }
+   */
 }

@@ -1,20 +1,15 @@
+import 'package:smartbeat_frontend/seguridad/models/user.dart';
+
 class InfoApp {
-  final String dni;
-  final String nombres;
+  final User user;
 
   const InfoApp({
-    required this.dni,
-    required this.nombres,
+    required this.user,
   });
-
-  InfoApp.from(Map<String, dynamic> data)
-      : this.dni = data['dni'],
-        this.nombres = data['nombres'];
 
   Map<String, dynamic> toMap() {
     return {
-      'dni': dni,
-      'nombres': nombres,
+      'user': user,
     };
   }
 }

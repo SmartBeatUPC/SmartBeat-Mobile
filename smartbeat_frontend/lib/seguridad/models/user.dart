@@ -15,7 +15,7 @@ class User {
     required this.age,
     required this.dni,
     required this.gender,
-    required this.nationality,
+    this.nationality,
     required this.phone,
   });
 
@@ -29,5 +29,4 @@ class User {
         dni = data['dni'],
         gender = data['gender'],
         phone = data['phone'];
-
 }

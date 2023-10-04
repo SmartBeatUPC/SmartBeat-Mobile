@@ -6,6 +6,8 @@ import 'package:reactive_forms/reactive_forms.dart';
 import 'package:smartbeat_frontend/config/forms/validations_messages.dart';
 import 'package:smartbeat_frontend/config/routes/routes.dart';
 import 'package:smartbeat_frontend/config/theme/light_theme.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/state/info_app_state.dart';
 import 'package:smartbeat_frontend/seguridad/screens/splash/screens/splash_screen.dart';
 
 void main() {
@@ -19,15 +21,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveFormConfig(
-      validationMessages: FormConfig.validationMessages,
-      child: MaterialApp(
-        title: 'SmartBeat App',
-        theme: lightTheme,
-        debugShowCheckedModeBanner: false,
-        initialRoute: SplashScreen.route,
-        onGenerateRoute: (settings) =>
-            CustomRoute.onGenerateRoute(settings),
+    return BlocProvider(
+      create: (context) => InfoAppCubit(),
+      child: BlocBuilder<InfoAppCubit, InfoAppState>(
+        builder: (context, state) {
+          return ReactiveFormConfig(
+            validationMessages: FormConfig.validationMessages,
+            child: MaterialApp(
+              title: 'SmartBeat App',
+              theme: lightTheme,
+              debugShowCheckedModeBanner: false,
+              initialRoute: SplashScreen.route,
+              onGenerateRoute: (settings) =>
+                  CustomRoute.onGenerateRoute(settings),
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/shared/components/custom_gradient_background.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
+import 'package:smartbeat_frontend/shared/models/qr-code.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
-import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class ConexionQrPage extends StatelessWidget {
   const ConexionQrPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final infoApp = BlocProvider.of<InfoAppCubit>(context).infoApp;
+
     return CustomScaffold(
       useAppBar: true,
       backgroundColorAppBar: Colors.white,
@@ -39,13 +43,14 @@ class ConexionQrPage extends StatelessWidget {
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       color: AppColors.secondary, letterSpacing: 1.0),
                 ),
-                Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  child: Image.asset(
-                    AppImages.qrConexion,
+                Expanded(
+                  child: Center(
+                    child: QRCode(
+                      qrData: '${infoApp.dataUser!.id!}',
+                      qrSize: MediaQuery.of(context).size.width * 0.7,
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           )

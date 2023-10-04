@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/login_cubit.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/state/login_state.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/components/form_section.dart';
@@ -16,10 +17,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubitInfoApp = BlocProvider.of<InfoAppCubit>(context);
+
     return BlocProvider(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
         if (state is LoginSuccess) {
+          cubitInfoApp.setInfoApp(state.infoSession);
+
+          //TODO Deducir que tipo de usuario es.
           Navigator.pushNamed(context, HomeNavBarScreen.route,
               arguments: const HomeNavBarScreenArgs(TypeUser.patient));
         }

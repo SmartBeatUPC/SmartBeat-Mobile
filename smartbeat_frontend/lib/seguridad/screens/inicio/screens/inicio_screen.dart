@@ -72,10 +72,6 @@ class InicioScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, LoginScreen.route);
-                      /*
-                      Navigator.pushNamed(context, HomeNavBarScreen.route,
-                          arguments: const HomeNavBarScreenArgs(TypeUser.doctor));
-                       */
                     },
                     child: const Text('Iniciar Sesion'),
                   ),

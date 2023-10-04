@@ -58,14 +58,18 @@ class _FormSectionState extends State<FormSection> {
           const SizedBox(height: 25.0),
           SizedBox(
             width: double.infinity,
-            child: ReactiveFormConsumer(builder: (context, form, child) {
-              return ElevatedButton(
-                onPressed: _form.valid
-                    ? () => BlocProvider.of<LoginCubit>(context).login()
-                    : null,
-                child: const Text('Ingresar'),
-              );
-            }),
+            child: ReactiveFormConsumer(
+              builder: (context, form, child) {
+                return ElevatedButton(
+                  onPressed: _form.valid
+                      ? () => BlocProvider.of<LoginCubit>(context)
+                  //TODO Cambiar si es online
+                          .login(isOnline: false)
+                      : null,
+                  child: const Text('Ingresar'),
+                );
+              },
+            ),
           ),
         ],
       ),
