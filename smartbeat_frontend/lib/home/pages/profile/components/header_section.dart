@@ -13,13 +13,9 @@ class HeaderSection extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 150.0,
+            width: 100.0,
             decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.outlineVariant,
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(20.0)),

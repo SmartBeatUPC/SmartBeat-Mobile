@@ -6,7 +6,9 @@ class CustomShadowContainer extends StatelessWidget {
   final Color? color;
   final EdgeInsetsGeometry? padding;
   final double? width;
+  final double? height;
   final Border? border;
+  final double borderOpacity;
 
   const CustomShadowContainer({
     super.key,
@@ -16,12 +18,15 @@ class CustomShadowContainer extends StatelessWidget {
     this.padding,
     this.width,
     this.border,
+    this.borderOpacity = 0.1,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
+      height: height,
       padding: padding,
       decoration: BoxDecoration(
           color: color,
@@ -29,7 +34,7 @@ class CustomShadowContainer extends StatelessWidget {
           borderRadius: borderRadius,
           boxShadow: [
             BoxShadow(
-              color: Colors.black12.withOpacity(0.1),
+              color: Colors.black12.withOpacity(borderOpacity),
               blurRadius: 10.0,
               spreadRadius: 4.0,
             ),

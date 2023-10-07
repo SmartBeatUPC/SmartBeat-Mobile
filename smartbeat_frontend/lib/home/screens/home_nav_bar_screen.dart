@@ -19,18 +19,19 @@ class HomeNavBarScreen extends StatefulWidget {
 
 class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
   List<Widget> _pages = <Widget>[];
-  int _selectedIndex = 0;
+  late int _selectedIndex;
 
   @override
   void initState() {
     super.initState();
     _pages = <Widget>[
-      ProfilePage(typeUser: widget.args.typeUser),
+      const ProfilePage(),
       const AnalisisMedicoPage(),
       const ConexionQrPage(),
       const HistorialPage(),
       const ChatBotPage(),
     ];
+    _selectedIndex = widget.args.indexPage;
   }
 
   @override
@@ -95,7 +96,7 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
 }
 
 class HomeNavBarScreenArgs {
-  final TypeUser typeUser;
+  final int indexPage;
 
-  const HomeNavBarScreenArgs(this.typeUser);
+  const HomeNavBarScreenArgs({this.indexPage = 0});
 }

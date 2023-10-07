@@ -22,7 +22,10 @@ class AuthService {
       url,
       body: loginReq.toMap(),
     );
-    return SessionInfo.fromLogin(response);
+    SessionInfo sessionInfo = SessionInfo.fromLogin(response);
+    sessionInfo.typeUser =
+        sessionInfo.isDoctor! ? TypeUser.doctor : TypeUser.patient;
+    return sessionInfo;
   }
 
   Future<SessionInfo> register(RegisterReq req, TypeUser typeUser) async {

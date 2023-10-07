@@ -6,7 +6,6 @@ import 'package:smartbeat_frontend/seguridad/bloc/cubit/login_cubit.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/state/login_state.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/components/form_section.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/components/footer_section.dart';
-import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 
@@ -26,9 +25,8 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccess) {
             cubitInfoApp.setInfoApp(state.infoSession);
 
-            //TODO Deducir que tipo de usuario es.
             Navigator.pushNamed(context, HomeNavBarScreen.route,
-                arguments: const HomeNavBarScreenArgs(TypeUser.patient));
+                arguments: const HomeNavBarScreenArgs());
           }
         },
         builder: (context, state) {
