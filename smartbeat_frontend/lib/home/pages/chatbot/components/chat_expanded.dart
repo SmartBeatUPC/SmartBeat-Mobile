@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/prediction_cubit.dart';
 import 'package:smartbeat_frontend/home/components/custom_info_container.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class ChatExpanded extends StatelessWidget {
+  final int medicalInformationId;
   final String textPrediction;
 
-  const ChatExpanded({super.key, required this.textPrediction});
+  const ChatExpanded({
+    super.key,
+    required this.textPrediction,
+    required this.medicalInformationId,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final infoAppCubit = BlocProvider.of<InfoAppCubit>(context);
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -76,9 +84,10 @@ class ChatExpanded extends StatelessWidget {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {
-                            //TODO Obtener el tipo de usuario y enviar datos de usuario
-                            BlocProvider.of<PredictionCubit>(context)
-                                .predict(TypeUser.patient);
+                            BlocProvider.of<PredictionCubit>(context).predict(
+                                TypeUser.patient,
+                                infoAppCubit.infoApp.dataUser!.id!,
+                                medicalInformationId);
                           },
                           child: Text('Generar nuevo'),
                         ),

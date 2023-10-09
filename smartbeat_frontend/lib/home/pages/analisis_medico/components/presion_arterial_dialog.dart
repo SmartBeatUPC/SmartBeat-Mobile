@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_shadow_container.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class PresionArterialDialog extends StatefulWidget {
-  const PresionArterialDialog({super.key});
+  final MedidaPresionPaciente medidaPresionPaciente;
+
+  const PresionArterialDialog({super.key, required this.medidaPresionPaciente,});
 
   @override
   State<PresionArterialDialog> createState() => _PresionArterialDialogState();
@@ -56,7 +59,7 @@ class _PresionArterialDialogState extends State<PresionArterialDialog> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '128',
+                              widget.medidaPresionPaciente.sys,
                               style: textTheme.headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
@@ -81,7 +84,7 @@ class _PresionArterialDialogState extends State<PresionArterialDialog> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '85',
+                              widget.medidaPresionPaciente.dia,
                               style: textTheme.headlineSmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
@@ -145,7 +148,7 @@ class _PresionArterialDialogState extends State<PresionArterialDialog> {
                           ),
                     ),
                     Text(
-                      'Lorem ipsum dolor sit amet consectetur. Nunc faucibus pellentesque amet in. Risus quis semper sit magna tellus vel curabitur et ipsum. Neque amet aliquet nunc nulla sem sit ac. Lorem ipsum dolor sit amet consectetur. Nunc faucibus pellentesque amet in. Risus quis semper sit magna tellus vel curabitur et ipsum. Neque amet aliquet nunc nulla sem sit ac.',
+                      'Asegura de seguir las indicaciones de tu doctor. Puedes intentar nuevamente en caso te hayas equivocado',
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                             fontWeight: FontWeight.w400,
                             color: Colors.white,

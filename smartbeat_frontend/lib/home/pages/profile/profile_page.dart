@@ -31,7 +31,11 @@ class ProfilePage extends StatelessWidget {
           if (state is ConsultaMedicaSuccess &&
               state.listConsultaMedica.isEmpty) {
             Navigator.pushNamed(context, HomeNavBarScreen.route,
-                arguments: const HomeNavBarScreenArgs(indexPage: 2));
+                arguments: const HomeNavBarScreenArgs(indexPage: 1));
+          }
+          if (state is ConsultaMedicaFailure) {
+            Navigator.pushNamed(context, HomeNavBarScreen.route,
+                arguments: const HomeNavBarScreenArgs(indexPage: 1));
           }
         }, builder: (context, state) {
           final cubit = BlocProvider.of<ConsultaMedicaCubit>(context);

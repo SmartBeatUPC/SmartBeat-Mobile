@@ -88,7 +88,7 @@ class HttpService {
 
   void _validateResponse(int statusCode, dynamic responseMap) {
     if (statusCode != 200 && statusCode != 201) {
-      throw ServiceException(message: responseMap['mensaje']);
+      throw ServiceException(message: responseMap['message']);
     }
   }
 }

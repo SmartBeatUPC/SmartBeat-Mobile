@@ -14,8 +14,8 @@ class PredictionService {
 
   final _httpService = HttpService.instance;
 
-  final String _apiUrlPatient = '${Environment.api}/recommendation/GPT';
-  final String _apiUrlDoctor = '${Environment.api}/suggestion/GPT';
+  final String _apiUrlPatient = '${Environment.api}/suggestion/GPT-V2';
+  final String _apiUrlDoctor = '${Environment.api}/suggestion/GPT-V2';
 
   Future<Prediction> getPredict(PredictionReq req, TypeUser typeUser) async {
     dynamic response = await _httpService.post(

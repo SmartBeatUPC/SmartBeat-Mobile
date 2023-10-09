@@ -5,7 +5,7 @@ import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 class HistorialMedicionesList extends StatelessWidget {
   final List<HistorialMedicion> mediciones;
 
-  HistorialMedicionesList({required this.mediciones});
+  const HistorialMedicionesList({super.key, required this.mediciones});
 
   @override
   Widget build(BuildContext context) {

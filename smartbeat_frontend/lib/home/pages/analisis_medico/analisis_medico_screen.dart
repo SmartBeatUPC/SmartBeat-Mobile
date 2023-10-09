@@ -6,14 +6,21 @@ import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 
 enum TypeMedicion { Manual, Smartwatch }
 
-class AnalisisMedicoPage extends StatefulWidget {
-  const AnalisisMedicoPage({Key? key});
+class AnalisisMedicoScreen extends StatefulWidget {
+  static String route = 'analisis_medico_screen';
+
+  final AnalisisMedicoScreenArgs args;
+
+  const AnalisisMedicoScreen({
+    super.key,
+    required this.args,
+  });
 
   @override
-  State<AnalisisMedicoPage> createState() => _AnalisisMedicoPageState();
+  State<AnalisisMedicoScreen> createState() => _AnalisisMedicoScreenState();
 }
 
-class _AnalisisMedicoPageState extends State<AnalisisMedicoPage> {
+class _AnalisisMedicoScreenState extends State<AnalisisMedicoScreen> {
   TypeMedicion? typeSelected;
   MedidaPresionPaciente? medidaPresionPaciente;
 
@@ -39,10 +46,17 @@ class _AnalisisMedicoPageState extends State<AnalisisMedicoPage> {
               onChangeMedidaPresion: onChangeMedidaPresionPaciente,
             )
           : BodyStartMedicion(
-        medidaPresionPaciente: medidaPresionPaciente,
-        onPressedSelectTypeMedicion: onPressedStartMedicion,
+              medidaPresionPaciente: medidaPresionPaciente,
+              onPressedSelectTypeMedicion: onPressedStartMedicion,
               onChangeMedidaPresion: onChangeMedidaPresionPaciente,
+              newMedicalInformationId: widget.args.newMedicalInformationId,
             ),
     );
   }
+}
+
+class AnalisisMedicoScreenArgs {
+  final int newMedicalInformationId;
+
+  const AnalisisMedicoScreenArgs(this.newMedicalInformationId);
 }

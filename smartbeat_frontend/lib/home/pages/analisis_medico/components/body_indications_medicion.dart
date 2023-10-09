@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
-import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_page.dart';
+import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/shared/models/slide.dart';
 
 class BodyIndicationMedicion extends StatefulWidget {

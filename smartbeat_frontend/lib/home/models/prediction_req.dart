@@ -1,25 +1,17 @@
-import 'package:smartbeat_frontend/home/models/medical_information.dart';
-
-class PredictionReq {
+class   PredictionReq {
   final bool methodology;
-  final int age;
-  final String gender;
-  final MedicalInformation medicalInformation;
-  final List<String>? pathologies;
+  final int patientId;
+  final int medicalInformationId;
 
   const PredictionReq({
     required this.methodology,
-    required this.age,
-    required this.gender,
-    required this.medicalInformation,
-    required this.pathologies,
+    required this.patientId,
+    required this.medicalInformationId,
   });
 
   Map<String, dynamic> toMap() => {
         'methodology': methodology,
-        'age': age,
-        'gender': gender,
-        'medicalInformation': medicalInformation.toMap(),
-        'pathologies': pathologies,
+        'patientId': patientId,
+        'medicalInformationId': medicalInformationId,
       };
 }

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_page.dart';
-import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_page.dart';
 import 'package:smartbeat_frontend/home/pages/conexion_qr/conexion_qr_page.dart';
 import 'package:smartbeat_frontend/home/pages/historial_page.dart';
 import 'package:smartbeat_frontend/home/pages/profile/profile_page.dart';
-import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 
 class HomeNavBarScreen extends StatefulWidget {
   final HomeNavBarScreenArgs args;
@@ -26,10 +23,8 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
     super.initState();
     _pages = <Widget>[
       const ProfilePage(),
-      const AnalisisMedicoPage(),
       const ConexionQrPage(),
       const HistorialPage(),
-      const ChatBotPage(),
     ];
     _selectedIndex = widget.args.indexPage;
   }
@@ -66,12 +61,6 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
                 label: ''),
             BottomNavigationBarItem(
                 icon: Icon(
-                  FontAwesomeIcons.briefcaseMedical,
-                  size: 30.0,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
                   Icons.qr_code,
                   size: 30.0,
                 ),
@@ -79,12 +68,6 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
             BottomNavigationBarItem(
                 icon: Icon(
                   FontAwesomeIcons.clipboardList,
-                  size: 30.0,
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.chat,
                   size: 30.0,
                 ),
                 label: ''),

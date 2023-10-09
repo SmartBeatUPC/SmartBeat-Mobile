@@ -12,25 +12,13 @@ class PredictionCubit extends Cubit<PredictionState> {
 
   PredictionCubit() : super(PredictionInitial());
 
-  Future<void> predict(TypeUser typeUser) async {
+  Future<void> predict(TypeUser typeUser, int patientId, int medicalInformationId) async {
     try {
       emit(PredictionLoading());
-      //TODO Obtener informacion medica
-      MedicalInformation medicalInformation = const MedicalInformation(
-        height: '1.70',
-        weight: '75.8',
-        bmi: '26.2',
-        sedentary: true,
-        smoke: true,
-        alcohol: false,
-      );
-      //TODO Obtener age, gender, pathologies
       PredictionReq predictionReq = PredictionReq(
-        methodology: false,
-        age: 22,
-        gender: 'Masculino',
-        medicalInformation: medicalInformation,
-        pathologies: [],
+        methodology: true,
+        patientId: patientId,
+        medicalInformationId: medicalInformationId,
       );
       Prediction prediction =
           await _predictionService.getPredict(predictionReq, typeUser);

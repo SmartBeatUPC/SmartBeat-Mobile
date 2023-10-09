@@ -1,7 +1,9 @@
 import 'package:smartbeat_frontend/config/environment/environment.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
 import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
+import 'package:smartbeat_frontend/home/models/medical_information_req.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
+import 'package:smartbeat_frontend/shared/exception/service_exception.dart';
 import 'package:smartbeat_frontend/shared/services/http_service.dart';
 
 class ConsultaMedicaService {
@@ -23,10 +25,22 @@ class ConsultaMedicaService {
         "${typeUser == TypeUser.doctor ? _apiUrlDoctor : _apiUrlPatient}/$userId/medical-consultations";
 
     dynamic response = await _httpService.get(url);
-    List<dynamic> consultasMedicasData = response as List<dynamic>;
-    List<ConsultaMedica> consultaMedicaList =
-        consultasMedicasData.map((map) => ConsultaMedica.from(map)).toList();
-    return consultaMedicaList;
+
+    if (response is Map<String, dynamic> &&
+        response.containsKey("success") &&
+        !response["success"]) {
+      throw ServiceException(message: response["message"]);
+    }
+
+    if (response is List<dynamic>) {
+      List<dynamic> consultasMedicasData = response;
+      List<ConsultaMedica> consultaMedicaList =
+      consultasMedicasData.map((map) => ConsultaMedica.from(map)).toList();
+      return consultaMedicaList;
+    } else {
+      return [];
+    }
+
   }
 
   Future<List<HistorialMedicion>> getListHistorialMediciones(
@@ -34,9 +48,30 @@ class ConsultaMedicaService {
     String url = "$_apiUrlDoctor/$consultaMedicaId/ppgs";
 
     dynamic response = await _httpService.get(url);
-    List<dynamic> historialMedicionesData = response as List<dynamic>;
-    List<HistorialMedicion> historialMedicionesList =
-        historialMedicionesData.map((map) => HistorialMedicion.from(map)).toList();
-    return historialMedicionesList;
+
+    if (response is Map<String, dynamic> &&
+        response.containsKey("success") &&
+        !response["success"]) {
+      throw ServiceException(message: response["message"]);
+    }
+
+    if (response is List<dynamic>) {
+      List<HistorialMedicion> historialMedicionesList =
+          response.map((map) => HistorialMedicion.from(map)).toList();
+      return historialMedicionesList;
+    } else {
+      return [];
+    }
   }
+
+  Future<int> createMedicalRecord(
+      MedicalInformationReq req, int medicalConsultationId) async {
+    String url = "${_apiUrlDoctor}/$medicalConsultationId/medical-record";
+
+    dynamic response = await _httpService.post(url, body: req.toMap());
+
+    return response['newMedicalInformation']['id'];
+  }
+
+
 }

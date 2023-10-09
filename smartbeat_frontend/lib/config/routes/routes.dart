@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
+import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_screen.dart';
+import 'package:smartbeat_frontend/home/screens/agregar_patologias_screen.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/seleccion_paciente_medico_screen.dart';
@@ -14,10 +17,22 @@ class CustomRoute {
     SplashScreen.route: (settings) => const SplashScreen(),
     InicioScreen.route: (settings) => const InicioScreen(),
     LoginScreen.route: (settings) => const LoginScreen(),
-        RegistroScreen.route: (settings) => const RegistroScreen(),
+    RegistroScreen.route: (settings) => const RegistroScreen(),
+    ChatBotScreen.route: (settings) {
+      final args = settings.arguments.castOr<ChatBotScreenArgs>()!;
+      return ChatBotScreen(args: args);
+    },
+    AgregarPatologiasScreen.route: (settings) {
+      final args = settings.arguments.castOr<AgregarPatologiasScreenArgs>()!;
+      return AgregarPatologiasScreen(args: args);
+    },
     HomeNavBarScreen.route: (settings) {
       final args = settings.arguments.castOr<HomeNavBarScreenArgs>()!;
       return HomeNavBarScreen(args: args);
+    },
+    AnalisisMedicoScreen.route: (settings) {
+      final args = settings.arguments.castOr<AnalisisMedicoScreenArgs>()!;
+      return AnalisisMedicoScreen(args: args);
     },
     SeleccionPacienteMedicoScreen.route: (settings) {
       final args = settings.arguments.castOr<SeleccionPacienteMedicoArgs>()!;

@@ -18,32 +18,37 @@ class DetailConsultaMedicaSection extends StatelessWidget {
 
     return Column(
       children: [
-        Text(
-          'Presión arterial',
-          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 15.0),
-        const CardInfoPresionArterial(sys: '120', dia: '80', bpn: '70'),
-        const SizedBox(height: 20.0),
-        StackedBarChart(
-          progressValues: [80, 60, 90, 40, 70, 20, 50, 30],
-          dates: [
-            '10 Jun',
-            '11 Jun',
-            '12 Jun',
-            '13 Jun',
-            '14 Jun',
-            '15 Jun',
-            '16 Jun',
-            '17 Jun'
-          ],
-        ),
-        const SizedBox(height: 20.0),
-        Text(
-          'Historial de mediciones',
-          style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 15.0),
+        if(false)
+        ...[
+          Text(
+            'Presión arterial',
+            style:
+                textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15.0),
+          const CardInfoPresionArterial(sys: '120', dia: '80', bpn: '70'),
+          const SizedBox(height: 20.0),
+          StackedBarChart(
+            progressValues: [80, 60, 90, 40, 70, 20, 50, 30],
+            dates: [
+              '10 Jun',
+              '11 Jun',
+              '12 Jun',
+              '13 Jun',
+              '14 Jun',
+              '15 Jun',
+              '16 Jun',
+              '17 Jun'
+            ],
+          ),
+          const SizedBox(height: 20.0),
+          Text(
+            'Historial de mediciones',
+            style:
+                textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 15.0),
+        ],
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: HistorialMedicionesList(mediciones: historialMediciones),
