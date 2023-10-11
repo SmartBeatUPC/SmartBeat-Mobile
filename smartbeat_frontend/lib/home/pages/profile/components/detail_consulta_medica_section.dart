@@ -26,7 +26,7 @@ class DetailConsultaMedicaSection extends StatelessWidget {
                 textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 15.0),
-          const CardInfoPresionArterial(sys: '120', dia: '80', bpn: '70'),
+          const CardInfoPresionArterial(sys: '120', dia: '80', bpm: '70'),
           const SizedBox(height: 20.0),
           StackedBarChart(
             progressValues: [80, 60, 90, 40, 70, 20, 50, 30],

@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smartbeat_frontend/home/bloc/cubit/medical_information_complete_cubit.dart';
 import 'package:smartbeat_frontend/home/components/custom_info_card.dart';
+import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
+import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
+import 'package:smartbeat_frontend/home/screens/medical_information_complete_screen.dart';
+import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
-class MedicoDetailSection extends StatelessWidget {
-  const MedicoDetailSection({super.key});
+class MedicoDetailSection extends StatefulWidget {
+  final List<ConsultaMedica> listConsultaMedica;
+
+  const MedicoDetailSection({super.key, required this.listConsultaMedica});
 
   @override
+  State<MedicoDetailSection> createState() => _MedicoDetailSectionState();
+}
+
+class _MedicoDetailSectionState extends State<MedicoDetailSection> {
+  @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -99,7 +115,71 @@ class MedicoDetailSection extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
+        Column(
+          children: widget.listConsultaMedica.map((consulta) {
+            return Card(
+              elevation: 3,
+              shadowColor: Colors.black,
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                onTap: () {
+                  cubit.fetch(consulta.consultation.id);
+                  /*
+                  MedicalInformationComplete medicalInformationComplete =
+                      MedicalInformationComplete(
+                          height: "80.0",
+                          weight: "80.0",
+                          smoke: true,
+                          bmi: "95.0",
+                          alcohol: true,
+                          sedentary: false,
+                          bloodPressureSistolic: "92.0",
+                          bloodPressureDiastolic: "85.0",
+                          pathologies: [
+                        "Fumo diario",
+                        "Tomo alcohol todos los fines de semana",
+                      ]);
+
+                  Navigator.pushNamed(
+                    context,
+                    MedicalInformationCompleteScreen.route,
+                    arguments: MedicalInformationCompleteScreenArgs(
+                      medicalInformationComplete: medicalInformationComplete,
+                    ),
+                  );
+                   */
+                },
+                title: RichText(
+                  text: TextSpan(
+                    text: 'Paciente: ',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text:
+                            '${consulta.doctorData.name!} ${consulta.doctorData.lastName!}'
+                                .toTitlecase(),
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                subtitle: Text(
+                  consulta.lastRecordDate,
+                  textAlign: TextAlign.end,
+                  style: textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.w600, color: AppColors.secondary),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
       ],
     );
   }

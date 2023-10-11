@@ -6,13 +6,13 @@ import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 class CardInfoPresionArterial extends StatelessWidget {
   final String sys;
   final String dia;
-  final String bpn;
+  final String bpm;
 
   const CardInfoPresionArterial({
     super.key,
     required this.sys,
     required this.dia,
-    required this.bpn,
+    required this.bpm,
   });
 
   @override
@@ -69,7 +69,7 @@ class CardInfoPresionArterial extends StatelessWidget {
             children: [
               RichText(
                 text: TextSpan(
-                  text: bpn,
+                  text: bpm,
                   style: textTheme.headlineMedium?.copyWith(
                     fontSize: textTheme.headlineMedium!.fontSize! - 5.0,
                     fontWeight: FontWeight.bold,
@@ -77,7 +77,7 @@ class CardInfoPresionArterial extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: ' BPN',
+                      text: ' BPM',
                       style: textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

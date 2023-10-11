@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_screen.dart';
 import 'package:smartbeat_frontend/home/screens/agregar_patologias_screen.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
+import 'package:smartbeat_frontend/home/screens/medical_information_complete_screen.dart';
+import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/seleccion_paciente_medico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/inicio/screens/inicio_screen.dart';
@@ -41,6 +44,15 @@ class CustomRoute {
     DatosPersonalesScreen.route: (settings) {
       final args = settings.arguments.castOr<DatosPersonalesScreenArgs>()!;
       return DatosPersonalesScreen(args: args);
+    },
+    MedicalInformationCompleteScreen.route: (settings) {
+      final args =
+          settings.arguments.castOr<MedicalInformationCompleteScreenArgs>()!;
+      return MedicalInformationCompleteScreen(args: args);
+    },
+    RegistrarDiagnosticoScreen.route: (settings) {
+      final args = settings.arguments.castOr<RegistrarDiagnosticoScreenArgs>()!;
+      return RegistrarDiagnosticoScreen(args: args);
     },
   };
 

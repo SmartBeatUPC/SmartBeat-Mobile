@@ -42,7 +42,7 @@ class HistorialPage extends StatelessWidget {
                   medidaPresionPaciente: MedidaPresionPaciente(
                       sys: '120',
                       dia: '80',
-                      bpn: '70',
+                      bpm: '70',
                       fechaHora: '11 de junio 2023 | 07:00hrs.'),
                   bpmColor: AppColors.primary,
                 ),

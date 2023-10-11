@@ -86,7 +86,7 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                         MedidaPresionPaciente(
                           sys: '${presionReq.bloodPressureSistolic}',
                           dia: '${presionReq.bloodPressureDiastolic}',
-                          bpn: '${presionReq.bloodPresheartRatesureDiastolic}',
+                          bpm: '${presionReq.bloodPresheartRatesureDiastolic}',
                           fechaHora: DateTime.now().toString().format('dd MMM'),
                         ),
                       );

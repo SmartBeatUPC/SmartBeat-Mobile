@@ -33,7 +33,7 @@ class _MedirPresionManualDialogState extends State<MedirPresionManualDialog> {
           MedidaPresionPaciente medidaPresionPaciente = MedidaPresionPaciente(
             sys: '${state.presionReq.bloodPressureSistolic}',
             dia: '${state.presionReq.bloodPressureDiastolic}',
-            bpn: '${state.presionReq.bloodPresheartRatesureDiastolic}',
+            bpm: '${state.presionReq.bloodPresheartRatesureDiastolic}',
             fechaHora: DateTime.now().toString().format('dd MMM'),
           );
           Navigator.pop(context, state.presionReq);

@@ -1,6 +1,8 @@
 import 'package:smartbeat_frontend/config/environment/environment.dart';
+import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
 import 'package:smartbeat_frontend/home/models/patologias_req.dart';
 import 'package:smartbeat_frontend/home/models/presion_req.dart';
+import 'package:smartbeat_frontend/shared/exception/service_exception.dart';
 import 'package:smartbeat_frontend/shared/services/http_service.dart';
 
 class MedicalInformationService {
@@ -32,5 +34,21 @@ class MedicalInformationService {
       url,
       body: req.toMap(),
     );
+  }
+
+  Future<MedicalInformationComplete> getMedicalInformationComplete(
+      int newMedicalInformationId) async {
+    final url = '$_apiUrl/$newMedicalInformationId/complete';
+    dynamic response = await _httpService.get(
+      url,
+    );
+
+    if (response is Map<String, dynamic> &&
+        response.containsKey("success") &&
+        !response["success"]) {
+      throw ServiceException(message: response["message"]);
+    }
+
+    return MedicalInformationComplete.from(response);
   }
 }

@@ -19,7 +19,7 @@ class ReqMedicalInformation {
         'height': height,
         'weight': weight,
         'bmi': bmi,
-        'sedentary': sedentary,
+        'sedentary': !sedentary,
         'smoke': smoke,
         'alcohol': alcohol,
       };
@@ -28,7 +28,7 @@ class ReqMedicalInformation {
       : height = data['talla'],
         weight = data['peso'],
         bmi = data['imc'],
-        sedentary = data['fumasteEstaSemana'],
-        smoke = data['tomasteAlcohol'],
-        alcohol = data['realizasteActividadFisica'];
+        sedentary = data['realizasteActividadFisica'],
+        smoke = data['fumasteEstaSemana'],
+        alcohol = data['tomasteAlcohol'];
 }

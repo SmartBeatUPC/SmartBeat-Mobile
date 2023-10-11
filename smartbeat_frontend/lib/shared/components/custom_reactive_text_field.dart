@@ -17,6 +17,7 @@ class CustomReactiveTextField extends StatefulWidget {
   final EdgeInsets padding;
   final bool isPassword;
   final Color color;
+  final int maxLines;
 
   const CustomReactiveTextField({
     super.key,
@@ -32,6 +33,7 @@ class CustomReactiveTextField extends StatefulWidget {
     this.onChanged,
     this.padding = const EdgeInsets.only(top: 15.0),
     this.color = AppColors.outlineVariant,
+    this.maxLines = 1,
   }) : isPassword = false;
 
   const CustomReactiveTextField.password({
@@ -45,6 +47,7 @@ class CustomReactiveTextField extends StatefulWidget {
     this.onChanged,
     this.padding = const EdgeInsets.only(top: 15.0),
     this.color = AppColors.primary,
+    this.maxLines = 1,
   })  : obscure = true,
         suffixIcon = null,
         onPressedIcon = null,
@@ -71,6 +74,7 @@ class _CustomReactiveTextFieldState extends State<CustomReactiveTextField> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ReactiveTextField(
+            maxLines: widget.maxLines,
             cursorColor: widget.color,
             validationMessages: widget.validationMessages,
             obscureText: widget.isPassword ? _obscurePassword : widget.obscure,

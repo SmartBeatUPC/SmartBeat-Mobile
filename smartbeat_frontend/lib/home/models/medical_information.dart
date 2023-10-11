@@ -19,7 +19,7 @@ class MedicalInformation {
     'height': height,
     'weight': weight,
     'bmi': bmi,
-    'sedentary': sedentary,
+    'sedentary': !sedentary,
     'smoke': smoke,
     'alcohol': alcohol,
   };

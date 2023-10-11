@@ -2,6 +2,8 @@ import 'package:smartbeat_frontend/config/environment/environment.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
 import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
 import 'package:smartbeat_frontend/home/models/medical_information_req.dart';
+import 'package:smartbeat_frontend/home/models/register_consulta_medica_req.dart';
+import 'package:smartbeat_frontend/home/models/register_diagnostic_req.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/exception/service_exception.dart';
 import 'package:smartbeat_frontend/shared/services/http_service.dart';
@@ -22,7 +24,7 @@ class ConsultaMedicaService {
   Future<List<ConsultaMedica>> getListConsultaMedica(
       TypeUser typeUser, int userId) async {
     String url =
-        "${typeUser == TypeUser.doctor ? _apiUrlDoctor : _apiUrlPatient}/$userId/medical-consultations";
+        "${Environment.api}/${typeUser.name}/$userId/medical-consultations";
 
     dynamic response = await _httpService.get(url);
 
@@ -34,13 +36,13 @@ class ConsultaMedicaService {
 
     if (response is List<dynamic>) {
       List<dynamic> consultasMedicasData = response;
-      List<ConsultaMedica> consultaMedicaList =
-      consultasMedicasData.map((map) => ConsultaMedica.from(map)).toList();
+      List<ConsultaMedica> consultaMedicaList = consultasMedicasData
+          .map((map) => ConsultaMedica.from(map, typeUser))
+          .toList();
       return consultaMedicaList;
     } else {
       return [];
     }
-
   }
 
   Future<List<HistorialMedicion>> getListHistorialMediciones(
@@ -73,5 +75,15 @@ class ConsultaMedicaService {
     return response['newMedicalInformation']['id'];
   }
 
+  Future<void> createDiagnostic(
+      RegisterDiagnosticReq req, int medicalRecordId) async {
+    String url = "${Environment.api}/medical-record/$medicalRecordId/diagnostic";
+
+    dynamic response = await _httpService.post(url, body: req.toMap());
+  }
+
+  Future<void> registerConsultaMedica(RegisterConsultaMedicaReq req) async {
+    await _httpService.post(_apiUrlDoctor, body: req.toMap());
+  }
 
 }
