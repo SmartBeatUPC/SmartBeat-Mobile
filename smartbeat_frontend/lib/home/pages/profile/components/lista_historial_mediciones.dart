@@ -4,8 +4,13 @@ import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 
 class HistorialMedicionesList extends StatelessWidget {
   final List<HistorialMedicion> mediciones;
+  final Function(HistorialMedicion)? onTapRowHistorialMedicion;
 
-  const HistorialMedicionesList({super.key, required this.mediciones});
+  const HistorialMedicionesList({
+    super.key,
+    required this.mediciones,
+    this.onTapRowHistorialMedicion,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,63 +33,70 @@ class HistorialMedicionesList extends StatelessWidget {
             .map(
               (medicion) => Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0, top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: medicion.ppg.bloodPressureSistolic,
-                            style: textTheme.displayMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.secondary,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: ' SYS',
-                                style: textTheme.displaySmall?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.textInputColor,
-                                ),
+                  InkWell(
+                    onTap: () {
+                      if (onTapRowHistorialMedicion != null) {
+                        onTapRowHistorialMedicion!(medicion);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0, top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: medicion.ppg.bloodPressureSistolic,
+                              style: textTheme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.secondary,
                               ),
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            text: medicion.ppg.bloodPressureDiastolic,
-                            style: textTheme.displayMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.secondary,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: ' DIA',
-                                style: textTheme.displaySmall?.copyWith(
+                              children: [
+                                TextSpan(
+                                  text: ' SYS',
+                                  style: textTheme.displaySmall?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.textInputColor),
+                                    color: AppColors.textInputColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: medicion.ppg.bloodPressureDiastolic,
+                              style: textTheme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.secondary,
                               ),
-                            ],
+                              children: [
+                                TextSpan(
+                                  text: ' DIA',
+                                  style: textTheme.displaySmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.textInputColor),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          '${medicion.ppg.heartRate}',
-                          style: textTheme.displayMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.secondary,
+                          Text(
+                            '${medicion.ppg.heartRate}',
+                            style: textTheme.displayMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                        Text(
-                          medicion.ppg.ppgDate.substring(0, 10),
-                          style: textTheme.displaySmall?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.secondary,
+                          Text(
+                            medicion.ppg.ppgDate.substring(0, 10),
+                            style: textTheme.displaySmall?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.secondary,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const Divider(

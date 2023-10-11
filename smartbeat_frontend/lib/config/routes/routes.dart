@@ -3,6 +3,8 @@ import 'package:smartbeat_frontend/home/models/medical_information_complete.dart
 import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_screen.dart';
 import 'package:smartbeat_frontend/home/screens/agregar_patologias_screen.dart';
+import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
+import 'package:smartbeat_frontend/home/screens/diagnostico/diagnostic_screen.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/home/screens/medical_information_complete_screen.dart';
 import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
@@ -53,6 +55,14 @@ class CustomRoute {
     RegistrarDiagnosticoScreen.route: (settings) {
       final args = settings.arguments.castOr<RegistrarDiagnosticoScreenArgs>()!;
       return RegistrarDiagnosticoScreen(args: args);
+    },
+    ConsultaMedicaScreen.route: (settings) {
+      final args = settings.arguments.castOr<ConsultaMedicaScreenArgs>()!;
+      return ConsultaMedicaScreen(args: args);
+    },
+    DiagnosticScreen.route: (settings) {
+      final args = settings.arguments.castOr<DiagnosticScreenArgs>()!;
+      return DiagnosticScreen(args: args);
     },
   };
 

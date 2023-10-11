@@ -1,7 +1,6 @@
-
 class MedicalPrescription {
   final String medicament;
-  final int dosage;
+  final String dosage;
   final String via;
   final String frequency;
   final String duration;
@@ -15,12 +14,12 @@ class MedicalPrescription {
   });
 
   Map<String, dynamic> toMap() => {
-    'medicament': medicament,
-    'dosage': dosage,
-    'via': via,
-    'frequency': frequency,
-    'duration': duration,
-  };
+        'medicament': medicament,
+        'dosage': dosage,
+        'via': via,
+        'frequency': frequency,
+        'duration': duration,
+      };
 
   MedicalPrescription.from(Map<String, dynamic> data)
       : medicament = data['medicament'],

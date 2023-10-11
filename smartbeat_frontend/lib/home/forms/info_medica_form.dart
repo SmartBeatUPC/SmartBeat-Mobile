@@ -6,8 +6,6 @@ class InfoMedicaForm extends FormGroup {
 
   FormControl<double> get peso => get<double>('peso');
 
-  FormControl<double> get imc => get<double>('imc');
-
   FormControl<bool> get fumasteEstaSemana => get<bool>('fumasteEstaSemana');
 
   FormControl<bool> get tomasteAlcohol => get<bool>('tomasteAlcohol');
@@ -23,11 +21,6 @@ class InfoMedicaForm extends FormGroup {
             ],
           ),
           'peso': FormControl<double>(
-            validators: [
-              Validators.required,
-            ],
-          ),
-          'imc': FormControl<double>(
             validators: [
               Validators.required,
             ],

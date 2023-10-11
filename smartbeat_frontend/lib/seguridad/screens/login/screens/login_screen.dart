@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
             cubitInfoApp.setInfoApp(state.infoSession);
 
             Navigator.pushNamed(context, HomeNavBarScreen.route,
-                arguments: const HomeNavBarScreenArgs());
+                arguments: const HomeNavBarScreenArgs(indexPage: 1));
           }
         },
         builder: (context, state) {

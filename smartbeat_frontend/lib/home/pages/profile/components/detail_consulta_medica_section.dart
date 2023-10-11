@@ -53,7 +53,6 @@ class DetailConsultaMedicaSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: HistorialMedicionesList(mediciones: historialMediciones),
         ),
-        const SizedBox(height: 50.0),
       ],
     );
   }

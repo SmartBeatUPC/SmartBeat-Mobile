@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
-import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
-import 'package:smartbeat_frontend/home/pages/analisis_medico/components/medida_presion_info.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smartbeat_frontend/home/bloc/cubit/medical_information_complete_cubit.dart';
+import 'package:smartbeat_frontend/home/bloc/states/medical_information_complete_state.dart';
+import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
+import 'package:smartbeat_frontend/home/pages/profile/components/lista_historial_mediciones.dart';
+import 'package:smartbeat_frontend/home/screens/consulta_medica/components/medical_information_body.dart';
 import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
-import 'package:smartbeat_frontend/shared/components/custom_shadow_container.dart';
-import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 
-class MedicalInformationCompleteScreen extends StatelessWidget {
+class MedicalInformationCompleteScreen extends StatefulWidget {
   static String route = 'medical_information_complete_screen';
   final MedicalInformationCompleteScreenArgs args;
 
@@ -17,179 +18,102 @@ class MedicalInformationCompleteScreen extends StatelessWidget {
   });
 
   @override
+  State<MedicalInformationCompleteScreen> createState() =>
+      _MedicalInformationCompleteScreenState();
+}
+
+class _MedicalInformationCompleteScreenState
+    extends State<MedicalInformationCompleteScreen> {
+  late int medicalRecordId;
+
+  @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    MedidaPresionPaciente medidaPresionPaciente = MedidaPresionPaciente(
-      sys: args.medicalInformationComplete.bloodPressureSistolic,
-      dia: args.medicalInformationComplete.bloodPressureDiastolic,
-      bpm: args.medicalInformationComplete.bmi,
-    );
-    return CustomScaffold(
-      useAppBar: true,
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10.0),
-            Text(
-              'Informacion Medica',
-              style: textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
-              child: CustomShadowContainer(
-                color: AppColors.primary.withOpacity(0.25),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 15.0),
-                borderRadius: BorderRadius.circular(10.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text('Altura:',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w400)),
-                        const Spacer(),
-                        Text(args.medicalInformationComplete.height,
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Peso:',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w400)),
-                        const Spacer(),
-                        Text(args.medicalInformationComplete.weight,
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('¿ Fuma tabaco ?',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w400)),
-                        const Spacer(),
-                        Text(
-                            args.medicalInformationComplete.smoke ? 'Si' : 'No',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('¿ Toma alcohool ?',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w400)),
-                        const Spacer(),
-                        Text(
-                            args.medicalInformationComplete.alcohol
-                                ? 'Si'
-                                : 'No',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('¿ Realiza ejercicio ?',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w400)),
-                        const Spacer(),
-                        Text(
-                            args.medicalInformationComplete.sedentary
-                                ? 'Si'
-                                : 'No',
-                            style: textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Text(
-              'Patologias',
-              style: textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10.0),
-            if (args.medicalInformationComplete.pathologies.isEmpty)
-              Text('El paciente no presenta patologias'),
-            if (args.medicalInformationComplete.pathologies.isNotEmpty)
-              Padding(
+
+    return BlocProvider(
+      create: (context) => MedicalInformationCompleteCubit(),
+      child: BlocConsumer<MedicalInformationCompleteCubit,
+              MedicalInformationCompleteState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            final cubit =
+                BlocProvider.of<MedicalInformationCompleteCubit>(context);
+            return CustomScaffold(
+              useAppBar: true,
+              backgroundColor: Colors.white,
+              body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: args.medicalInformationComplete.pathologies
-                      .map((e) => Text(
-                            '-> $e',
-                            style: textTheme.titleSmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ))
-                      .toList(),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15.0),
+                      Text(
+                        'Historial Medico',
+                        style: textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 15.0),
+                      HistorialMedicionesList(
+                        mediciones: widget.args.mediciones,
+                        onTapRowHistorialMedicion: (rowMedicion) {
+                          cubit.fetch(rowMedicion.ppg.medicalInformationId);
+                          medicalRecordId = rowMedicion.medicalRecordId;
+                        },
+                      ),
+                      if (state is MedicalInformationCompleteSuccess) ...[
+                        const SizedBox(height: 10.0),
+                        MedicalInformationBody(
+                            medicalInformationComplete:
+                                state.medicalInformationComplete),
+                        const SizedBox(
+                          height: 20.0,
+                        ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    RegistrarDiagnosticoScreen.route,
+                                    arguments: RegistrarDiagnosticoScreenArgs(
+                                      idMedicalRecord: medicalRecordId,
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Realizar diagnostico',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20.0),
+                            Flexible(
+                              child: OutlinedButton(
+                                onPressed: () {},
+                                child: const Text('Sugerencias chatgpt',
+                                    textAlign: TextAlign.center),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                      ]
+                    ],
+                  ),
                 ),
               ),
-            const SizedBox(height: 10.0),
-            Text(
-              'Presion arterial',
-              style: textTheme.headlineSmall
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10.0),
-            MedidaPresionInfo(
-              medidaPresionPaciente: medidaPresionPaciente,
-              bpmColor: AppColors.secondary,
-            ),
-            Spacer(),
-            Row(
-              children: [
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RegistrarDiagnosticoScreen.route,
-                        arguments: RegistrarDiagnosticoScreenArgs(
-                          idMedicalRecord:
-                              args.medicalInformationComplete.medicalRecordId,
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Realizar diagnostico',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20.0),
-                Flexible(
-                  child: OutlinedButton(
-                    onPressed: () {},
-                    child: const Text('Sugerencias chatgpt',
-                        textAlign: TextAlign.center),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-          ],
-        ),
-      ),
+            );
+          }),
     );
   }
 }
 
 class MedicalInformationCompleteScreenArgs {
-  final MedicalInformationComplete medicalInformationComplete;
+  final List<HistorialMedicion> mediciones;
 
   const MedicalInformationCompleteScreenArgs({
-    required this.medicalInformationComplete,
+    required this.mediciones,
   });
 }

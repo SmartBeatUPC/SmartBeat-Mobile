@@ -66,11 +66,6 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
                     formControl: cubit.infoMedicaForm.peso,
                     label: 'Peso',
                   ),
-                  CustomReactiveTextField(
-                    hintText: '0.0',
-                    formControl: cubit.infoMedicaForm.imc,
-                    label: 'IMC',
-                  ),
                   Row(
                     children: [
                       const Text('¿Fumó esta semana?'),

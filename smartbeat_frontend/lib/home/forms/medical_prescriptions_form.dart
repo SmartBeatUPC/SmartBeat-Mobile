@@ -4,7 +4,7 @@ import 'package:smartbeat_frontend/shared/extensions/form_group_extension.dart';
 class MedicalPrescriptionForm extends FormGroup {
   FormControl<String> get medicament => get<String>('medicament');
 
-  FormControl<int> get dosage => get<int>('dosage');
+  FormControl<String> get dosage => get<String>('dosage');
 
   FormControl<String> get via => get<String>('via');
 
@@ -19,7 +19,7 @@ class MedicalPrescriptionForm extends FormGroup {
               Validators.required,
             ],
           ),
-          'dosage': FormControl<int>(
+          'dosage': FormControl<String>(
             validators: [
               Validators.required,
             ],

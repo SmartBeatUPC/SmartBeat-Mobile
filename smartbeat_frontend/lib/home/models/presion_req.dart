@@ -11,7 +11,7 @@ class PresionReq {
 
   Map<String, dynamic> toMap() => {
         'bloodPressureSistolic': bloodPressureSistolic.toStringAsFixed(2),
-        'bloodPressureDiastolic': bloodPressureSistolic.toStringAsFixed(2),
+        'bloodPressureDiastolic': bloodPressureDiastolic.toStringAsFixed(2),
         'heartRate': bloodPresheartRatesureDiastolic
       };
 

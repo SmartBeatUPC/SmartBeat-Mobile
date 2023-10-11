@@ -6,6 +6,7 @@ class MedicalInformationComplete {
   final bool alcohol;
   final bool sedentary;
   final String bmi;
+  final String heartRate;
   final String bloodPressureSistolic;
   final String bloodPressureDiastolic;
   final List<String> pathologies;
@@ -16,6 +17,7 @@ class MedicalInformationComplete {
     required this.weight,
     required this.smoke,
     required this.bmi,
+    required this.heartRate,
     required this.alcohol,
     required this.sedentary,
     required this.bloodPressureSistolic,
@@ -29,6 +31,7 @@ class MedicalInformationComplete {
         weight = data['weight'],
         smoke = data['smoke'],
         bmi = data['bmi'],
+        heartRate = '${data['heartRate']}',
         alcohol = data['alcohol'],
         sedentary = data['sedentary'],
         bloodPressureSistolic = data['bloodPressureSistolic'],

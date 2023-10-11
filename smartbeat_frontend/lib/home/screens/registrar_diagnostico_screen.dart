@@ -4,11 +4,13 @@ import 'package:reactive_forms/reactive_forms.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/register_diagnostic_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/states/register_diagnostic_state.dart';
 import 'package:smartbeat_frontend/home/models/medical_prescription.dart';
+import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/custom_shadow_container.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class RegistrarDiagnosticoScreen extends StatefulWidget {
   static String route = 'registrar_diagnostico_screen';
@@ -33,7 +35,21 @@ class _RegistrarDiagnosticoScreenState
     return BlocProvider(
       create: (context) => RegisterDiagnosticCubit(),
       child: BlocConsumer<RegisterDiagnosticCubit, RegisterDiagnosticState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is RegisterDiagnosticSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, HomeNavBarScreen.route, (_) => false,
+                arguments: const HomeNavBarScreenArgs());
+            Utils.showSnackBar(
+                context, 'Se realizó el diagnostico correctamente.',
+                colorBackground: Colors.lightGreenAccent);
+          }
+          if (state is RegisterDiagnosticFailure) {
+            Navigator.pop(context);
+            Utils.showSnackBar(context,
+                'Por favor vuelva a intentar su diagnostico en unos minutos.');
+          }
+        },
         builder: (context, state) {
           final cubit = BlocProvider.of<RegisterDiagnosticCubit>(context);
 
@@ -68,7 +84,7 @@ class _RegistrarDiagnosticoScreenState
                             SizedBox(height: 20.0),
                             IconButton(
                               onPressed: () async {
-                                MedicalPrescription medicalPrescriptions =
+                                MedicalPrescription? medicalPrescriptions =
                                     await showDialog(
                                   context: context,
                                   builder: (context) => CustomDialog(

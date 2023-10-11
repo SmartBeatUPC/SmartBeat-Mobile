@@ -27,7 +27,7 @@ class ReqMedicalInformation {
   ReqMedicalInformation.from(Map<String, dynamic> data)
       : height = data['talla'],
         weight = data['peso'],
-        bmi = data['imc'],
+        bmi = data['peso'] / (data['talla'] * data['talla']),
         sedentary = data['realizasteActividadFisica'],
         smoke = data['fumasteEstaSemana'],
         alcohol = data['tomasteAlcohol'];

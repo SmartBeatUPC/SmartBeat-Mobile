@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
-import 'package:smartbeat_frontend/home/pages/profile/components/detail_consulta_medica_section.dart';
+import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
+import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 
@@ -22,8 +23,9 @@ class PacienteDetailSection extends StatefulWidget {
 }
 
 class _PacienteDetailSectionState extends State<PacienteDetailSection> {
-  bool showPresionArterial = false;
   late int consultaMedicaId;
+  late int lastMedicalRecordId;
+  late int medicalInformationId;
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +65,22 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
           child:
               BlocConsumer<HistorialMedicionesCubit, HistorialMedicionesState>(
             listener: (context, state) {
+              if (state is HistorialMedicionesSuccess) {
+                Navigator.pushNamed(
+                  context,
+                  ConsultaMedicaScreen.route,
+                  arguments: ConsultaMedicaScreenArgs(
+                    listHistorialMedicion: state.listHistorialMedicion,
+                    consultaMedicaId: consultaMedicaId
+                  ),
+                );
+              }
+
               if (state is HistorialMedicionesFailure) {
                 showDialog(
                   context: context,
-                  builder: (context) => InformacionMedicaDialog(consultaMedicaId: consultaMedicaId),
+                  builder: (context) => InformacionMedicaDialog(
+                      consultaMedicaId: consultaMedicaId),
                 );
               }
             },
@@ -90,7 +104,21 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                       ),
                       const Spacer(),
                       OutlinedButton(
-                          onPressed: () {}, child: const Text('+ consulta'))
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const CustomDialog(
+                                  body: Center(
+                                    child: Text(
+                                      'Para iniciar una consulta medica, debes presentar tu QR a tu medico.',
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('+ consulta'))
                     ],
                   ),
                   Column(
@@ -103,11 +131,10 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           onTap: () {
-                            cubit.fetch(consulta.consultation.id);
-                            setState(() {
-                              showPresionArterial = !showPresionArterial;
-                              consultaMedicaId = consulta.consultation.id;
-                            });
+                            lastMedicalRecordId = consulta.lastMedicalRecordId;
+                            consultaMedicaId = consulta.consultation.id;
+                            cubit.fetch(consultaMedicaId);
+                            setState(() {});
                           },
                           title: RichText(
                             text: TextSpan(
@@ -138,12 +165,6 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 15.0),
-                  if (showPresionArterial &&
-                      state is HistorialMedicionesSuccess)
-                    DetailConsultaMedicaSection(
-                      historialMediciones: state.listHistorialMedicion,
-                    ),
                 ],
               );
             },
