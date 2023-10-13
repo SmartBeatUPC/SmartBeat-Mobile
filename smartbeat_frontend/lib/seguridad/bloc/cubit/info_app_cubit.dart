@@ -11,5 +11,11 @@ class InfoAppCubit extends Cubit<InfoAppState> {
     _sessionInfo = sessionInfo;
   }
 
+  void signOut() {
+    emit(InfoAppLoading());
+    _sessionInfo = SessionInfo.empty();
+    emit(InfoAppInitial());
+  }
+
   SessionInfo get infoApp => _sessionInfo;
 }

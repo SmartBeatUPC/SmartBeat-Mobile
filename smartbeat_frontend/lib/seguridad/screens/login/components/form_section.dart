@@ -46,6 +46,17 @@ class _FormSectionState extends State<FormSection> {
                   formControl: _form.password,
                   label: 'Contraseña',
                 ),
+                Row(
+                  children: [
+                    ReactiveCheckbox(
+                      formControl: _form.recordarDatos,
+                    ),
+                    Text(
+                      'Recordar Datos',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
                 TextButton(
                   onPressed: () {},
                   child: const Text(
@@ -55,7 +66,7 @@ class _FormSectionState extends State<FormSection> {
               ],
             ),
           ),
-          const SizedBox(height: 25.0),
+          const SizedBox(height: 10.0),
           SizedBox(
             width: double.infinity,
             child: ReactiveFormConsumer(
@@ -63,7 +74,7 @@ class _FormSectionState extends State<FormSection> {
                 return ElevatedButton(
                   onPressed: _form.valid
                       ? () => BlocProvider.of<LoginCubit>(context)
-                  //TODO Cambiar si es online
+                          //TODO Cambiar si es online
                           .login()
                       : null,
                   child: const Text('Ingresar'),

@@ -8,4 +8,5 @@ class AppConstants {
     DialogHeightSize.large: 850.0
   });
   static const String keyInfoApp = 'infoApp';
+  static const String keyRememberedForm = 'rememberedLoginValues';
 }

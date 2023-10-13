@@ -11,7 +11,6 @@ class RegistroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      useAppBar: true,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(

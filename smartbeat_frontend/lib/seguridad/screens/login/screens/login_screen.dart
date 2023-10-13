@@ -33,7 +33,6 @@ class LoginScreen extends StatelessWidget {
           return Loading(
             isLoading: state is LoginLoading,
             child: CustomScaffold(
-              useAppBar: true,
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
                 child: Column(
