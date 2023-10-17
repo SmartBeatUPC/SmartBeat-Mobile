@@ -4,6 +4,7 @@ import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.da
 import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
 import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
+import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
@@ -70,9 +71,8 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                   context,
                   ConsultaMedicaScreen.route,
                   arguments: ConsultaMedicaScreenArgs(
-                    listHistorialMedicion: state.listHistorialMedicion,
-                    consultaMedicaId: consultaMedicaId
-                  ),
+                      listHistorialMedicion: state.listHistorialMedicion,
+                      consultaMedicaId: consultaMedicaId),
                 );
               }
 
@@ -108,10 +108,33 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                return const CustomDialog(
+                                return CustomDialog(
+                                  size: DialogHeightSize.extraSmall,
+                                  hasClose: false,
                                   body: Center(
-                                    child: Text(
-                                      'Para iniciar una consulta medica, debes presentar tu QR a tu medico.',
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Para iniciar una consulta \nmedica, debes presentar\n tu QR a tu medico.',
+                                          textAlign: TextAlign.center,
+                                          style: textTheme.titleLarge?.copyWith(
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        const SizedBox(height: 15.0),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pushNamed(context,
+                                                  HomeNavBarScreen.route,
+                                                  arguments:
+                                                      const HomeNavBarScreenArgs(
+                                                          indexPage: 1));
+                                            },
+                                            child: const Text('Ver QR'))
+                                      ],
                                     ),
                                   ),
                                 );

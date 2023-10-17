@@ -46,17 +46,6 @@ class _FormSectionState extends State<FormSection> {
                   formControl: _form.password,
                   label: 'Contraseña',
                 ),
-                Row(
-                  children: [
-                    ReactiveCheckbox(
-                      formControl: _form.recordarDatos,
-                    ),
-                    Text(
-                      'Recordar Datos',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
                 TextButton(
                   onPressed: () {},
                   child: const Text(

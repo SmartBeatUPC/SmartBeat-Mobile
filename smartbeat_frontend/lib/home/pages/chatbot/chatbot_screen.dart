@@ -44,6 +44,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                   ? ChatExpanded(
                       textPrediction: state.prediction.responseAssistance,
                       medicalInformationId: widget.args.medicalInformationId,
+                      doctorLastName: widget.args.doctorLastName,
                     )
                   : Column(
                       children: [
@@ -70,9 +71,10 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                               top: 40.0, bottom: 20.0, left: 20.0, right: 20.0),
                           child: OutlinedButton(
                               onPressed: () {
-                                //TODO Obtener el tipo de usuario y enviar datos de usuario
                                 BlocProvider.of<PredictionCubit>(context)
-                                    .predict(TypeUser.patient, infoAppCubit.infoApp.dataUser!.id!,
+                                    .predict(
+                                        infoAppCubit.infoApp.typeUser!,
+                                        infoAppCubit.infoApp.dataUser!.id!,
                                         widget.args.medicalInformationId);
                               },
                               child: const Text('Click Aquí para comenzar')),
@@ -89,6 +91,10 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
 class ChatBotScreenArgs {
   final int medicalInformationId;
+  final String doctorLastName;
 
-  const ChatBotScreenArgs({required this.medicalInformationId});
+  const ChatBotScreenArgs({
+    required this.medicalInformationId,
+    required this.doctorLastName,
+  });
 }

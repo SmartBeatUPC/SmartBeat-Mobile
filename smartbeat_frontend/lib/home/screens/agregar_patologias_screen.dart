@@ -51,6 +51,7 @@ class _AgregarPatologiasScreenState extends State<AgregarPatologiasScreen> {
               context: context,
               builder: (context) => AsistenteMedicoDialog(
                 newMedicalInformationId: widget.args.medicalInformationId,
+                doctorLastName: widget.args.doctorLastName,
               ),
             );
           }
@@ -131,6 +132,10 @@ class _AgregarPatologiasScreenState extends State<AgregarPatologiasScreen> {
 
 class AgregarPatologiasScreenArgs {
   final int medicalInformationId;
+  final String doctorLastName;
 
-  const AgregarPatologiasScreenArgs({required this.medicalInformationId});
+  const AgregarPatologiasScreenArgs({
+    required this.medicalInformationId,
+    required this.doctorLastName,
+  });
 }

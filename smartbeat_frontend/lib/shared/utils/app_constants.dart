@@ -9,4 +9,5 @@ class AppConstants {
   });
   static const String keyInfoApp = 'infoApp';
   static const String keyRememberedForm = 'rememberedLoginValues';
+  static const String codigoPaisPeru = '+51';
 }

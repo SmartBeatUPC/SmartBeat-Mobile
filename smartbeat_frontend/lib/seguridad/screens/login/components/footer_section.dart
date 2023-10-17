@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reactive_forms/reactive_forms.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/login_cubit.dart';
+import 'package:smartbeat_frontend/seguridad/forms/login_form.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/registro_screen.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 import 'icon_row.dart';
 
-class FooterSection extends StatelessWidget {
+class FooterSection extends StatefulWidget {
   const FooterSection({super.key});
+
+  @override
+  State<FooterSection> createState() => _FooterSectionState();
+}
+
+class _FooterSectionState extends State<FooterSection> {
+  late LoginForm _form;
+
+  @override
+  void initState() {
+    super.initState();
+    _form = BlocProvider.of<LoginCubit>(context).loginForm;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +66,9 @@ class FooterSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Switch(value: true, onChanged: (value) {}),
+            ReactiveSwitch(
+              formControl: _form.recordarDatos,
+            ),
             const SizedBox(width: 15.0),
             Text(
               'Recuérdame',

@@ -14,7 +14,7 @@ class PredictionService {
 
   final _httpService = HttpService.instance;
 
-  final String _apiUrlPatient = '${Environment.api}/suggestion/GPT-V2';
+  final String _apiUrlPatient = '${Environment.api}/recommendation/GPT-V2';
   final String _apiUrlDoctor = '${Environment.api}/suggestion/GPT-V2';
 
   Future<Prediction> getPredict(PredictionReq req, TypeUser typeUser) async {

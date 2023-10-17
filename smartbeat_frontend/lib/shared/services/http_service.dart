@@ -87,8 +87,10 @@ class HttpService {
   }
 
   void _validateResponse(int statusCode, dynamic responseMap) {
-    if (statusCode != 200 && statusCode != 201) {
-      throw ServiceException(message: responseMap['message']);
+    if (responseMap is Map<String, dynamic> &&
+        responseMap.containsKey("success") &&
+        !responseMap["success"]) {
+      throw ServiceException(message: responseMap["message"]);
     }
   }
 }

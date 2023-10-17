@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/register_cubit.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/state/register_state.dart';
 import 'package:smartbeat_frontend/seguridad/forms/registro_inicial_form.dart';
 import 'package:smartbeat_frontend/seguridad/screens/login/screens/login_screen.dart';
+import 'package:smartbeat_frontend/shared/components/custom_reactive_dropdown_field.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/models/option.dart';
 
 enum TypeUser { doctor, patient }
 
@@ -22,6 +23,17 @@ class DatosPersonalesScreen extends StatefulWidget {
 }
 
 class _DatosPersonalesScreenState extends State<DatosPersonalesScreen> {
+  List<Option> optionsNacionalidad = [
+    const Option(value: 'peru', text: 'Peru'),
+    const Option(value: 'chile', text: 'Chile'),
+    const Option(value: 'argentina', text: 'Argentina'),
+    const Option(value: 'ecuatoriano', text: 'Ecuatoriano'),
+  ];
+  List<Option> optionsGenero = [
+    const Option(value: 'masculino', text: 'Masculino'),
+    const Option(value: 'femenino', text: 'Femenino'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -85,14 +97,15 @@ class _DatosPersonalesScreenState extends State<DatosPersonalesScreen> {
                             label: 'Telefono',
                           ),
                           if (widget.args.typeUser == TypeUser.patient)
-                            CustomReactiveTextField(
-                                hintText: 'Nacionalidad',
-                                formControl: form.phone,
-                                label: 'Nacionalidad'),
-                          CustomReactiveTextField(
-                            hintText: 'Genero',
+                            CustomReactiveDropdownField(
+                              formControl: form.nationality,
+                              items: optionsNacionalidad,
+                              hintText: 'Nacionalidad',
+                            ),
+                          CustomReactiveDropdownField(
                             formControl: form.gender,
-                            label: 'Genero',
+                            items: optionsGenero,
+                            hintText: 'Genero',
                           ),
                           const SizedBox(height: 50.0),
                         ],

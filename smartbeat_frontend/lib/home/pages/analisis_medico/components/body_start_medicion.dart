@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:smartbeat_frontend/home/models/medical_information_ppg.dart';
 import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
 import 'package:smartbeat_frontend/home/models/presion_req.dart';
+import 'package:smartbeat_frontend/home/models/req_medical_information.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/asistente_medico_dialog.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/medida_presion_info.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/medir_presion_manual_dialog.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/seleccion_medicion_dialog.dart';
-import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_screen.dart';
 import 'package:smartbeat_frontend/home/screens/agregar_patologias_screen.dart';
-import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -17,14 +17,16 @@ class BodyStartMedicion extends StatefulWidget {
   final Function(TypeMedicion?) onPressedSelectTypeMedicion;
   final Function(MedidaPresionPaciente?) onChangeMedidaPresion;
   final MedidaPresionPaciente? medidaPresionPaciente;
-  final int newMedicalInformationId;
+  final ReqMedicalInformation reqMedicalInformation;
+  final int consultaMedicaId;
 
   const BodyStartMedicion({
     super.key,
     required this.onPressedSelectTypeMedicion,
     required this.onChangeMedidaPresion,
     required this.medidaPresionPaciente,
-    required this.newMedicalInformationId,
+    required this.reqMedicalInformation,
+    required this.consultaMedicaId,
   });
 
   @override
@@ -33,6 +35,8 @@ class BodyStartMedicion extends StatefulWidget {
 
 class _BodyStartMedicionState extends State<BodyStartMedicion> {
   TypeMedicion? typeSelected;
+  int? newMedicalInformationId;
+  String? doctorLastName;
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +78,17 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                     builder: (context) => const SeleccionMedcionDialog(),
                   );
                   if (typeSelected == TypeMedicion.Manual) {
-                    PresionReq? presionReq = await showDialog(
+                    final resultMedirPresionManual = await showDialog(
                       context: context,
                       builder: (context) => MedirPresionManualDialog(
-                          newMedicalInformationId:
-                              widget.newMedicalInformationId),
+                        reqMedicalInformation: widget.reqMedicalInformation,
+                        consultaMedicaId: widget.consultaMedicaId,
+                      ),
                     );
-
-                    if (presionReq != null) {
+                    PresionReq? presionReq = resultMedirPresionManual[0];
+                    MedicalInformationPpg? medicalInformationPpg =
+                        resultMedirPresionManual[1];
+                    if (presionReq != null && medicalInformationPpg != null) {
                       widget.onChangeMedidaPresion(
                         MedidaPresionPaciente(
                           sys: '${presionReq.bloodPressureSistolic}',
@@ -91,7 +98,9 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                         ),
                       );
                       this.typeSelected = typeSelected;
-
+                      newMedicalInformationId =
+                          medicalInformationPpg.newMedicalInformationId;
+                      doctorLastName = medicalInformationPpg.doctorLastName;
                       setState(() {});
                     }
                   } else {
@@ -101,16 +110,14 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                     });
                   }
                 },
-                child: Text('Click Aquí para comenzar'),
+                child: const Text('Click Aquí para comenzar'),
               ),
             ),
           ),
         if (typeSelected != null) ...[
-          SizedBox(
-            height: 20.0,
-          ),
+          const SizedBox(height: 20.0),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5.0),
@@ -129,7 +136,8 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                   context,
                   AgregarPatologiasScreen.route,
                   arguments: AgregarPatologiasScreenArgs(
-                    medicalInformationId: widget.newMedicalInformationId,
+                    medicalInformationId: newMedicalInformationId!,
+                    doctorLastName: doctorLastName!,
                   ),
                 );
               },
@@ -137,13 +145,11 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.add,
                     size: 30,
                   ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
+                  const SizedBox(width: 10.0),
                   Text('Agregar Patologias',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -153,23 +159,20 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
               ),
             ),
           ),
-          SizedBox(
-            height: 20.0,
-          ),
+          const SizedBox(height: 20.0),
           OutlinedButton(
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) => AsistenteMedicoDialog(
-                  newMedicalInformationId: widget.newMedicalInformationId,
+                  newMedicalInformationId: newMedicalInformationId!,
+                  doctorLastName: doctorLastName!,
                 ),
               );
             },
-            child: Text('Continuar sin pantologias'),
+            child: const Text('Continuar sin pantologias'),
           ),
-          SizedBox(
-            height: 20.0,
-          ),
+          const SizedBox(height: 20.0),
         ],
         if (widget.medidaPresionPaciente != null)
           Padding(

@@ -39,7 +39,7 @@ class DetailConsultaMedicaSection extends StatelessWidget {
               '15 Jun',
               '16 Jun',
               '17 Jun'
-            ],
+            ], clasificationValues: [],
           ),
           const SizedBox(height: 20.0),
           Text(

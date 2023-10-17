@@ -6,6 +6,7 @@ import 'package:smartbeat_frontend/seguridad/screens/login/screens/login_screen.
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class CustomScaffold extends StatelessWidget {
   final Widget? bottomNavigationBar;
@@ -52,10 +53,21 @@ class CustomScaffold extends StatelessWidget {
                     ),
                   ],
                 ),
+                leading: Builder(
+                  builder: (context) => Container(
+                    padding: const EdgeInsets.all(7.5),
+                    child: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    ),
+                  ),
+                ),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.arrow_back_ios_sharp),
-                    onPressed: () {},
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
                 backgroundColor:
@@ -86,18 +98,21 @@ class CustomScaffold extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.0, left: 10.0, right: 10.0),
+                                  padding: const EdgeInsets.only(
+                                    top: 20.0,
+                                    left: 10.0,
+                                    right: 10.0,
+                                  ),
                                   child: CircleAvatar(
                                     radius: 50,
                                     backgroundColor: Colors.grey[100],
                                     child: CircleAvatar(
                                       radius: 50,
                                       backgroundImage: AssetImage(
-                                        infoAppCubit.infoApp.typeUser ==
-                                                TypeUser.patient
-                                            ? AppImages.paciente
-                                            : AppImages.medico,
+                                        Utils.getImageProfile(
+                                            infoAppCubit
+                                                .infoApp.dataUser!.gender!,
+                                            infoAppCubit.infoApp.typeUser!),
                                       ),
                                     ),
                                   ),
@@ -134,27 +149,6 @@ class CustomScaffold extends StatelessWidget {
                       ),
                       leading: Icon(Icons.line_weight_rounded,
                           size: 25.0, color: Colors.grey),
-                    ),
-                    ListTile(
-                      title: Text(
-                        "Historial de mediciones",
-                      ),
-                      leading:
-                          Icon(Icons.update, size: 25.0, color: Colors.grey),
-                    ),
-                    ListTile(
-                      title: Text(
-                        "Historial de medicamentos",
-                      ),
-                      leading: Icon(Icons.browser_updated,
-                          size: 25.0, color: Colors.grey),
-                    ),
-                    ListTile(
-                      title: Text(
-                        "Mi médico",
-                      ),
-                      leading:
-                          Icon(Icons.qr_code, size: 25.0, color: Colors.grey),
                     ),
                     Spacer(),
                     InkWell(

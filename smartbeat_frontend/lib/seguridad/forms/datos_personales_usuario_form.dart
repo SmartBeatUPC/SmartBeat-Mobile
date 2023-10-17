@@ -12,7 +12,7 @@ class DatosPersonalesUsuarioForm extends FormGroup {
 
   FormControl<String> get telefono => get<String>('phone');
 
-  FormControl<String> get phone => get<String>('nationality');
+  FormControl<String> get nationality => get<String>('nationality');
 
   FormControl<String> get gender => get<String>('gender');
 

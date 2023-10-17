@@ -6,10 +6,13 @@ import 'package:smartbeat_frontend/home/bloc/states/register_diagnostic_state.da
 import 'package:smartbeat_frontend/home/models/medical_prescription.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
+import 'package:smartbeat_frontend/shared/components/custom_reactive_dropdown_field.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/custom_shadow_container.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/formatters/currency_formatter.dart';
+import 'package:smartbeat_frontend/shared/models/option.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class RegistrarDiagnosticoScreen extends StatefulWidget {
@@ -28,6 +31,12 @@ class RegistrarDiagnosticoScreen extends StatefulWidget {
 
 class _RegistrarDiagnosticoScreenState
     extends State<RegistrarDiagnosticoScreen> {
+  List<Option> optionsVia = [
+    const Option(value: 'oral', text: 'Oral'),
+    const Option(value: 'intravenosa', text: 'Intravenosa'),
+    const Option(value: 'rectal', text: 'Rectal'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -115,18 +124,25 @@ class _RegistrarDiagnosticoScreenState
                                                   label: 'Medicamento',
                                                 ),
                                                 CustomReactiveTextField(
-                                                  hintText: 'Dosis',
+                                                  hintText: '0.0',
+                                                  keyboardType:
+                                                      const TextInputType
+                                                          .numberWithOptions(),
+                                                  inputFormatters: [
+                                                    CurrencyInputFormatter(
+                                                        decimalPlaces: 1)
+                                                  ],
                                                   formControl: cubit
                                                       .medicalPrescriptionsFrom
                                                       .dosage,
                                                   label: 'Dosis',
                                                 ),
-                                                CustomReactiveTextField(
-                                                  hintText: 'via',
+                                                CustomReactiveDropdownField(
                                                   formControl: cubit
                                                       .medicalPrescriptionsFrom
                                                       .via,
-                                                  label: 'via',
+                                                  items: optionsVia,
+                                                  hintText: 'Via',
                                                 ),
                                                 CustomReactiveTextField(
                                                   hintText: 'frequency',

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smartbeat_frontend/home/pages/conexion_qr/conexion_qr_page.dart';
-import 'package:smartbeat_frontend/home/pages/historial_page.dart';
 import 'package:smartbeat_frontend/home/pages/profile/profile_page.dart';
 
 class HomeNavBarScreen extends StatefulWidget {
@@ -24,7 +22,9 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
     _pages = <Widget>[
       const ProfilePage(),
       const ConexionQrPage(),
+      /*
       const HistorialPage(),
+       */
     ];
     _selectedIndex = widget.args.indexPage;
   }
@@ -65,12 +65,14 @@ class _HomeNavBarScreenState extends State<HomeNavBarScreen> {
                   size: 30.0,
                 ),
                 label: ''),
+            /*
             BottomNavigationBarItem(
                 icon: Icon(
                   FontAwesomeIcons.clipboardList,
                   size: 30.0,
                 ),
                 label: ''),
+             */
           ],
         ),
       ),

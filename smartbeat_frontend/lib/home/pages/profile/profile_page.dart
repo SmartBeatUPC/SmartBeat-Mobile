@@ -12,6 +12,7 @@ import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -64,10 +65,9 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       const SizedBox(height: 30.0),
                       HeaderSection(
-                        pathImg: infoAppCubit.infoApp.typeUser ==
-                                TypeUser.patient
-                            ? AppImages.paciente2
-                            : AppImages.medico,
+                        pathImg: Utils.getImageProfile(
+                            infoAppCubit.infoApp.dataUser!.gender!,
+                            infoAppCubit.infoApp.typeUser!),
                         title:
                             "${infoAppCubit.infoApp.dataUser!.name!} ${infoAppCubit.infoApp.dataUser!.lastName!}",
                       ),

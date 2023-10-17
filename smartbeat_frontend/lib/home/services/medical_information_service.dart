@@ -43,12 +43,6 @@ class MedicalInformationService {
       url,
     );
 
-    if (response is Map<String, dynamic> &&
-        response.containsKey("success") &&
-        !response["success"]) {
-      throw ServiceException(message: response["message"]);
-    }
-
     return MedicalInformationComplete.from(response);
   }
 }

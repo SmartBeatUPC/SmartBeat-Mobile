@@ -8,6 +8,7 @@ import 'package:smartbeat_frontend/seguridad/screens/login/components/form_secti
 import 'package:smartbeat_frontend/seguridad/screens/login/components/footer_section.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class LoginScreen extends StatelessWidget {
   static String route = 'login_screen';
@@ -22,6 +23,10 @@ class LoginScreen extends StatelessWidget {
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
+          if (state is LoginFailure) {
+            Utils.showSnackBar(context, 'Credenciales incorrectas.');
+          }
+
           if (state is LoginSuccess) {
             cubitInfoApp.setInfoApp(state.infoSession);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
+import 'package:smartbeat_frontend/home/models/req_medical_information.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/body_indications_medicion.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/body_start_medicion.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
@@ -49,14 +50,19 @@ class _AnalisisMedicoScreenState extends State<AnalisisMedicoScreen> {
               medidaPresionPaciente: medidaPresionPaciente,
               onPressedSelectTypeMedicion: onPressedStartMedicion,
               onChangeMedidaPresion: onChangeMedidaPresionPaciente,
-              newMedicalInformationId: widget.args.newMedicalInformationId,
+              reqMedicalInformation: widget.args.reqMedicalInformation,
+              consultaMedicaId: widget.args.consultaMedicaId,
             ),
     );
   }
 }
 
 class AnalisisMedicoScreenArgs {
-  final int newMedicalInformationId;
+  final ReqMedicalInformation reqMedicalInformation;
+  final int consultaMedicaId;
 
-  const AnalisisMedicoScreenArgs(this.newMedicalInformationId);
+  const AnalisisMedicoScreenArgs(
+    this.reqMedicalInformation,
+    this.consultaMedicaId,
+  );
 }

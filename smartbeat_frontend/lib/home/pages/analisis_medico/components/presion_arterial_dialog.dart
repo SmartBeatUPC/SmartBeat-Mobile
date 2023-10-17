@@ -8,15 +8,29 @@ import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class PresionArterialDialog extends StatefulWidget {
   final MedidaPresionPaciente medidaPresionPaciente;
+  final String ppgClasification;
+  final int ppgBar;
 
-  const PresionArterialDialog({super.key, required this.medidaPresionPaciente,});
+  const PresionArterialDialog({
+    super.key,
+    required this.medidaPresionPaciente,
+    required this.ppgClasification,
+    required this.ppgBar,
+  });
 
   @override
   State<PresionArterialDialog> createState() => _PresionArterialDialogState();
 }
 
 class _PresionArterialDialogState extends State<PresionArterialDialog> {
-  double _sliderValue = 50.0;
+  late double _sliderValue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _sliderValue = widget.ppgBar.toDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +114,13 @@ class _PresionArterialDialogState extends State<PresionArterialDialog> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30.0),
+                const SizedBox(height: 15.0),
+                Text(
+                  widget.ppgClasification,
+                  style: textTheme.titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 15.0),
                 Container(
                   height: 10,
                   child: Slider(
