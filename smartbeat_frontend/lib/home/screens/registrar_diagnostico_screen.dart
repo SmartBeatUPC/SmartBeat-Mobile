@@ -145,18 +145,18 @@ class _RegistrarDiagnosticoScreenState
                                                   hintText: 'Via',
                                                 ),
                                                 CustomReactiveTextField(
-                                                  hintText: 'frequency',
+                                                  hintText: 'Frecuencia',
                                                   formControl: cubit
                                                       .medicalPrescriptionsFrom
                                                       .frequency,
-                                                  label: 'frequency',
+                                                  label: 'Frecuencia',
                                                 ),
                                                 CustomReactiveTextField(
                                                   hintText: 'duration',
                                                   formControl: cubit
                                                       .medicalPrescriptionsFrom
                                                       .duration,
-                                                  label: 'duration',
+                                                  label: 'Duracion',
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsets
@@ -243,12 +243,26 @@ class _RegistrarDiagnosticoScreenState
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            '${e.medicament}',
-                                            style: textTheme.titleMedium
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          Row(
+                                            children: [
+                                              const SizedBox(width: 10.0),
+                                              Text(
+                                                '${e.medicament}',
+                                                style: textTheme.titleMedium
+                                                    ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                              ),
+                                              Spacer(),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    cubit
+                                                        .removeMedicalPrescription(
+                                                            e);
+                                                    setState(() {});
+                                                  },
+                                                  icon: Icon(Icons.close))
+                                            ],
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(

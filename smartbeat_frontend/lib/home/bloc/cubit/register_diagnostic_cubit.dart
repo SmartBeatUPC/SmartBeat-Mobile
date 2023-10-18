@@ -29,4 +29,12 @@ class RegisterDiagnosticCubit extends Cubit<RegisterDiagnosticState> {
       emit(RegisterDiagnosticFailure(e.message));
     }
   }
+
+  void removeMedicalPrescription(MedicalPrescription prescription) {
+    final index = listMedicalPrescription.indexOf(prescription);
+
+    if (index != -1) {
+      listMedicalPrescription.removeAt(index);
+    }
+  }
 }
