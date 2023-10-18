@@ -71,7 +71,8 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                       '${infoAppCubit.infoApp.dataUser!.age!} Años',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          color: AppColors.acentText, fontWeight: FontWeight.bold),
+                          color: AppColors.acentText,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Flexible(
@@ -87,6 +88,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                 ],
               ),
             ),
+            /*
             SizedBox(height: 10.0),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -112,6 +114,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                 )
               ],
             ),
+
             SizedBox(height: 10.0),
             Container(
               decoration: BoxDecoration(
@@ -165,6 +168,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                 ],
               ),
             ),
+                         */
             Column(
               children: widget.listConsultaMedica.map((consulta) {
                 return Card(

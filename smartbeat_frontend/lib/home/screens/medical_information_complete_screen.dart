@@ -6,7 +6,9 @@ import 'package:smartbeat_frontend/home/bloc/states/medical_information_complete
 import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
 import 'package:smartbeat_frontend/home/pages/chatbot/chatbot_screen.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/lista_historial_mediciones.dart';
+import 'package:smartbeat_frontend/home/pages/profile/components/stacked_bar_chart.dart';
 import 'package:smartbeat_frontend/home/screens/consulta_medica/components/medical_information_body.dart';
+import 'package:smartbeat_frontend/home/screens/diagnostico/diagnostic_screen.dart';
 import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
@@ -56,6 +58,19 @@ class _MedicalInformationCompleteScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        StackedBarChart(
+                          numberOfBars: widget.args.mediciones.length,
+                          progressValues: widget.args.mediciones
+                              .map((medicion) => medicion.ppg.ppgBar)
+                              .toList(),
+                          dates: widget.args.mediciones
+                              .map((medicion) =>
+                                  Utils.formatearFecha(medicion.ppg.ppgDate))
+                              .toList(),
+                          clasificationValues: widget.args.mediciones
+                              .map((medicion) => medicion.ppg.ppgClasification)
+                              .toList(),
+                        ),
                         const SizedBox(height: 15.0),
                         Text(
                           'Historial Medico',
@@ -76,7 +91,6 @@ class _MedicalInformationCompleteScreenState
                           ),
                         ),
                         if (state is MedicalInformationCompleteSuccess) ...[
-                          const SizedBox(height: 10.0),
                           MedicalInformationBody(
                             medicalInformationComplete:
                                 state.medicalInformationComplete,
@@ -86,8 +100,8 @@ class _MedicalInformationCompleteScreenState
                             children: [
                               if (state.medicalInformationComplete
                                       .diagnosticExist ==
-                                  'Por realizar')
-                                Flexible(
+                                  'Por realizar') ...[
+                                Expanded(
                                   child: ElevatedButton(
                                     onPressed: () {
                                       Navigator.pushNamed(
@@ -105,26 +119,25 @@ class _MedicalInformationCompleteScreenState
                                     ),
                                   ),
                                 ),
-                              const SizedBox(width: 20.0),
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      ChatBotScreen.route,
-                                      arguments: ChatBotScreenArgs(
-                                        medicalInformationId:
-                                            medicalInformationId,
-                                        doctorLastName: infoAppCubit
-                                            .infoApp.dataUser!.lastName!,
-                                        lastMedicalRecordId: medicalRecordId,
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Sugerencias GPT',
-                                      textAlign: TextAlign.center),
+                              ],
+                              if (state.medicalInformationComplete
+                                      .diagnosticExist ==
+                                  'Realizado') ...[
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        DiagnosticScreen.route,
+                                        arguments: DiagnosticScreenArgs(
+                                          medicalRecordId: medicalRecordId,
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Ver diagnostico'),
+                                  ),
                                 ),
-                              ),
+                              ]
                             ],
                           ),
                           const SizedBox(height: 20.0),
