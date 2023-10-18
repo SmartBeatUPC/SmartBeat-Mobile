@@ -34,7 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> setRememberedForm() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic>? rememberedForm = loginForm.rawValue;
-    if(loginForm.recordarDatos.value! == false) {
+    if (loginForm.recordarDatos.value! == false) {
       rememberedForm.remove('email');
       rememberedForm.remove('password');
     }
@@ -52,6 +52,7 @@ class LoginCubit extends Cubit<LoginState> {
       LoginReq loginReq = LoginReq.from(loginForm.rawValue);
       if (isOnline) {
         SessionInfo sessionInfo = await _authService.login(loginReq);
+        sessionInfo.email = loginForm.email.value;
         emit(LoginSuccess(sessionInfo));
       } else {
         User dataUserPatient = User(

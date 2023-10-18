@@ -9,6 +9,7 @@ import 'package:smartbeat_frontend/home/models/medical_information_complete.dart
 import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
 import 'package:smartbeat_frontend/home/screens/medical_information_complete_screen.dart';
 import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_images.dart';
@@ -32,6 +33,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final infoAppCubit = BlocProvider.of<InfoAppCubit>(context);
 
     return BlocProvider(
       create: (context) => HistorialMedicionesCubit(),
@@ -59,14 +61,30 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Text(
-                'Cardiologo en Apolo Hospital',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      color: AppColors.textInputColor,
-                      fontWeight: FontWeight.normal,
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                      '${infoAppCubit.infoApp.dataUser!.age!} Años',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          color: AppColors.acentText, fontWeight: FontWeight.bold),
                     ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Text(infoAppCubit.infoApp.email ?? '',
+                        textAlign: TextAlign.center),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Text('+51${infoAppCubit.infoApp.dataUser!.phone!}',
+                        textAlign: TextAlign.center),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 10.0),
