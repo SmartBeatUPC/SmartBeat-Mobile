@@ -61,7 +61,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40.0),
               child: Text(
-                'Cardiologa en Apolo Hospital',
+                'Cardiologo en Apolo Hospital',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                       color: AppColors.textInputColor,

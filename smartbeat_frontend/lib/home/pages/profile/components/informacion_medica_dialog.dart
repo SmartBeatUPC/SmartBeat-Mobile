@@ -75,7 +75,7 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
             ),
             Row(
               children: [
-                const Text('¿Tomó alchool?'),
+                const Text('¿Tomó alcohol?'),
                 const Spacer(),
                 ReactiveSwitch(
                   formControl: _form.tomasteAlcohol,

@@ -5,6 +5,7 @@ import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.d
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
 import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
+import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
@@ -32,6 +33,7 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final infoAppCubit = BlocProvider.of<InfoAppCubit>(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,19 +46,21 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
               Flexible(
                 flex: 1,
                 child: Text(
-                  '58 Años',
+                  '${infoAppCubit.infoApp.dataUser!.age!} Años',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
                       color: AppColors.acentText, fontWeight: FontWeight.bold),
                 ),
               ),
-              const Flexible(
+              Flexible(
                 flex: 2,
-                child: Text('jlopez@gmail.com', textAlign: TextAlign.center),
+                child: Text(infoAppCubit.infoApp.email ?? '',
+                    textAlign: TextAlign.center),
               ),
-              const Flexible(
+              Flexible(
                 flex: 1,
-                child: Text('+51985748248', textAlign: TextAlign.center),
+                child: Text('+51${infoAppCubit.infoApp.dataUser!.phone!}',
+                    textAlign: TextAlign.center),
               ),
             ],
           ),
@@ -75,8 +79,7 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                       listHistorialMedicion: state.listHistorialMedicion,
                       consultaMedicaId: consultaMedicaId,
                       lastMedicalRecordId: lastMedicalRecordId,
-                      doctorPhone: doctorPhone
-                  ),
+                      doctorPhone: doctorPhone),
                 );
               }
 
