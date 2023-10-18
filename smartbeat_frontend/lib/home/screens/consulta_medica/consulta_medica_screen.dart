@@ -28,17 +28,6 @@ class ConsultaMedicaScreen extends StatefulWidget {
 class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
   late int medicalRecordId;
 
-  redirectToWsp(String numero, BuildContext context) async {
-    var wspUri = Uri.parse(
-        'whatsapp://send?phone=${AppConstants.codigoPaisPeru}$numero&text=Hola!');
-    if (await canLaunchUrl(wspUri)) {
-      await launchUrl(wspUri, mode: LaunchMode.externalNonBrowserApplication);
-    } else if (context.mounted) {
-      Utils.showSnackBar(
-          context, 'WhatsApp no esta instalado en este dispositivo');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -91,8 +80,11 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                               showDialog(
                                 context: context,
                                 builder: (context) => InformacionMedicaDialog(
-                                    consultaMedicaId:
-                                        widget.args.consultaMedicaId),
+                                  consultaMedicaId:
+                                      widget.args.consultaMedicaId,
+                                  lastMedicalRecordId:
+                                      widget.args.lastMedicalRecordId,
+                                ),
                               );
                             },
                             child: Text('+ Presion'),
@@ -113,6 +105,7 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                           medicalInformationComplete:
                               state.medicalInformationComplete,
                           showSectionPresionArterial: false,
+                          doctorPhone: widget.args.doctorPhone,
                         ),
                         Row(
                           children: [
@@ -134,8 +127,8 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
-                                  //Todo se debe obtener el numero del doctor o patient dependiendo del tipo de usaurio en sesion
-                                  redirectToWsp('999999999', context);
+                                  Utils.redirectToWsp(
+                                      widget.args.doctorPhone, context);
                                 },
                                 child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -168,9 +161,13 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
 class ConsultaMedicaScreenArgs {
   final List<HistorialMedicion> listHistorialMedicion;
   final int consultaMedicaId;
+  final int lastMedicalRecordId;
+  final String doctorPhone;
 
   const ConsultaMedicaScreenArgs({
     required this.listHistorialMedicion,
     required this.consultaMedicaId,
+    required this.lastMedicalRecordId,
+    required this.doctorPhone,
   });
 }

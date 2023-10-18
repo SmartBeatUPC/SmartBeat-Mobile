@@ -6,11 +6,13 @@ import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 class AsistenteMedicoDialog extends StatelessWidget {
   final int newMedicalInformationId;
   final String doctorLastName;
+  final int lastMedicalRecordId;
 
   const AsistenteMedicoDialog({
     super.key,
     required this.newMedicalInformationId,
     required this.doctorLastName,
+    required this.lastMedicalRecordId,
   });
 
   @override
@@ -41,7 +43,7 @@ class AsistenteMedicoDialog extends StatelessWidget {
                     ChatBotScreen.route,
                     arguments: ChatBotScreenArgs(
                       medicalInformationId: newMedicalInformationId,
-                      doctorLastName: doctorLastName,
+                      doctorLastName: doctorLastName, lastMedicalRecordId: lastMedicalRecordId,
                     ),
                   );
                 },

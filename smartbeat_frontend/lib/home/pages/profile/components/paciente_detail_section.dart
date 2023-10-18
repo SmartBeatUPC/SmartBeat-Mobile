@@ -27,6 +27,7 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
   late int consultaMedicaId;
   late int lastMedicalRecordId;
   late int medicalInformationId;
+  late String doctorPhone;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +73,10 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                   ConsultaMedicaScreen.route,
                   arguments: ConsultaMedicaScreenArgs(
                       listHistorialMedicion: state.listHistorialMedicion,
-                      consultaMedicaId: consultaMedicaId),
+                      consultaMedicaId: consultaMedicaId,
+                      lastMedicalRecordId: lastMedicalRecordId,
+                      doctorPhone: doctorPhone
+                  ),
                 );
               }
 
@@ -80,7 +84,9 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                 showDialog(
                   context: context,
                   builder: (context) => InformacionMedicaDialog(
-                      consultaMedicaId: consultaMedicaId),
+                    consultaMedicaId: consultaMedicaId,
+                    lastMedicalRecordId: lastMedicalRecordId,
+                  ),
                 );
               }
             },
@@ -155,6 +161,7 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                           ),
                           onTap: () {
                             lastMedicalRecordId = consulta.lastMedicalRecordId;
+                            doctorPhone = consulta.doctorData.phone!;
                             consultaMedicaId = consulta.consultation.id;
                             cubit.fetch(consultaMedicaId);
                             setState(() {});

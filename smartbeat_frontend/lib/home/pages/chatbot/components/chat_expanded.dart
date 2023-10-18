@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/prediction_cubit.dart';
+import 'package:smartbeat_frontend/home/bloc/cubit/prediction_save_cubit.dart';
 import 'package:smartbeat_frontend/home/components/custom_info_container.dart';
 import 'package:smartbeat_frontend/home/screens/home_nav_bar_screen.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class ChatExpanded extends StatelessWidget {
   final int medicalInformationId;
+  final int lastMedicalRecordId;
   final String textPrediction;
   final String doctorLastName;
 
@@ -18,12 +20,14 @@ class ChatExpanded extends StatelessWidget {
     required this.textPrediction,
     required this.medicalInformationId,
     required this.doctorLastName,
+    required this.lastMedicalRecordId,
   });
 
   @override
   Widget build(BuildContext context) {
     final infoAppCubit = BlocProvider.of<InfoAppCubit>(context);
     final textTheme = Theme.of(context).textTheme;
+    final predictionSaveCubit = BlocProvider.of<PredictionSaveCubit>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -98,44 +102,57 @@ class ChatExpanded extends StatelessWidget {
               Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    horizontal: 20.0, vertical: 0.0),
+                child: Column(
                   children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          BlocProvider.of<PredictionCubit>(context).predict(
-                              TypeUser.patient,
-                              infoAppCubit.infoApp.dataUser!.id!,
-                              medicalInformationId);
-                        },
-                        child: Text('Generar nuevo'),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              BlocProvider.of<PredictionCubit>(context).predict(
+                                  TypeUser.patient,
+                                  infoAppCubit.infoApp.dataUser!.id!,
+                                  medicalInformationId);
+                            },
+                            child: Text('Generar nuevo'),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20.0,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                HomeNavBarScreen.route,
+                                (_) => false,
+                                arguments: const HomeNavBarScreenArgs(),
+                              );
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.home),
+                                SizedBox(width: 5.0),
+                                Text('Regresar'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 20.0,
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
+                    TextButton(
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            HomeNavBarScreen.route,
-                            (_) => false,
-                            arguments: const HomeNavBarScreenArgs(),
+                          predictionSaveCubit.savePrediction(
+                            infoAppCubit.infoApp.typeUser!,
+                            textPrediction,
+                            lastMedicalRecordId,
                           );
                         },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.home),
-                            SizedBox(width: 5.0),
-                            Text('Regresar'),
-                          ],
-                        ),
-                      ),
-                    ),
+                        child: Text('Guardar respuesta')),
                   ],
                 ),
               )

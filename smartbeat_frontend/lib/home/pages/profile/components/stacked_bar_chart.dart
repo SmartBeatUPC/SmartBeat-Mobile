@@ -47,26 +47,32 @@ class StackedBarChart extends StatelessWidget {
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomStart,
-                children: [
-                  Container(
-                    width: 17.5,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
+              GestureDetector(
+                onTapDown: (TapDownDetails details) {
+                  _showPopupMenu(
+                      details.globalPosition, context, classification);
+                },
+                child: Stack(
+                  alignment: AlignmentDirectional.bottomStart,
+                  children: [
+                    Container(
+                      width: 17.5,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 17.5,
-                    height: (progress / 100) * 100,
-                    decoration: BoxDecoration(
-                      color: detectColorByClassification(classification),
-                      borderRadius: BorderRadius.circular(10),
+                    Container(
+                      width: 17.5,
+                      height: (progress / 100) * 100,
+                      decoration: BoxDecoration(
+                        color: detectColorByClassification(classification),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 5.0),
               Transform.rotate(
@@ -81,5 +87,17 @@ class StackedBarChart extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  _showPopupMenu(
+      Offset offset, BuildContext context, String classification) async {
+    double left = offset.dx;
+    double top = offset.dy;
+    await showMenu(
+        context: context,
+        position: RelativeRect.fromLTRB(left, top, left + 1, top + 1),
+        items: [
+          PopupMenuItem(child: Text(classification)),
+        ]);
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
+import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Utils {
   static void showSnackBar(BuildContext context, String message,
@@ -20,5 +23,16 @@ class Utils {
 
   static String getImageProfile(String gender, TypeUser typeUser){
     return  'assets/${typeUser.name}-${gender.toLowerCase()}.png';
+  }
+
+  static redirectToWsp(String numero, BuildContext context) async {
+    var wspUri = Uri.parse(
+        'whatsapp://send?phone=${AppConstants.codigoPaisPeru}$numero&text=Hola!');
+    if (await canLaunchUrl(wspUri)) {
+      await launchUrl(wspUri, mode: LaunchMode.externalNonBrowserApplication);
+    } else if (context.mounted) {
+      Utils.showSnackBar(
+          context, 'WhatsApp no esta instalado en este dispositivo');
+    }
   }
 }

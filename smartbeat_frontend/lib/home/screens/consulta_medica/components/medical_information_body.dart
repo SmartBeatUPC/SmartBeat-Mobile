@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
 import 'package:smartbeat_frontend/home/models/medida_presion_paciente.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/medida_presion_info.dart';
 import 'package:smartbeat_frontend/shared/components/custom_shadow_container.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class MedicalInformationBody extends StatelessWidget {
   final MedicalInformationComplete medicalInformationComplete;
   final bool showSectionPresionArterial;
+  final String doctorPhone;
 
   const MedicalInformationBody({
     super.key,
     required this.medicalInformationComplete,
     this.showSectionPresionArterial = true,
+    required this.doctorPhone,
   });
 
   @override
@@ -121,10 +125,31 @@ class MedicalInformationBody extends StatelessWidget {
           ),
         const SizedBox(height: 20.0),
         if (showSectionPresionArterial) ...[
-          Text(
-            'Presión arterial',
-            style:
-                textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          Row(
+            children: [
+              Text(
+                'Presión arterial',
+                style: textTheme.headlineSmall
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  Utils.redirectToWsp(doctorPhone, context);
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.whatsapp,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 5.0),
+                    Text('Contactar'),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 10.0),
           MedidaPresionInfo(

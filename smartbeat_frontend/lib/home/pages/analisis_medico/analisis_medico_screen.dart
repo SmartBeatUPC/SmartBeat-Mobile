@@ -52,6 +52,7 @@ class _AnalisisMedicoScreenState extends State<AnalisisMedicoScreen> {
               onChangeMedidaPresion: onChangeMedidaPresionPaciente,
               reqMedicalInformation: widget.args.reqMedicalInformation,
               consultaMedicaId: widget.args.consultaMedicaId,
+              lastMedicalRecordId: widget.args.lastMedicalRecordId,
             ),
     );
   }
@@ -60,9 +61,11 @@ class _AnalisisMedicoScreenState extends State<AnalisisMedicoScreen> {
 class AnalisisMedicoScreenArgs {
   final ReqMedicalInformation reqMedicalInformation;
   final int consultaMedicaId;
+  final int lastMedicalRecordId;
 
   const AnalisisMedicoScreenArgs(
     this.reqMedicalInformation,
     this.consultaMedicaId,
+    this.lastMedicalRecordId,
   );
 }

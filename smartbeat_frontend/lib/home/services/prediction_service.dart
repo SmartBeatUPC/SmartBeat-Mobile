@@ -24,4 +24,18 @@ class PredictionService {
     );
     return Prediction.from(response);
   }
+
+  Future<void> savePrediction(
+      int medicalRecordId, TypeUser typeUser, String textPrediction) async {
+    String url =
+        '${Environment.api}/medical-record/$medicalRecordId/${typeUser == TypeUser.patient ? 'recommendation' : 'suggestion'}';
+
+    dynamic response = await _httpService.post(
+      url,
+      body: {
+        typeUser == TypeUser.patient ? 'recommendation' : 'suggestion':
+            textPrediction
+      },
+    );
+  }
 }

@@ -9,8 +9,13 @@ import 'package:smartbeat_frontend/shared/formatters/currency_formatter.dart';
 
 class InformacionMedicaDialog extends StatefulWidget {
   final int consultaMedicaId;
+  final int lastMedicalRecordId;
 
-  const InformacionMedicaDialog({super.key, required this.consultaMedicaId});
+  const InformacionMedicaDialog({
+    super.key,
+    required this.consultaMedicaId,
+    required this.lastMedicalRecordId,
+  });
 
   @override
   State<InformacionMedicaDialog> createState() =>
@@ -88,8 +93,8 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
                 Navigator.pushNamed(
                   context,
                   AnalisisMedicoScreen.route,
-                  arguments: AnalisisMedicoScreenArgs(
-                      reqMedicalInformation, widget.consultaMedicaId),
+                  arguments: AnalisisMedicoScreenArgs(reqMedicalInformation,
+                      widget.consultaMedicaId, widget.lastMedicalRecordId),
                 );
               },
               child: const Text('Guardar'),

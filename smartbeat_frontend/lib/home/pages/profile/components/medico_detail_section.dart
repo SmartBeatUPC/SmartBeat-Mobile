@@ -27,6 +27,7 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
   late int consultaMedicaId;
   late int lastMedicalRecordId;
   late int medicalInformationId;
+  late String doctorPhone;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,9 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
             context,
             MedicalInformationCompleteScreen.route,
             arguments: MedicalInformationCompleteScreenArgs(
-                mediciones: state.listHistorialMedicion),
+              mediciones: state.listHistorialMedicion,
+              doctorPhone: doctorPhone,
+            ),
           );
         }
         if (state is HistorialMedicionesFailure) {
@@ -157,9 +160,8 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                       lastMedicalRecordId = consulta.lastMedicalRecordId;
                       consultaMedicaId = consulta.consultation.id;
                       cubitHistorialMediciones.fetch(consultaMedicaId);
+                      doctorPhone = consulta.doctorData.phone!;
                       setState(() {});
-
-                      //cubit.fetch(consulta.lastMedicalRecordId);
                     },
                     title: RichText(
                       text: TextSpan(

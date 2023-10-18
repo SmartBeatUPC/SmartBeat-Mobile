@@ -19,6 +19,7 @@ class BodyStartMedicion extends StatefulWidget {
   final MedidaPresionPaciente? medidaPresionPaciente;
   final ReqMedicalInformation reqMedicalInformation;
   final int consultaMedicaId;
+  final int lastMedicalRecordId;
 
   const BodyStartMedicion({
     super.key,
@@ -27,6 +28,7 @@ class BodyStartMedicion extends StatefulWidget {
     required this.medidaPresionPaciente,
     required this.reqMedicalInformation,
     required this.consultaMedicaId,
+    required this.lastMedicalRecordId,
   });
 
   @override
@@ -138,6 +140,7 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                   arguments: AgregarPatologiasScreenArgs(
                     medicalInformationId: newMedicalInformationId!,
                     doctorLastName: doctorLastName!,
+                    lastMedicalRecordId: widget.lastMedicalRecordId,
                   ),
                 );
               },
@@ -167,6 +170,7 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
                 builder: (context) => AsistenteMedicoDialog(
                   newMedicalInformationId: newMedicalInformationId!,
                   doctorLastName: doctorLastName!,
+                  lastMedicalRecordId: widget.lastMedicalRecordId,
                 ),
               );
             },
