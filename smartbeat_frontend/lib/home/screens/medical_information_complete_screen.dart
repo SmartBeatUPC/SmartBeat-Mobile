@@ -121,7 +121,7 @@ class _MedicalInformationCompleteScreenState
                                       ),
                                     );
                                   },
-                                  child: const Text('Sugerencias chatgpt',
+                                  child: const Text('Sugerencias GPT',
                                       textAlign: TextAlign.center),
                                 ),
                               ),
