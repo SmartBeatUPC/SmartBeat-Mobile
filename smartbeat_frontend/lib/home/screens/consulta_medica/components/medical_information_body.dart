@@ -45,6 +45,17 @@ class MedicalInformationBody extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    Text('BMI:',
+                        style: textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
+                    const Spacer(),
+                    Text(medicalInformationComplete.bmi,
+                        style: textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                Row(
+                  children: [
                     Text('Altura:',
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w400)),
