@@ -118,8 +118,29 @@ class _MedicalInformationCompleteScreenState
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
+
                                 ),
-                              ],
+                                const SizedBox(width: 20.0),
+                                Expanded(
+                                child: OutlinedButton(
+                                onPressed: () {
+                                Navigator.pushNamed(
+                                context,
+                                ChatBotScreen.route,
+                                arguments: ChatBotScreenArgs(
+                                medicalInformationId:
+                                medicalInformationId,
+                                doctorLastName: infoAppCubit
+                                    .infoApp.dataUser!.lastName!,
+                                lastMedicalRecordId: medicalRecordId,
+                                  ),
+                                );
+                                },
+                                child: const Text('Sugerencias',
+                                textAlign: TextAlign.center),
+                                ),
+                                ),
+                                ],
                               if (state.medicalInformationComplete
                                       .diagnosticExist ==
                                   'Realizado') ...[
