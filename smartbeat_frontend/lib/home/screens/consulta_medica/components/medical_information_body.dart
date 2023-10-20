@@ -45,7 +45,7 @@ class MedicalInformationBody extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text('BMI:',
+                    Text('IMC:',
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w400)),
                     const Spacer(),
@@ -56,7 +56,7 @@ class MedicalInformationBody extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text('Altura:',
+                    Text('Altura (m):',
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w400)),
                     const Spacer(),
@@ -67,7 +67,7 @@ class MedicalInformationBody extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text('Peso:',
+                    Text('Peso (kg):',
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w400)),
                     const Spacer(),

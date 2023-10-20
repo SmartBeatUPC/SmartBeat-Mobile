@@ -64,13 +64,13 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
               keyboardType: const TextInputType.numberWithOptions(),
               inputFormatters: [CurrencyInputFormatter()],
               formControl: _form.talla,
-              label: 'Talla',
+              label: 'Talla (m)',
             ),
             CustomReactiveTextField(
               hintText: '000.00',
               keyboardType: const TextInputType.numberWithOptions(),
               inputFormatters: [CurrencyInputFormatter()],
-              label: 'Peso',
+              label: 'Peso (kg)',
               formControl: _form.peso,
             ),
             Row(
