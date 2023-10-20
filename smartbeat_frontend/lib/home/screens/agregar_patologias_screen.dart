@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/patologias_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/states/patologias_state.dart';
 import 'package:smartbeat_frontend/home/models/Patologia.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/components/asistente_medico_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 
 class AgregarPatologiasScreen extends StatefulWidget {
   final AgregarPatologiasScreenArgs args;
@@ -20,7 +23,19 @@ class AgregarPatologiasScreen extends StatefulWidget {
 
 class _AgregarPatologiasScreenState extends State<AgregarPatologiasScreen> {
   final TextEditingController _patologiaController = TextEditingController();
-  final List<Patologia> _patologiasList = [];
+  List<Patologia> _patologiasList = [];
+
+  Future<void> updatePatologias() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? formString = prefs.getString(AppConstants.keyPatologias);
+    if (formString != null) {
+      List<dynamic> patologiasMap = jsonDecode(formString)['patologias'];
+      for (var e in patologiasMap) {
+        _patologiasList.add(Patologia(pathology: e.toString()));
+      }
+    }
+    setState(() {});
+  }
 
   void _agregarPatologia() {
     setState(() {
@@ -36,6 +51,12 @@ class _AgregarPatologiasScreenState extends State<AgregarPatologiasScreen> {
     setState(() {
       _patologiasList.removeAt(index);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updatePatologias();
   }
 
   @override

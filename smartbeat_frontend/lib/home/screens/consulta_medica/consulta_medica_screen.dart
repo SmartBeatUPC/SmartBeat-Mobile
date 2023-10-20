@@ -1,9 +1,16 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.dart';
+import 'package:smartbeat_frontend/home/bloc/cubit/last_medical_information_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/medical_information_complete_cubit.dart';
+import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
+import 'package:smartbeat_frontend/home/bloc/states/last_medical_information_state.dart';
 import 'package:smartbeat_frontend/home/bloc/states/medical_information_complete_state.dart';
-import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
+import 'package:smartbeat_frontend/home/forms/info_medica_form.dart';
+import 'package:smartbeat_frontend/home/models/medical_information.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/informacion_medica_dialog.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/lista_historial_mediciones.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/stacked_bar_chart.dart';
@@ -11,9 +18,11 @@ import 'package:smartbeat_frontend/home/screens/consulta_medica/components/medic
 import 'package:smartbeat_frontend/home/screens/diagnostico/diagnostic_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
+import 'package:smartbeat_frontend/shared/components/tab_buttons.dart';
 import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+enum TypeFilter { Todos, Hoy, Diagnostico }
 
 class ConsultaMedicaScreen extends StatefulWidget {
   static String route = 'consulta_medica_screen';
@@ -27,130 +36,227 @@ class ConsultaMedicaScreen extends StatefulWidget {
 
 class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
   late int medicalRecordId;
+  List<String> typeFilterOptions =
+      TypeFilter.values.map((type) => type.name).toList();
+  TypeFilter selectedType = TypeFilter.Todos;
+  int selectedTypeIndex = 0;
+
+  Future<void> setInformacionMedicaForm(
+      MedicalInformation medicalInformation) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    InfoMedicaForm form = InfoMedicaForm(
+        height: double.parse(medicalInformation.height),
+        weight: double.parse(medicalInformation.weight),
+        smoke: medicalInformation.smoke,
+        sedentary: medicalInformation.sedentary,
+        alcohol: medicalInformation.alcohol);
+    Map<String, dynamic>? infoMedicaForm = form.rawValue;
+    await prefs.setString(AppConstants.keyInfoApp, jsonEncode(infoMedicaForm));
+  }
+
+  Future<void> setPatologias(List<String> patologias) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic>? patologiasMap = {'patologias': patologias};
+    await prefs.setString(
+        AppConstants.keyPatologias, jsonEncode(patologiasMap));
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-
-    return BlocProvider(
-      create: (context) => MedicalInformationCompleteCubit(),
-      child: BlocConsumer<MedicalInformationCompleteCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MedicalInformationCompleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => HistorialMedicionesCubit()
+            ..fetch(
+              widget.args.consultaMedicaId,
+              TypeFilter.Todos,
+            ),
+        ),
+        BlocProvider(
+          create: (context) => LastMedicalInformationCubit()
+            ..fetch(
+              widget.args.consultaMedicaId,
+            ),
+        )
+      ],
+      child: BlocBuilder<MedicalInformationCompleteCubit,
           MedicalInformationCompleteState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          final cubit =
-              BlocProvider.of<MedicalInformationCompleteCubit>(context);
+        builder: (contextMedicalInformation, stateMedicalInformation) {
+          final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
+              contextMedicalInformation);
 
-          return CustomScaffold(
-            useAppBar: true,
-            backgroundColor: Colors.white,
-            body: Loading(
-              isLoading: state is MedicalInformationCompleteLoading,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 15.0),
-                      StackedBarChart(
-                        numberOfBars: widget.args.listHistorialMedicion.length,
-                        progressValues: widget.args.listHistorialMedicion
-                            .map((medicion) => medicion.ppg.ppgBar)
-                            .toList(),
-                        dates: widget.args.listHistorialMedicion
-                            .map((medicion) =>
-                                Utils.formatearFecha(medicion.ppg.ppgDate))
-                            .toList(),
-                        clasificationValues: widget.args.listHistorialMedicion
-                            .map((medicion) => medicion.ppg.ppgClasification)
-                            .toList(),
-                      ),
-                      const SizedBox(height: 20.0),
-                      Row(
-                        children: [
-                          Text(
-                            'Historial Medico',
-                            style: textTheme.headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          ElevatedButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => InformacionMedicaDialog(
-                                  consultaMedicaId:
-                                      widget.args.consultaMedicaId,
-                                  lastMedicalRecordId:
-                                      widget.args.lastMedicalRecordId,
-                                ),
-                              );
-                            },
-                            child: Text('+ Presion'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 15.0),
-                      HistorialMedicionesList(
-                        mediciones: widget.args.listHistorialMedicion,
-                        onTapRowHistorialMedicion: (rowMedicion) {
-                          cubit.fetch(rowMedicion.ppg.medicalInformationId);
-                          medicalRecordId = rowMedicion.medicalRecordId;
-                        },
-                      ),
-                      const SizedBox(height: 15.0),
-                      if (state is MedicalInformationCompleteSuccess) ...[
-                        MedicalInformationBody(
-                          medicalInformationComplete:
-                              state.medicalInformationComplete,
-                          showSectionPresionArterial: false,
-                          doctorPhone: widget.args.doctorPhone,
-                        ),
-                        Row(
+          return BlocBuilder<HistorialMedicionesCubit,
+              HistorialMedicionesState>(
+            builder: (contextHistorialMediciones, stateHistorialMediciones) {
+              final cubitHistorialMediciones =
+                  BlocProvider.of<HistorialMedicionesCubit>(
+                      contextHistorialMediciones);
+
+              return BlocConsumer<LastMedicalInformationCubit,
+                  LastMedicalInformationState>(listener: (context, state) {
+                if (state is LastMedicalInformationSuccess) {
+                  setInformacionMedicaForm(
+                      state.lastMedicalInformation.lastMedicalInformation);
+                  setPatologias(state.lastMedicalInformation.patologias);
+                }
+              }, builder: (context, state) {
+                return CustomScaffold(
+                  useAppBar: true,
+                  backgroundColor: Colors.white,
+                  body: Loading(
+                    isLoading: stateMedicalInformation
+                            is MedicalInformationCompleteLoading ||
+                        stateHistorialMediciones
+                            is HistorialMedicionesLoading ||
+                        state is LastMedicalInformationLoading,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    DiagnosticScreen.route,
-                                    arguments: DiagnosticScreenArgs(
-                                      medicalRecordId: medicalRecordId,
-                                    ),
-                                  );
-                                },
-                                child: const Text('Ver diagnostico'),
+                            const SizedBox(height: 15.0),
+                            if (stateHistorialMediciones
+                                is HistorialMedicionesSuccess) ...[
+                              StackedBarChart(
+                                numberOfBars: cubitHistorialMediciones
+                                    .listConsultaMedica.length,
+                                progressValues: cubitHistorialMediciones
+                                    .listConsultaMedica
+                                    .map((medicion) => medicion.ppg.ppgBar)
+                                    .toList(),
+                                dates: cubitHistorialMediciones
+                                    .listConsultaMedica
+                                    .map((medicion) => Utils.formatearFecha(
+                                        medicion.ppg.ppgDate))
+                                    .toList(),
+                                clasificationValues: cubitHistorialMediciones
+                                    .listConsultaMedica
+                                    .map((medicion) =>
+                                        medicion.ppg.ppgClasification)
+                                    .toList(),
                               ),
-                            ),
-                            const SizedBox(width: 15.0),
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Utils.redirectToWsp(
-                                      widget.args.doctorPhone, context);
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      FontAwesomeIcons.whatsapp,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 5.0),
-                                    Text('Contactar'),
-                                  ],
+                              const SizedBox(height: 20.0),
+                            ],
+                            Row(
+                              children: [
+                                Text(
+                                  'Historial Medico',
+                                  style: textTheme.headlineSmall
+                                      ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
-                              ),
+                                Spacer(),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: contextMedicalInformation,
+                                      builder: (context) =>
+                                          InformacionMedicaDialog(
+                                        consultaMedicaId:
+                                            widget.args.consultaMedicaId,
+                                        lastMedicalRecordId:
+                                            widget.args.lastMedicalRecordId,
+                                      ),
+                                    );
+                                  },
+                                  child: Text('+ Presion'),
+                                ),
+                              ],
                             ),
+                            const SizedBox(height: 15.0),
+                            TabButtons(
+                              options: typeFilterOptions,
+                              onOptionSelected: (index) {
+                                selectedTypeIndex = index;
+                                selectedType = TypeFilter.values[index];
+                                cubitHistorialMediciones.fetch(
+                                    widget.args.consultaMedicaId, selectedType);
+                                setState(() {});
+                              },
+                              selectedIndex: selectedTypeIndex,
+                            ),
+                            const SizedBox(height: 15.0),
+                            if (stateHistorialMediciones
+                                is HistorialMedicionesSuccess)
+                              HistorialMedicionesList(
+                                mediciones:
+                                    cubitHistorialMediciones.listConsultaMedica,
+                                onTapRowHistorialMedicion: (rowMedicion) {
+                                  cubit.fetch(
+                                      rowMedicion.ppg.medicalInformationId);
+                                  medicalRecordId = rowMedicion.medicalRecordId;
+                                },
+                              ),
+                            if (stateHistorialMediciones
+                                is HistorialMedicionesFailure)
+                              Center(
+                                child: Text(selectedType == TypeFilter.Hoy
+                                    ? 'No se ha elaborado una presión arterial hoy'
+                                    : 'No se ha recibido ningún Diagnóstico'),
+                              ),
+                            const SizedBox(height: 15.0),
+                            if (stateMedicalInformation
+                                is MedicalInformationCompleteSuccess) ...[
+                              MedicalInformationBody(
+                                medicalInformationComplete:
+                                    stateMedicalInformation
+                                        .medicalInformationComplete,
+                                showSectionPresionArterial: false,
+                                doctorPhone: widget.args.doctorPhone,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                          contextMedicalInformation,
+                                          DiagnosticScreen.route,
+                                          arguments: DiagnosticScreenArgs(
+                                            medicalRecordId: medicalRecordId,
+                                          ),
+                                        );
+                                      },
+                                      child: const Text('Ver diagnostico'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15.0),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Utils.redirectToWsp(
+                                            widget.args.doctorPhone,
+                                            contextMedicalInformation);
+                                      },
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            FontAwesomeIcons.whatsapp,
+                                            color: Colors.white,
+                                          ),
+                                          SizedBox(width: 5.0),
+                                          Text('Contactar'),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ],
                         ),
-                      ],
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
+                );
+              });
+            },
           );
         },
       ),
@@ -159,13 +265,11 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
 }
 
 class ConsultaMedicaScreenArgs {
-  final List<HistorialMedicion> listHistorialMedicion;
   final int consultaMedicaId;
   final int lastMedicalRecordId;
   final String doctorPhone;
 
   const ConsultaMedicaScreenArgs({
-    required this.listHistorialMedicion,
     required this.consultaMedicaId,
     required this.lastMedicalRecordId,
     required this.doctorPhone,

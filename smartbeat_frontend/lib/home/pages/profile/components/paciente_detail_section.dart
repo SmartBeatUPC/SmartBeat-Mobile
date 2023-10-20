@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'informacion_medica_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
@@ -9,8 +10,6 @@ import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
-
-import 'informacion_medica_dialog.dart';
 
 class PacienteDetailSection extends StatefulWidget {
   final List<ConsultaMedica> listConsultaMedica;
@@ -76,7 +75,6 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                   context,
                   ConsultaMedicaScreen.route,
                   arguments: ConsultaMedicaScreenArgs(
-                      listHistorialMedicion: state.listHistorialMedicion,
                       consultaMedicaId: consultaMedicaId,
                       lastMedicalRecordId: lastMedicalRecordId,
                       doctorPhone: doctorPhone),
@@ -166,7 +164,7 @@ class _PacienteDetailSectionState extends State<PacienteDetailSection> {
                             lastMedicalRecordId = consulta.lastMedicalRecordId;
                             doctorPhone = consulta.doctorData.phone!;
                             consultaMedicaId = consulta.consultation.id;
-                            cubit.fetch(consultaMedicaId);
+                            cubit.fetch(consultaMedicaId, TypeFilter.Todos);
                             setState(() {});
                           },
                           title: RichText(

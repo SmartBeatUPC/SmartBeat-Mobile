@@ -2,43 +2,49 @@ import 'package:reactive_forms/reactive_forms.dart';
 import 'package:smartbeat_frontend/shared/extensions/form_group_extension.dart';
 
 class InfoMedicaForm extends FormGroup {
-  FormControl<double> get talla => get<double>('talla');
+  FormControl<double> get talla => get<double>('height');
 
-  FormControl<double> get peso => get<double>('peso');
+  FormControl<double> get peso => get<double>('weight');
 
-  FormControl<bool> get fumasteEstaSemana => get<bool>('fumasteEstaSemana');
+  FormControl<bool> get fumasteEstaSemana => get<bool>('smoke');
 
-  FormControl<bool> get tomasteAlcohol => get<bool>('tomasteAlcohol');
+  FormControl<bool> get tomasteAlcohol => get<bool>('alcohol');
 
-  FormControl<bool> get realizasteActividadFisica =>
-      get<bool>('realizasteActividadFisica');
+  FormControl<bool> get realizasteActividadFisica => get<bool>('sedentary');
 
-  InfoMedicaForm()
-      : super(fb.group({
-          'talla': FormControl<double>(
+  InfoMedicaForm({
+    double height = 0.0,
+    double weight = 0.0,
+    bool smoke = false,
+    bool alcohol = false,
+    bool sedentary = false,
+  }) : super(fb.group({
+          'height': FormControl<double>(
+            validators: [
+              Validators.required,
+            ],
+            value: height,
+          ),
+          'weight': FormControl<double>(
+            validators: [
+              Validators.required,
+            ],
+            value: weight,
+          ),
+          'smoke': FormControl<bool>(
+            value: smoke,
             validators: [
               Validators.required,
             ],
           ),
-          'peso': FormControl<double>(
+          'alcohol': FormControl<bool>(
+            value: alcohol,
             validators: [
               Validators.required,
             ],
           ),
-          'fumasteEstaSemana': FormControl<bool>(
-            value: false,
-            validators: [
-              Validators.required,
-            ],
-          ),
-          'tomasteAlcohol': FormControl<bool>(
-            value: false,
-            validators: [
-              Validators.required,
-            ],
-          ),
-          'realizasteActividadFisica': FormControl<bool>(
-            value: false,
+          'sedentary': FormControl<bool>(
+            value: sedentary,
             validators: [
               Validators.required,
             ],

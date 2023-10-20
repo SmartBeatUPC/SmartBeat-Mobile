@@ -2,10 +2,12 @@ import 'package:smartbeat_frontend/config/environment/environment.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
 import 'package:smartbeat_frontend/home/models/diagnostic.dart';
 import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
+import 'package:smartbeat_frontend/home/models/last_medical_information.dart';
 import 'package:smartbeat_frontend/home/models/medical_information_ppg.dart';
 import 'package:smartbeat_frontend/home/models/medical_information_req.dart';
 import 'package:smartbeat_frontend/home/models/register_consulta_medica_req.dart';
 import 'package:smartbeat_frontend/home/models/register_diagnostic_req.dart';
+import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/exception/service_exception.dart';
 import 'package:smartbeat_frontend/shared/services/http_service.dart';
@@ -43,15 +45,28 @@ class ConsultaMedicaService {
     }
   }
 
+  String getNumberFilterOfTypeFilter(TypeFilter typeFilter) {
+    if (typeFilter == TypeFilter.Todos) {
+      return '1';
+    }
+    if (typeFilter == TypeFilter.Hoy) {
+      return '2';
+    }
+    if (typeFilter == TypeFilter.Diagnostico) {
+      return '3';
+    }
+    return '1';
+  }
+
   Future<List<HistorialMedicion>> getListHistorialMediciones(
-      int consultaMedicaId) async {
-    String url = "$_apiUrlDoctor/$consultaMedicaId/ppgs";
+      int consultaMedicaId, TypeFilter typeFilter) async {
+    String url =
+        "$_apiUrlDoctor/$consultaMedicaId/ppgs/${getNumberFilterOfTypeFilter(typeFilter)}";
 
     dynamic response = await _httpService.get(url);
 
     if (response['ppgs'] is List<dynamic>) {
-      List<dynamic> historialMedicionesListMap =
-          response['ppgs'];
+      List<dynamic> historialMedicionesListMap = response['ppgs'];
 
       List<HistorialMedicion> historialMedicionesList =
           historialMedicionesListMap
@@ -100,5 +115,15 @@ class ConsultaMedicaService {
       throw ServiceException(message: response["message"]);
     }
     return Diagnostic.from(response);
+  }
+
+  Future<LastMedicalInformation> getLastMedicalInformation(
+      int medicalInformationId) async {
+    String url =
+        "${Environment.api}/medical-consultation/$medicalInformationId/medical-information/last";
+
+    dynamic response = await _httpService.get(url);
+
+    return LastMedicalInformation.from(response);
   }
 }

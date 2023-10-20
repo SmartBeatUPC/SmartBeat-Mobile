@@ -8,6 +8,8 @@ class AppConstants {
     DialogHeightSize.large: 850.0
   });
   static const String keyInfoApp = 'infoApp';
+  static const String keyPatologias = 'patologias';
+  static const String keyInfoMedica = 'infoMedica';
   static const String keyRememberedForm = 'rememberedLoginValues';
   static const String codigoPaisPeru = '+51';
 }

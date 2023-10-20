@@ -44,8 +44,8 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
             context,
             MedicalInformationCompleteScreen.route,
             arguments: MedicalInformationCompleteScreenArgs(
-              mediciones: state.listHistorialMedicion,
               doctorPhone: doctorPhone,
+              consultaMedicaId: consultaMedicaId,
             ),
           );
         }
@@ -181,7 +181,8 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
                     onTap: () {
                       lastMedicalRecordId = consulta.lastMedicalRecordId;
                       consultaMedicaId = consulta.consultation.id;
-                      cubitHistorialMediciones.fetch(consultaMedicaId);
+                      cubitHistorialMediciones.fetch(
+                          consultaMedicaId, TypeFilter.Todos);
                       doctorPhone = consulta.doctorData.phone!;
                       setState(() {});
                     },

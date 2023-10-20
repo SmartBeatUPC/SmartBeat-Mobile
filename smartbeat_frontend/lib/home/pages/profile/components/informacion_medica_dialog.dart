@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartbeat_frontend/home/forms/info_medica_form.dart';
 import 'package:smartbeat_frontend/home/models/req_medical_information.dart';
 import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.dart';
 import 'package:smartbeat_frontend/shared/formatters/currency_formatter.dart';
+import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 
 class InformacionMedicaDialog extends StatefulWidget {
   final int consultaMedicaId;
@@ -24,6 +27,21 @@ class InformacionMedicaDialog extends StatefulWidget {
 
 class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
   InfoMedicaForm _form = InfoMedicaForm();
+
+  Future<void> updateFormWithInformacionMedicaForm() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? formString = prefs.getString(AppConstants.keyInfoApp);
+    if (formString != null) {
+      _form.patchValue(jsonDecode(formString));
+    }
+    print("Formulario : " + formString!);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateFormWithInformacionMedicaForm();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +104,9 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
               height: 25.0,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 ReqMedicalInformation reqMedicalInformation =
                     ReqMedicalInformation.from(_form.rawValue);
-
                 Navigator.pushNamed(
                   context,
                   AnalisisMedicoScreen.route,

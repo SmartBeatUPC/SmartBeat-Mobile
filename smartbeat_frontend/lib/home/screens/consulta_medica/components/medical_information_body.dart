@@ -104,7 +104,7 @@ class MedicalInformationBody extends StatelessWidget {
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.w400)),
                     const Spacer(),
-                    Text(medicalInformationComplete.sedentary ? 'Si' : 'No',
+                    Text(!medicalInformationComplete.sedentary ? 'Si' : 'No',
                         style: textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.bold)),
                   ],

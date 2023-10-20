@@ -11,7 +11,6 @@ import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_pers
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
-import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class ProfilePage extends StatelessWidget {
