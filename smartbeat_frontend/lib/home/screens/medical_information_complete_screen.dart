@@ -120,6 +120,29 @@ class _MedicalInformationCompleteScreenState
                               ],
                             ),
                           ),
+                          const SizedBox(height: 10.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                contextMedicalInformation,
+                                RegistrarDiagnosticoScreen.route,
+                                arguments: RegistrarDiagnosticoScreenArgs(
+                                  idMedicalRecord: medicalRecordId,
+                                ),
+                              );
+                            },
+                            child: const Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Realizar diagnostico',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
                         ],
                         OutlinedButton(
                           onPressed: () {
@@ -135,28 +158,6 @@ class _MedicalInformationCompleteScreenState
                               ),
                               SizedBox(width: 10.0),
                               Text('Contactar'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              contextMedicalInformation,
-                              RegistrarDiagnosticoScreen.route,
-                              arguments: RegistrarDiagnosticoScreenArgs(
-                                idMedicalRecord: medicalRecordId,
-                              ),
-                            );
-                          },
-                          child: const Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Realizar diagnostico',
-                                textAlign: TextAlign.center,
-                              ),
                             ],
                           ),
                         ),
