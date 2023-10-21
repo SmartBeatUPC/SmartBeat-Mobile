@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartbeat_frontend/seguridad/screens/registro/screens/datos_personales_screen.dart';
 import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,5 +35,10 @@ class Utils {
       Utils.showSnackBar(
           context, 'WhatsApp no esta instalado en este dispositivo');
     }
+  }
+
+  static void eliminarPatologiasInfoMedica() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

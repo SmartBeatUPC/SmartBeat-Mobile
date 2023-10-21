@@ -13,8 +13,19 @@ import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    Utils.eliminarPatologiasInfoMedica();
+  }
 
   @override
   Widget build(BuildContext context) {

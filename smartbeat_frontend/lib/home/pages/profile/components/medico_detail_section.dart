@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.dart';
-import 'package:smartbeat_frontend/home/bloc/cubit/medical_information_complete_cubit.dart';
-import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
-import 'package:smartbeat_frontend/home/components/custom_info_card.dart';
 import 'package:smartbeat_frontend/home/models/consulta_medica.dart';
-import 'package:smartbeat_frontend/home/models/medical_information_complete.dart';
 import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_screen.dart';
 import 'package:smartbeat_frontend/home/screens/medical_information_complete_screen.dart';
-import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
-import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
-import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class MedicoDetailSection extends StatefulWidget {
@@ -35,60 +27,38 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
     final textTheme = Theme.of(context).textTheme;
     final infoAppCubit = BlocProvider.of<InfoAppCubit>(context);
 
-    return BlocProvider(
-      create: (context) => HistorialMedicionesCubit(),
-      child: BlocConsumer<HistorialMedicionesCubit, HistorialMedicionesState>(
-          listener: (context, state) {
-        if (state is HistorialMedicionesSuccess) {
-          Navigator.pushNamed(
-            context,
-            MedicalInformationCompleteScreen.route,
-            arguments: MedicalInformationCompleteScreenArgs(
-              doctorPhone: doctorPhone,
-              consultaMedicaId: consultaMedicaId,
-            ),
-          );
-        }
-        if (state is HistorialMedicionesFailure) {
-          Utils.showSnackBar(context,
-              'Aun no se ha completado el registro de presion del paciente');
-        }
-      }, builder: (context, state) {
-        final cubitHistorialMediciones =
-            BlocProvider.of<HistorialMedicionesCubit>(context);
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Text(
-                      '${infoAppCubit.infoApp.dataUser!.age!} Años',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                          color: AppColors.acentText,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Text(infoAppCubit.infoApp.email ?? '',
-                        textAlign: TextAlign.center),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Text('+51${infoAppCubit.infoApp.dataUser!.phone!}',
-                        textAlign: TextAlign.center),
-                  ),
-                ],
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Text(
+                  '${infoAppCubit.infoApp.dataUser!.age!} Años',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: AppColors.acentText,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            /*
+              Flexible(
+                flex: 2,
+                child: Text(infoAppCubit.infoApp.email ?? '',
+                    textAlign: TextAlign.center),
+              ),
+              Flexible(
+                flex: 1,
+                child: Text('+51${infoAppCubit.infoApp.dataUser!.phone!}',
+                    textAlign: TextAlign.center),
+              ),
+            ],
+          ),
+        ),
+        /*
             SizedBox(height: 10.0),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -169,54 +139,64 @@ class _MedicoDetailSectionState extends State<MedicoDetailSection> {
               ),
             ),
                          */
-            Column(
-              children: widget.listConsultaMedica.map((consulta) {
-                return Card(
-                  elevation: 3,
-                  shadowColor: Colors.black,
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    onTap: () {
-                      lastMedicalRecordId = consulta.lastMedicalRecordId;
-                      consultaMedicaId = consulta.consultation.id;
-                      cubitHistorialMediciones.fetch(
-                          consultaMedicaId, TypeFilter.Todos);
-                      doctorPhone = consulta.doctorData.phone!;
-                      setState(() {});
-                    },
-                    title: RichText(
-                      text: TextSpan(
-                        text: 'Paciente: ',
-                        style: textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        children: [
-                          TextSpan(
-                            text:
-                                '${consulta.doctorData.name!} ${consulta.doctorData.lastName!}',
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
+        Column(
+          children: widget.listConsultaMedica.map((consulta) {
+            return Card(
+              elevation: 3,
+              shadowColor: Colors.black,
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                onTap: () {
+                  lastMedicalRecordId = consulta.lastMedicalRecordId;
+                  consultaMedicaId = consulta.consultation.id;
+                  doctorPhone = consulta.doctorData.phone!;
+                  setState(() {});
+
+                  if(consulta.lastMedicalRecordId != -1)
+                    Navigator.pushNamed(
+                      context,
+                      MedicalInformationCompleteScreen.route,
+                      arguments: MedicalInformationCompleteScreenArgs(
+                        doctorPhone: doctorPhone,
+                        consultaMedicaId: consultaMedicaId,
                       ),
+                    );
+                  if(consulta.lastMedicalRecordId == -1){
+                    Utils.showSnackBar(context,
+                        'Aun no se ha completado el registro de presion del paciente');
+                  }
+                },
+                title: RichText(
+                  text: TextSpan(
+                    text: 'Paciente: ',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
-                    subtitle: Text(
-                      consulta.lastRecordDate,
-                      textAlign: TextAlign.end,
-                      style: textTheme.displaySmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.secondary),
-                    ),
+                    children: [
+                      TextSpan(
+                        text:
+                        '${consulta.doctorData.name!} ${consulta.doctorData.lastName!}',
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              }).toList(),
-            ),
-          ],
-        );
-      }),
+                ),
+                subtitle: Text(
+                  consulta.lastRecordDate,
+                  textAlign: TextAlign.end,
+                  style: textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.secondary),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }

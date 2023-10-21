@@ -34,7 +34,6 @@ class _InformacionMedicaDialogState extends State<InformacionMedicaDialog> {
     if (formString != null) {
       _form.patchValue(jsonDecode(formString));
     }
-    print("Formulario : " + formString!);
   }
 
   @override
