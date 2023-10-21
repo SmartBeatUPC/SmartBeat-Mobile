@@ -79,24 +79,22 @@ class _MedirPresionManualDialogState extends State<MedirPresionManualDialog> {
                   const SizedBox(height: 10.0),
                   CustomReactiveTextField(
                     formControl: cubit.presionForm.bloodPressureSistolic,
-                    hintText: '000.0',
+                    hintText: '0',
                     keyboardType: const TextInputType.numberWithOptions(),
-                    inputFormatters: [CurrencyInputFormatter(decimalPlaces: 1)],
                     label: 'SYS',
                   ),
                   const SizedBox(height: 5.0),
                   CustomReactiveTextField(
                     formControl: cubit.presionForm.bloodPressureDiastolic,
-                    hintText: '000.0',
+                    hintText: '0',
                     keyboardType: const TextInputType.numberWithOptions(),
-                    inputFormatters: [CurrencyInputFormatter(decimalPlaces: 1)],
                     label: 'DIA',
                   ),
                   const SizedBox(height: 5.0),
                   CustomReactiveTextField(
                     formControl:
                         cubit.presionForm.bloodPresheartRatesureDiastolic,
-                    hintText: '000.0',
+                    hintText: '0',
                     keyboardType: const TextInputType.numberWithOptions(),
                     label: 'BPM',
                   ),

@@ -72,6 +72,9 @@ class DiagnosticScreen extends StatelessWidget {
                                           const EdgeInsets.only(bottom: 20.0),
                                       child: CustomShadowContainer(
                                         padding: EdgeInsets.all(10),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.white,
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -90,19 +93,27 @@ class DiagnosticScreen extends StatelessWidget {
                                                 children: [
                                                   Row(
                                                     children: [
-                                                      Text(
-                                                          'Duración: ${e.duration}'),
+                                                      Flexible(
+                                                        child: Text(
+                                                            'Duración: ${e.duration}'),
+                                                      ),
                                                       Spacer(),
-                                                      Text('Via: ${e.via}'),
+                                                      Flexible(
+                                                          child: Text(
+                                                              'Via: ${e.via}')),
                                                     ],
                                                   ),
                                                   Row(
                                                     children: [
-                                                      Text(
-                                                          'Frecuencia: ${e.frequency}'),
+                                                      Flexible(
+                                                        child: Text(
+                                                            'Frecuencia: ${e.frequency}'),
+                                                      ),
                                                       Spacer(),
-                                                      Text(
-                                                        'Dosis: ${e.dosage}',
+                                                      Flexible(
+                                                        child: Text(
+                                                          'Dosis: ${e.dosage}',
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -111,9 +122,6 @@ class DiagnosticScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.white,
                                       ),
                                     ),
                                   )

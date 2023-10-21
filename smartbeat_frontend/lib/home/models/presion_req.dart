@@ -1,6 +1,6 @@
 class PresionReq {
-  final double bloodPressureSistolic;
-  final double bloodPressureDiastolic;
+  final int bloodPressureSistolic;
+  final int bloodPressureDiastolic;
   final int bloodPresheartRatesureDiastolic;
 
   const PresionReq({
@@ -10,8 +10,8 @@ class PresionReq {
   });
 
   Map<String, dynamic> toMap() => {
-        'bloodPressureSistolic': bloodPressureSistolic.toStringAsFixed(2),
-        'bloodPressureDiastolic': bloodPressureDiastolic.toStringAsFixed(2),
+        'bloodPressureSistolic': '$bloodPressureSistolic',
+        'bloodPressureDiastolic': '$bloodPressureDiastolic',
         'heartRate': bloodPresheartRatesureDiastolic
       };
 

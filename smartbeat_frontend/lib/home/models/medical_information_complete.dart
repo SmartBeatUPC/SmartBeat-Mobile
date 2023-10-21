@@ -7,8 +7,8 @@ class MedicalInformationComplete {
   final bool sedentary;
   final String bmi;
   final String heartRate;
-  final String bloodPressureSistolic;
-  final String bloodPressureDiastolic;
+  final int bloodPressureSistolic;
+  final int bloodPressureDiastolic;
   final String diagnosticExist;
   final List<String> pathologies;
 
@@ -36,9 +36,11 @@ class MedicalInformationComplete {
         heartRate = '${data['heartRate']}',
         alcohol = data['alcohol'],
         sedentary = data['sedentary'],
-        bloodPressureSistolic = data['bloodPressureSistolic'],
+        bloodPressureSistolic =
+            double.parse(data['bloodPressureSistolic']).toInt(),
         diagnosticExist = data['diagnosticExist'],
-        bloodPressureDiastolic = data['bloodPressureDiastolic'],
+        bloodPressureDiastolic =
+            double.parse(data['bloodPressureDiastolic']).toInt(),
         pathologies = (data['pathologies'] as List<dynamic>)
             .map((item) => item.toString())
             .toList();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/historial_mediciones_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/cubit/medical_information_complete_cubit.dart';
 import 'package:smartbeat_frontend/home/bloc/states/historial_mediciones_state.dart';
@@ -12,9 +13,11 @@ import 'package:smartbeat_frontend/home/screens/consulta_medica/consulta_medica_
 import 'package:smartbeat_frontend/home/screens/diagnostico/diagnostic_screen.dart';
 import 'package:smartbeat_frontend/home/screens/registrar_diagnostico_screen.dart';
 import 'package:smartbeat_frontend/seguridad/bloc/cubit/info_app_cubit.dart';
+import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/components/tab_buttons.dart';
+import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class MedicalInformationCompleteScreen extends StatefulWidget {
@@ -58,12 +61,119 @@ class _MedicalInformationCompleteScreenState
             ),
         )
       ],
-      child: BlocBuilder<MedicalInformationCompleteCubit,
-              MedicalInformationCompleteState>(
-          builder: (contextMedicalInformation, stateMedicalInformation) {
-        final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
-            contextMedicalInformation);
-        return BlocConsumer<HistorialMedicionesCubit, HistorialMedicionesState>(
+      child: BlocConsumer<MedicalInformationCompleteCubit,
+          MedicalInformationCompleteState>(
+        listener: (contextMedicalInformation, stateMedicalInformation) {
+          if (stateMedicalInformation is MedicalInformationCompleteSuccess) {
+            showDialog(
+              context: contextMedicalInformation,
+              builder: (contextMedicalInformation) => CustomDialog(
+                size: DialogHeightSize.large,
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        MedicalInformationBody(
+                          medicalInformationComplete: stateMedicalInformation
+                              .medicalInformationComplete,
+                          doctorPhone: widget.args.doctorPhone,
+                        ),
+                        if (stateMedicalInformation
+                                .medicalInformationComplete.diagnosticExist ==
+                            'Realizado')
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                contextMedicalInformation,
+                                DiagnosticScreen.route,
+                                arguments: DiagnosticScreenArgs(
+                                  medicalRecordId: medicalRecordId,
+                                ),
+                              );
+                            },
+                            child: const Text('Ver diagnostico'),
+                          ),
+                        const SizedBox(height: 5.0),
+                        if (stateMedicalInformation
+                                .medicalInformationComplete.diagnosticExist ==
+                            'Por realizar') ...[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                contextMedicalInformation,
+                                ChatBotScreen.route,
+                                arguments: ChatBotScreenArgs(
+                                  medicalInformationId: medicalInformationId,
+                                  doctorLastName:
+                                      infoAppCubit.infoApp.dataUser!.lastName!,
+                                  lastMedicalRecordId: medicalRecordId,
+                                ),
+                              );
+                            },
+                            child: const Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Sugerencias',
+                                    textAlign: TextAlign.center),
+                              ],
+                            ),
+                          ),
+                        ],
+                        OutlinedButton(
+                          onPressed: () {
+                            Utils.redirectToWsp(widget.args.doctorPhone,
+                                contextMedicalInformation);
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.whatsapp,
+                                color: AppColors.secondary,
+                              ),
+                              SizedBox(width: 10.0),
+                              Text('Contactar'),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              contextMedicalInformation,
+                              RegistrarDiagnosticoScreen.route,
+                              arguments: RegistrarDiagnosticoScreenArgs(
+                                idMedicalRecord: medicalRecordId,
+                              ),
+                            );
+                          },
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Realizar diagnostico',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        },
+        builder: (contextMedicalInformation, stateMedicalInformation) {
+          final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
+              contextMedicalInformation);
+          return BlocConsumer<HistorialMedicionesCubit,
+              HistorialMedicionesState>(
             listener: (context, state) {},
             builder: (context, state) {
               final cubitHistorialMediciones =
@@ -144,91 +254,16 @@ class _MedicalInformationCompleteScreenState
                                   ? 'No se ha elaborado una presión arterial hoy'
                                   : 'No se ha recibido ningún Diagnóstico'),
                             ),
-                          if (stateMedicalInformation
-                              is MedicalInformationCompleteSuccess) ...[
-                            MedicalInformationBody(
-                              medicalInformationComplete:
-                                  stateMedicalInformation
-                                      .medicalInformationComplete,
-                              doctorPhone: widget.args.doctorPhone,
-                            ),
-                            Row(
-                              children: [
-                                if (stateMedicalInformation
-                                        .medicalInformationComplete
-                                        .diagnosticExist ==
-                                    'Por realizar') ...[
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                          contextMedicalInformation,
-                                          RegistrarDiagnosticoScreen.route,
-                                          arguments:
-                                              RegistrarDiagnosticoScreenArgs(
-                                            idMedicalRecord: medicalRecordId,
-                                          ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        'Realizar diagnostico',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20.0),
-                                  Expanded(
-                                    child: OutlinedButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                          contextMedicalInformation,
-                                          ChatBotScreen.route,
-                                          arguments: ChatBotScreenArgs(
-                                            medicalInformationId:
-                                                medicalInformationId,
-                                            doctorLastName: infoAppCubit
-                                                .infoApp.dataUser!.lastName!,
-                                            lastMedicalRecordId:
-                                                medicalRecordId,
-                                          ),
-                                        );
-                                      },
-                                      child: const Text('Sugerencias',
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  ),
-                                ],
-                                if (stateMedicalInformation
-                                        .medicalInformationComplete
-                                        .diagnosticExist ==
-                                    'Realizado') ...[
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                          contextMedicalInformation,
-                                          DiagnosticScreen.route,
-                                          arguments: DiagnosticScreenArgs(
-                                            medicalRecordId: medicalRecordId,
-                                          ),
-                                        );
-                                      },
-                                      child: const Text('Ver diagnostico'),
-                                    ),
-                                  ),
-                                ]
-                              ],
-                            ),
-                            const SizedBox(height: 20.0),
-                          ]
                         ],
                       ),
                     ),
                   ),
                 ),
               );
-            });
-      }),
+            },
+          );
+        },
+      ),
     );
   }
 }

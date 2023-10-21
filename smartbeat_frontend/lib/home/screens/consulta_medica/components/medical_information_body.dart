@@ -23,8 +23,8 @@ class MedicalInformationBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     MedidaPresionPaciente medidaPresionPaciente = MedidaPresionPaciente(
-      sys: medicalInformationComplete.bloodPressureSistolic,
-      dia: medicalInformationComplete.bloodPressureDiastolic,
+      sys: '${medicalInformationComplete.bloodPressureSistolic}',
+      dia: '${medicalInformationComplete.bloodPressureDiastolic}',
       bpm: medicalInformationComplete.heartRate,
     );
     return Column(
@@ -35,7 +35,7 @@ class MedicalInformationBody extends StatelessWidget {
           style: textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           child: CustomShadowContainer(
             color: AppColors.primary.withOpacity(0.25),
             padding:
@@ -136,31 +136,10 @@ class MedicalInformationBody extends StatelessWidget {
           ),
         const SizedBox(height: 20.0),
         if (showSectionPresionArterial) ...[
-          Row(
-            children: [
-              Text(
-                'Presión arterial',
-                style: textTheme.headlineSmall
-                    ?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  Utils.redirectToWsp(doctorPhone, context);
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.whatsapp,
-                      color: Colors.white,
-                    ),
-                    SizedBox(width: 5.0),
-                    Text('Contactar'),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            'Presión arterial',
+            style: textTheme.headlineSmall
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10.0),
           MedidaPresionInfo(

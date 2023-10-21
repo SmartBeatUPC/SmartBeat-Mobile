@@ -16,6 +16,7 @@ import 'package:smartbeat_frontend/home/pages/profile/components/lista_historial
 import 'package:smartbeat_frontend/home/pages/profile/components/stacked_bar_chart.dart';
 import 'package:smartbeat_frontend/home/screens/consulta_medica/components/medical_information_body.dart';
 import 'package:smartbeat_frontend/home/screens/diagnostico/diagnostic_screen.dart';
+import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/components/tab_buttons.dart';
@@ -83,8 +84,65 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
             ),
         )
       ],
-      child: BlocBuilder<MedicalInformationCompleteCubit,
+      child: BlocConsumer<MedicalInformationCompleteCubit,
           MedicalInformationCompleteState>(
+        listener: (contextMedicalInformation, stateMedicalInformation) {
+          if (stateMedicalInformation is MedicalInformationCompleteSuccess) {
+            showDialog(
+              context: context,
+              builder: (contextMedicalInformation) => CustomDialog(
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Column(
+                    children: [
+                      MedicalInformationBody(
+                        medicalInformationComplete:
+                            stateMedicalInformation.medicalInformationComplete,
+                        showSectionPresionArterial: false,
+                        doctorPhone: widget.args.doctorPhone,
+                      ),
+                      Spacer(),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              contextMedicalInformation,
+                              DiagnosticScreen.route,
+                              arguments: DiagnosticScreenArgs(
+                                medicalRecordId: medicalRecordId,
+                              ),
+                            );
+                          },
+                          child: const Text('Ver diagnostico'),
+                        ),
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Utils.redirectToWsp(widget.args.doctorPhone,
+                                contextMedicalInformation);
+                          },
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.whatsapp,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 5.0),
+                              Text('Contactar'),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+        },
         builder: (contextMedicalInformation, stateMedicalInformation) {
           final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
               contextMedicalInformation);
@@ -199,56 +257,6 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                                     : 'No se ha recibido ningún Diagnóstico'),
                               ),
                             const SizedBox(height: 15.0),
-                            if (stateMedicalInformation
-                                is MedicalInformationCompleteSuccess) ...[
-                              MedicalInformationBody(
-                                medicalInformationComplete:
-                                    stateMedicalInformation
-                                        .medicalInformationComplete,
-                                showSectionPresionArterial: false,
-                                doctorPhone: widget.args.doctorPhone,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                          contextMedicalInformation,
-                                          DiagnosticScreen.route,
-                                          arguments: DiagnosticScreenArgs(
-                                            medicalRecordId: medicalRecordId,
-                                          ),
-                                        );
-                                      },
-                                      child: const Text('Ver diagnostico'),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 15.0),
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        Utils.redirectToWsp(
-                                            widget.args.doctorPhone,
-                                            contextMedicalInformation);
-                                      },
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            FontAwesomeIcons.whatsapp,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(width: 5.0),
-                                          Text('Contactar'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
                           ],
                         ),
                       ),

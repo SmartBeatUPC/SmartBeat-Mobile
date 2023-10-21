@@ -271,19 +271,25 @@ class _RegistrarDiagnosticoScreenState
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Text(
-                                                        'Duración: ${e.duration}'),
+                                                    Flexible(
+                                                      child: Text(
+                                                          'Duración: ${e.duration}'),
+                                                    ),
                                                     Spacer(),
-                                                    Text('Via: ${e.via}'),
+                                                    Flexible(child: Text('Via: ${e.via}')),
                                                   ],
                                                 ),
                                                 Row(
                                                   children: [
-                                                    Text(
-                                                        'Frecuencia: ${e.frequency}'),
+                                                    Flexible(
+                                                      child: Text(
+                                                          'Frecuencia: ${e.frequency}'),
+                                                    ),
                                                     Spacer(),
-                                                    Text(
-                                                      'Dosis: ${e.dosage}',
+                                                    Flexible(
+                                                      child: Text(
+                                                        'Dosis: ${e.dosage}',
+                                                      ),
                                                     ),
                                                   ],
                                                 ),

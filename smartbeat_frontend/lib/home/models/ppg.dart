@@ -1,7 +1,7 @@
 class PPG {
   final int id;
-  final String bloodPressureSistolic;
-  final String bloodPressureDiastolic;
+  final int bloodPressureSistolic;
+  final int bloodPressureDiastolic;
   final int heartRate;
   final String ppgDate;
   final int medicalInformationId;
@@ -21,8 +21,10 @@ class PPG {
 
   PPG.from(Map<String, dynamic> data)
       : id = data['id'],
-        bloodPressureSistolic = data['bloodPressureSistolic'],
-        bloodPressureDiastolic = data['bloodPressureDiastolic'],
+        bloodPressureSistolic =
+            double.parse(data['bloodPressureSistolic']).toInt(),
+        bloodPressureDiastolic =
+            double.parse(data['bloodPressureDiastolic']).toInt(),
         heartRate = data['heartRate'],
         ppgDate = data['ppgDate'],
         ppgBar = data['ppgBar'],

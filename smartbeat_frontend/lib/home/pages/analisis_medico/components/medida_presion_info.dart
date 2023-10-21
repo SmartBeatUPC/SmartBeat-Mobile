@@ -22,28 +22,29 @@ class MedidaPresionInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Container(
-            padding: const EdgeInsets.all(30.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 25.0),
             decoration: BoxDecoration(
               color: AppColors.secondary,
               borderRadius: BorderRadius.circular(25.0),
             ),
             width: double.infinity,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 RichText(
                   text: TextSpan(
                     text: medidaPresionPaciente.sys,
-                    style: textTheme.headlineMedium?.copyWith(
+                    style: textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                     children: [
                       TextSpan(
                         text: ' SYS',
-                        style: textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -55,14 +56,14 @@ class MedidaPresionInfo extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: medidaPresionPaciente.dia,
-                    style: textTheme.headlineMedium?.copyWith(
+                    style: textTheme.headlineLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                     children: [
                       TextSpan(
                         text: ' DIA',
-                        style: textTheme.titleMedium?.copyWith(
+                        style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -86,7 +87,9 @@ class MedidaPresionInfo extends StatelessWidget {
               height: 50.0,
               color: bpmColor,
             ),
-            const SizedBox(width: 5.0,),
+            const SizedBox(
+              width: 5.0,
+            ),
             RichText(
               text: TextSpan(
                 text: medidaPresionPaciente.bpm,

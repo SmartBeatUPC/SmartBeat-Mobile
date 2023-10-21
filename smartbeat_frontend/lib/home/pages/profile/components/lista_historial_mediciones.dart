@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smartbeat_frontend/home/models/historial_medicion.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
+import 'package:smartbeat_frontend/shared/utils/app_images.dart';
 
 class HistorialMedicionesList extends StatefulWidget {
   final List<HistorialMedicion> mediciones;
@@ -73,15 +75,15 @@ class _HistorialMedicionesListState extends State<HistorialMedicionesList> {
                           children: [
                             RichText(
                               text: TextSpan(
-                                text: medicion.ppg.bloodPressureSistolic,
-                                style: textTheme.displayMedium?.copyWith(
+                                text: '${medicion.ppg.bloodPressureSistolic}',
+                                style: textTheme.displayLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.secondary,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: ' SYS',
-                                    style: textTheme.displaySmall?.copyWith(
+                                    style: textTheme.displayMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: AppColors.textInputColor,
                                     ),
@@ -92,15 +94,15 @@ class _HistorialMedicionesListState extends State<HistorialMedicionesList> {
                             ),
                             RichText(
                               text: TextSpan(
-                                text: medicion.ppg.bloodPressureDiastolic,
-                                style: textTheme.displayMedium?.copyWith(
+                                text: '${medicion.ppg.bloodPressureDiastolic}',
+                                style: textTheme.displayLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.secondary,
                                 ),
                                 children: [
                                   TextSpan(
                                     text: ' DIA',
-                                    style: textTheme.displaySmall?.copyWith(
+                                    style: textTheme.displayMedium?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.textInputColor),
                                   ),
@@ -108,16 +110,27 @@ class _HistorialMedicionesListState extends State<HistorialMedicionesList> {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            Text(
-                              '${medicion.ppg.heartRate}',
-                              style: textTheme.displayMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.secondary,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  '${medicion.ppg.heartRate}',
+                                  style: textTheme.displayLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.secondary,
+                                  ),
+                                ),
+                                const SizedBox(width: 2.5),
+                                SvgPicture.asset(
+                                  AppImages.heartbeatBoldSvg,
+                                  width: 25.0,
+                                  height: 25.0,
+                                  color: Colors.black,
+                                ),
+                              ],
                             ),
                             Text(
                               medicion.ppg.ppgDate,
-                              style: textTheme.displaySmall?.copyWith(
+                              style: textTheme.displayMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.secondary,
                               ),
