@@ -50,7 +50,10 @@ class SeleccionMedcionDialog extends StatelessWidget {
               scaleImage: 1.15,
               fitImage: BoxFit.scaleDown,
               onTap: () {
+                //TODO Realziar conexion con smartwatch
+                /*
                 Navigator.of(context).pop(TypeMedicion.Smartwatch);
+                 */
               },
             ),
           ),

@@ -82,7 +82,7 @@ class _MedicalInformationCompleteScreenState
                         if (stateMedicalInformation
                                 .medicalInformationComplete.diagnosticExist ==
                             'Realizado')
-                          TextButton(
+                          ElevatedButton(
                             onPressed: () {
                               Navigator.pushNamed(
                                 contextMedicalInformation,
@@ -92,7 +92,13 @@ class _MedicalInformationCompleteScreenState
                                 ),
                               );
                             },
-                            child: const Text('Ver diagnostico'),
+                            child: const Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Ver diagnostico'),
+                              ],
+                            ),
                           ),
                         const SizedBox(height: 5.0),
                         if (stateMedicalInformation
@@ -144,7 +150,7 @@ class _MedicalInformationCompleteScreenState
                           ),
                           const SizedBox(height: 10.0),
                         ],
-                        OutlinedButton(
+                        TextButton(
                           onPressed: () {
                             Utils.redirectToWsp(widget.args.doctorPhone,
                                 contextMedicalInformation);
@@ -154,7 +160,7 @@ class _MedicalInformationCompleteScreenState
                             children: [
                               Icon(
                                 FontAwesomeIcons.whatsapp,
-                                color: AppColors.secondary,
+                                color: AppColors.primary,
                               ),
                               SizedBox(width: 10.0),
                               Text('Contactar'),

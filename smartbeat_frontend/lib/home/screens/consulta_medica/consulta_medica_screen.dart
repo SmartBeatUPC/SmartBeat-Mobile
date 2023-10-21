@@ -20,6 +20,7 @@ import 'package:smartbeat_frontend/shared/components/custom_dialog.dart';
 import 'package:smartbeat_frontend/shared/components/custom_scaffold.dart';
 import 'package:smartbeat_frontend/shared/components/loading.dart';
 import 'package:smartbeat_frontend/shared/components/tab_buttons.dart';
+import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
 import 'package:smartbeat_frontend/shared/utils/app_constants.dart';
 import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
@@ -103,7 +104,7 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                       ),
                       Spacer(),
                       Expanded(
-                        child: TextButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.pushNamed(
                               contextMedicalInformation,
@@ -113,11 +114,17 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                               ),
                             );
                           },
-                          child: const Text('Ver diagnostico'),
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Ver diagnostico'),
+                            ],
+                          ),
                         ),
                       ),
                       Expanded(
-                        child: ElevatedButton(
+                        child: TextButton(
                           onPressed: () {
                             Utils.redirectToWsp(widget.args.doctorPhone,
                                 contextMedicalInformation);
@@ -127,7 +134,7 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                             children: [
                               Icon(
                                 FontAwesomeIcons.whatsapp,
-                                color: Colors.white,
+                                color: AppColors.primary,
                               ),
                               SizedBox(width: 5.0),
                               Text('Contactar'),
