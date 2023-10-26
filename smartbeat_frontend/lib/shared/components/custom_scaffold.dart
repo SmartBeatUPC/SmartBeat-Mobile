@@ -153,9 +153,9 @@ class CustomScaffold extends StatelessWidget {
                     Spacer(),
                     InkWell(
                       onTap: () {
-                        infoAppCubit.signOut();
                         Navigator.pushNamedAndRemoveUntil(
                             context, LoginScreen.route, (_) => false);
+                        infoAppCubit.signOut();
                       },
                       child: ListTile(
                         title: Text(
