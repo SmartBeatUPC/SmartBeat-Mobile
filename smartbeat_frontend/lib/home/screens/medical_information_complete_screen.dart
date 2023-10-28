@@ -175,13 +175,23 @@ class _MedicalInformationCompleteScreenState
               ),
             );
           }
+
+          if (stateMedicalInformation is MedicalInformationCompleteFailure) {
+            Utils.showSnackBar(context,
+                'Se presentó un error, intentelo de nuevo en unos minutos.');
+          }
         },
         builder: (contextMedicalInformation, stateMedicalInformation) {
           final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
               contextMedicalInformation);
           return BlocConsumer<HistorialMedicionesCubit,
               HistorialMedicionesState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is HistorialMedicionesFailure) {
+                Utils.showSnackBar(context,
+                    'Se presentó un error, intentelo de nuevo en unos minutos.');
+              }
+            },
             builder: (context, state) {
               final cubitHistorialMediciones =
                   BlocProvider.of<HistorialMedicionesCubit>(

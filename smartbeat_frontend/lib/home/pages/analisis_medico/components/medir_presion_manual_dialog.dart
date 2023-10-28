@@ -13,6 +13,7 @@ import 'package:smartbeat_frontend/shared/components/custom_reactive_text_field.
 import 'package:smartbeat_frontend/shared/extensions/string_extension.dart';
 import 'package:smartbeat_frontend/shared/formatters/currency_formatter.dart';
 import 'package:smartbeat_frontend/shared/utils/app_colors.dart';
+import 'package:smartbeat_frontend/shared/utils/utils.dart';
 
 class MedirPresionManualDialog extends StatefulWidget {
   final ReqMedicalInformation reqMedicalInformation;
@@ -54,6 +55,11 @@ class _MedirPresionManualDialogState extends State<MedirPresionManualDialog> {
             ),
           );
         }
+        if (state is MedicalInformationFailure) {
+          Utils.showSnackBar(context,
+              'Se presentó un error, intentelo de nuevo en unos minutos.');
+        }
+
       }, builder: (context, state) {
         final cubit = BlocProvider.of<MedicalInformationCubit>(context);
         if (state is MedicalInformationLoading) {

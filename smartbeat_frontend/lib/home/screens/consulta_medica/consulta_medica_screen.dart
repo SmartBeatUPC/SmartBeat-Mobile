@@ -149,13 +149,24 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
               ),
             );
           }
+
+          if (stateMedicalInformation is MedicalInformationCompleteFailure) {
+            Utils.showSnackBar(context,
+                'Se presentó un error, intentelo de nuevo en unos minutos.');
+          }
         },
         builder: (contextMedicalInformation, stateMedicalInformation) {
           final cubit = BlocProvider.of<MedicalInformationCompleteCubit>(
               contextMedicalInformation);
 
-          return BlocBuilder<HistorialMedicionesCubit,
+          return BlocConsumer<HistorialMedicionesCubit,
               HistorialMedicionesState>(
+            listener: (contextHistorialMediciones, stateHistorialMediciones) {
+              if (stateHistorialMediciones is HistorialMedicionesFailure) {
+                Utils.showSnackBar(context,
+                    'Se presentó un error, intentelo de nuevo en unos minutos.');
+              }
+            },
             builder: (contextHistorialMediciones, stateHistorialMediciones) {
               final cubitHistorialMediciones =
                   BlocProvider.of<HistorialMedicionesCubit>(
