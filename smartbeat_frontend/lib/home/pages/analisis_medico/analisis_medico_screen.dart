@@ -53,6 +53,7 @@ class _AnalisisMedicoScreenState extends State<AnalisisMedicoScreen> {
               reqMedicalInformation: widget.args.reqMedicalInformation,
               consultaMedicaId: widget.args.consultaMedicaId,
               lastMedicalRecordId: widget.args.lastMedicalRecordId,
+              useReqMedicalInformation: widget.args.useReqMedicalInformation,
             ),
     );
   }
@@ -62,10 +63,12 @@ class AnalisisMedicoScreenArgs {
   final ReqMedicalInformation reqMedicalInformation;
   final int consultaMedicaId;
   final int lastMedicalRecordId;
+  final bool useReqMedicalInformation;
 
   const AnalisisMedicoScreenArgs(
     this.reqMedicalInformation,
     this.consultaMedicaId,
-    this.lastMedicalRecordId,
-  );
+    this.lastMedicalRecordId, {
+    this.useReqMedicalInformation = false,
+  });
 }

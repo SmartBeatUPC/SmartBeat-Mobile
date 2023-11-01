@@ -11,6 +11,8 @@ import 'package:smartbeat_frontend/home/bloc/states/last_medical_information_sta
 import 'package:smartbeat_frontend/home/bloc/states/medical_information_complete_state.dart';
 import 'package:smartbeat_frontend/home/forms/info_medica_form.dart';
 import 'package:smartbeat_frontend/home/models/medical_information.dart';
+import 'package:smartbeat_frontend/home/models/req_medical_information.dart';
+import 'package:smartbeat_frontend/home/pages/analisis_medico/analisis_medico_screen.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/informacion_medica_dialog.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/lista_historial_mediciones.dart';
 import 'package:smartbeat_frontend/home/pages/profile/components/stacked_bar_chart.dart';
@@ -42,6 +44,16 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
       TypeFilter.values.map((type) => type.name).toList();
   TypeFilter selectedType = TypeFilter.Todos;
   int selectedTypeIndex = 0;
+
+  InfoMedicaForm _formInfoMedicaForm = InfoMedicaForm();
+
+  Future<void> updateFormWithInformacionMedicaForm() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? formString = prefs.getString(AppConstants.keyInfoApp);
+    if (formString != null) {
+      _formInfoMedicaForm.patchValue(jsonDecode(formString));
+    }
+  }
 
   Future<void> setInformacionMedicaForm(
       MedicalInformation medicalInformation) async {
@@ -227,17 +239,91 @@ class _ConsultaMedicaScreenState extends State<ConsultaMedicaScreen> {
                                 ),
                                 Spacer(),
                                 ElevatedButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: contextMedicalInformation,
-                                      builder: (context) =>
-                                          InformacionMedicaDialog(
-                                        consultaMedicaId:
-                                            widget.args.consultaMedicaId,
-                                        lastMedicalRecordId:
-                                            widget.args.lastMedicalRecordId,
-                                      ),
-                                    );
+                                  onPressed: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    String? formString = prefs
+                                        .getString(AppConstants.keyInfoApp);
+                                    if (formString != null) {
+                                      showDialog(
+                                        context: contextMedicalInformation,
+                                        builder: (context) => CustomDialog(
+                                          size: DialogHeightSize.extraSmall,
+                                          body: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '¿Desea realizar algun cambio en su informacion medica?',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(height: 20.0),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          showDialog(
+                                                            context:
+                                                                contextMedicalInformation,
+                                                            builder: (context) =>
+                                                                InformacionMedicaDialog(
+                                                              consultaMedicaId:
+                                                                  widget.args
+                                                                      .consultaMedicaId,
+                                                              lastMedicalRecordId:
+                                                                  widget.args
+                                                                      .lastMedicalRecordId,
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Text('Si')),
+                                                    SizedBox(width: 10.0),
+                                                    OutlinedButton(
+                                                        onPressed: () async {
+                                                          await updateFormWithInformacionMedicaForm();
+                                                          ReqMedicalInformation
+                                                              reqMedicalInformation =
+                                                              ReqMedicalInformation.from(
+                                                                  _formInfoMedicaForm
+                                                                      .rawValue);
+                                                          print("Fomulario enviado: " +
+                                                              _formInfoMedicaForm
+                                                                  .rawValue
+                                                                  .toString());
+                                                          Navigator.pushNamed(
+                                                            context,
+                                                            AnalisisMedicoScreen
+                                                                .route,
+                                                            arguments:
+                                                                AnalisisMedicoScreenArgs(
+                                                              reqMedicalInformation,
+                                                              widget.args
+                                                                  .consultaMedicaId,
+                                                              widget.args
+                                                                  .lastMedicalRecordId,
+                                                              useReqMedicalInformation:
+                                                                  true,
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: Text('No'))
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: Text('+ Presion'),
                                 ),

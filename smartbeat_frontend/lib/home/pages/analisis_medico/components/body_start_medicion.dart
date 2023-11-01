@@ -20,6 +20,7 @@ class BodyStartMedicion extends StatefulWidget {
   final ReqMedicalInformation reqMedicalInformation;
   final int consultaMedicaId;
   final int lastMedicalRecordId;
+  final bool useReqMedicalInformation;
 
   const BodyStartMedicion({
     super.key,
@@ -29,6 +30,7 @@ class BodyStartMedicion extends StatefulWidget {
     required this.reqMedicalInformation,
     required this.consultaMedicaId,
     required this.lastMedicalRecordId,
+    required this.useReqMedicalInformation,
   });
 
   @override
@@ -118,50 +120,55 @@ class _BodyStartMedicionState extends State<BodyStartMedicion> {
           ),
         if (typeSelected != null) ...[
           const SizedBox(height: 20.0),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  spreadRadius: 1.0,
-                  blurRadius: 25.0,
-                  offset: const Offset(1, 1),
-                ),
-              ],
-            ),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  AgregarPatologiasScreen.route,
-                  arguments: AgregarPatologiasScreenArgs(
-                    medicalInformationId: newMedicalInformationId!,
-                    doctorLastName: doctorLastName!,
-                    lastMedicalRecordId: widget.lastMedicalRecordId,
+          if (!widget.useReqMedicalInformation)
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 7.5, horizontal: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 1.0,
+                    blurRadius: 25.0,
+                    offset: const Offset(1, 1),
                   ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.add,
-                    size: 30,
-                  ),
-                  const SizedBox(width: 10.0),
-                  Text('Agregar Patologias',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.secondary)),
                 ],
               ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AgregarPatologiasScreen.route,
+                    arguments: AgregarPatologiasScreenArgs(
+                      medicalInformationId: newMedicalInformationId!,
+                      doctorLastName: doctorLastName!,
+                      lastMedicalRecordId: widget.lastMedicalRecordId,
+                    ),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.add,
+                      size: 30,
+                    ),
+                    const SizedBox(width: 10.0),
+                    Text('Agregar Patologias',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.secondary)),
+                  ],
+                ),
+              ),
             ),
-          ),
           const SizedBox(height: 20.0),
           OutlinedButton(
             onPressed: () {

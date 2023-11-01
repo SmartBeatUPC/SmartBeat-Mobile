@@ -15,15 +15,6 @@ class MedicalInformation {
     required this.alcohol,
   });
 
-  Map<String, dynamic> toMap() => {
-        'height': height,
-        'weight': weight,
-        'bmi': bmi,
-        'sedentary': !sedentary,
-        'smoke': smoke,
-        'alcohol': alcohol,
-      };
-
   MedicalInformation.from(Map<String, dynamic> data)
       : height = data['height'],
         weight = data['weight'],
